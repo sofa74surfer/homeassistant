@@ -1,0 +1,8 @@
+platform: rest
+method: GET
+resource: http://192.168.1.201/report
+name: MyStrom NAS & Switch Report
+value_template: "OK"
+json_attributes:
+  - "power"
+  - "relay"

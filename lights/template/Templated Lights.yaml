@@ -1,0 +1,23 @@
+platform: template
+lights:
+
+# ####### #################### #######
+# ####### Dingz Light Template #######
+# ####### #################### #######
+
+# ####### Dingz Katzenbaum Light
+  dingz_katzenbaum_light:
+    unique_id: dingz_katzenbaum_light
+    friendly_name: "Dingz Katzenbaum"
+    level_template: "{{ (states.sensor.dingz_wohnzimmer_state.attributes
+['dimmers'][3]['output']*255/100)|int }}"
+    value_template: "{{ states.sensor.dingz_wohnzimmer_state.attributes['dimmers'][3]['on']}}"
+    turn_on:
+      service: script.dingz_katzenbaum_light_on
+    turn_off:
+      service: script.dingz_katzenbaum_light_off
+    set_level:
+      service: script.dingz_katzenbaum_light_level
+      entity_id: light.dingz_katzenbaum_light
+      data:
+        brightness: "{{ (brightness * 100 / 255) | int }}"

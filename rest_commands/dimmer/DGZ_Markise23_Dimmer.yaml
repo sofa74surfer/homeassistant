@@ -1,0 +1,5 @@
+  dingz_markise23_dimmer:
+    url: http://192.168.1.192/api/v1/dimmer/{{ dimmer }}/{{ enum }}
+    method: POST
+    payload: 'value={{ value }}'
+    content_type: 'application/x-www-form-urlencoded; charset=utf-8'

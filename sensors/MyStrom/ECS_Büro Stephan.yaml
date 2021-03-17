@@ -1,0 +1,10 @@
+platform: rest
+method: GET
+resource: http://192.168.1.216/report
+name: MyStrom Büro Stephan Report
+value_template: "OK"
+json_attributes:
+  - "power"
+  - "Ws"
+  - "relay"
+  - "temperature"

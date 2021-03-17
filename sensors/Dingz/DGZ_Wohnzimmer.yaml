@@ -1,0 +1,35 @@
+platform: rest
+method: GET
+resource: http://192.168.1.195/api/v1/state
+name: Dingz Wohnzimmer State
+value_template: "OK"
+json_attributes:
+  - "dimmers"
+  - "blinds"
+  - "led"
+  - "sensors"
+  - "thermostat"
+  - "wifi"
+
+#platform: rest
+#method: GET
+#resource: http://192.168.1.194/api/v1/dimmer
+#name: Dingz Wohnzimmer Light
+#value_template: "OK"
+#json_attributes:
+#  - "0"
+#  - "1"
+#  - "2"
+#  - "3"
+
+  #platform: rest
+#method: GET
+#resource: http://192.168.1.194/api/v1/dimmer/3
+#name: Dingz Wohnzimmer Katzenbaum Light
+#value_template: "OK"
+#json_attributes:
+#  - "on"
+#  - "value"
+#  - "ramp"
+#  - "disabled"
+#  - "index"

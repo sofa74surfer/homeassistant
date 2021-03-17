@@ -1,0 +1,5 @@
+  dingz_markise45_led:
+    url: http://192.168.1.193/api/v1/led/set
+    method: POST
+    payload: 'action={{ action }}&color={{ color }}&mode=hsv'
+    content_type: 'application/x-www-form-urlencoded; charset=utf-8'

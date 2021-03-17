@@ -1,0 +1,56 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+########### INCLUDES #####
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+########### INCLUDES ##### Additional Dir List
+sensor: !include_dir_list sensors/
+binary_sensor: !include_dir_list binary_sensors/
+switch: !include_dir_list switches/
+rest_command: !include_dir_merge_named rest_commands/
+light: !include_dir_list lights/
+
+########### INCLUDES ##### Additional Explizit YAML
+#sensor: !include include/sensor_hue_battery.yaml
+#sensor: !include_dir_named include/sensor/
+
+remote:
+  - platform: harmony
+    name: Harmony Hub
+    host: 192.168.1.162
+    activity: Film wiedergeben
+    delay_secs: 0.6
+
+media_player:
+  - platform: nad
+    type: Telnet
+    port: 23
+    host: 192.168.1.56
+    name: NAD Receiver
+    min_volume: -60
+    max_volume: -20
+    volume_step: 3
+    sources:
+      1: 'Mac'
+      2: 'Apple TV'
+      3: 'Swisscom TV'
+      4: 'Epson HDMI'
+      5: 'BluOS'
+  - platform: bluesound
+    hosts:
+      - host: 192.168.1.56
+        name: NAD Bluesound
+        port: 11000
+
+surepetcare:
+  username: !secret surepetcare_login
+  password: !secret surepetcare_password
+  feeders: [375323, 556301]
+  flaps: [566075]
+  pets: [171666, 175347]
+

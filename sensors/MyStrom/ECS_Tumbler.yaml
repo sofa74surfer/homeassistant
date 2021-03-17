@@ -1,0 +1,8 @@
+platform: rest
+method: GET
+resource: http://192.168.1.206/report
+name: MyStrom Tumbler Report
+value_template: "OK"
+json_attributes:
+  - "power"
+  - "relay"

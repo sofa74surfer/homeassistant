@@ -1,0 +1,7 @@
+service: remote.send_command
+data:
+  entity_id: remote.NAD_VolumeUp
+  command:
+    - VolumeUp
+  device: NAD-AV-Receiver
+  delay_secs: 0.6

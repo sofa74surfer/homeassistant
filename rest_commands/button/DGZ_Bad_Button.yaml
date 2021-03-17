@@ -1,0 +1,3 @@
+  dingz_bad_button:
+    url: http://192.168.1.190/api/v1/button/{{ button }}/{{ action }}
+    method: POST

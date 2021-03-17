@@ -1,0 +1,446 @@
+- id: '1605079406491'
+  alias: Gang Hue Stufe 001, Violett, -99 to -6, home
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+    above: -100
+    below: '-5'
+    for: 0:10:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.hue_gang_stufe_001_violett_minus_6_und_kalter
+  mode: single
+- id: '1605082936921'
+  alias: Gang Hue Stufe 002, Hellblau, -5 to +2, home
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+    above: -6
+    below: '3'
+    for: 0:10:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.hue_gang_stufe_002_hellblau_minus_5_bis_2_grad
+  mode: single
+- id: '1605082987124'
+  alias: Gang Hue Stufe 003, Grün, +3 to +10, home
+  description: ''
+  trigger:
+  - platform: numeric_state
+    above: '2'
+    below: '11'
+    for: 0:10:00
+    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.hue_gang_stufe_003_grun_3_bis_10_grad
+  mode: single
+- id: '1605083027369'
+  alias: Gang Hue Stufe 004, Gelb, +11 to +20, home
+  description: ''
+  trigger:
+  - platform: numeric_state
+    above: '10'
+    below: '21'
+    for: 0:10:0
+    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.hue_gang_stufe_004_gelb_11_bis_20_grad
+  mode: single
+- id: '1605083101843'
+  alias: Gang Hue Stufe 005, Orange, +21 to +30, home
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+    above: 20
+    below: '31'
+    for: 0:10:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.hue_gang_stufe_005_orange_21_bis_30_grad
+  mode: single
+- id: '1605083135467'
+  alias: Gang Hue Stufe 006, Rot, +31 to +99, home
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+    above: 30
+    below: '100'
+    for: 0:10:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.hue_gang_stufe_006_rot_31_grad_und_warmer
+  mode: single
+- id: '1605125587628'
+  alias: Gang Hue OFF, not_home
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '10'
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: not_home
+  action:
+  - type: turn_off
+    device_id: b7c070812bc10ef90d842a1118d0e2fd
+    entity_id: light.gang
+    domain: light
+  mode: single
+- id: '1605130829896'
+  alias: Schlafzimmer Szene  ON 22:00, random 1-30, not_home
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: not_home
+  action:
+  - delay: '{{ ''00:%02i:00''%range(01,30) | random }}'
+  - scene: scene.hue_schlafzimmer_on_ambient
+  mode: single
+- id: '1605131875883'
+  alias: Schlafzimmer Szene OFF 23:30, random 1-20, not_home
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:30:00'
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: not_home
+  action:
+  - delay: '{{ ''00:%02i:00''%range(01,20) | random }}'
+  - type: turn_off
+    device_id: 8ed0457539dbddc51a48b7131d9052f4
+    entity_id: light.schlafzimmer
+    domain: light
+  - type: turn_off
+    device_id: 102868ddbbb70ae31bf29015163b2377
+    entity_id: light.schlafzimmer_pia
+    domain: light
+  - type: turn_off
+    device_id: d6346b6b5496edaf277b7cc83658cc75
+    entity_id: light.schlafzimmer_stephan
+    domain: light
+  mode: single
+- id: '1605216723225'
+  alias: Wohnzimmer Szene  ON 05:30:00, home
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:00:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.hue_wohnzimmer_on_ambient
+  mode: single
+- id: '1605216797509'
+  alias: Wohnzimmer Szene OFF Sunrise plus 1 hour
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 01:00:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: bc4e2b8027de165a9d7628e411e489e0
+    entity_id: light.fernseher_links
+    domain: light
+  - type: turn_off
+    device_id: 0dd875b3b51061ea9b2dd05653705a41
+    entity_id: light.fernseher_rechts
+    domain: light
+  - type: turn_off
+    device_id: 235f47d131e98d3da54e4e67ce4fe675
+    entity_id: light.sideboard
+    domain: light
+  - type: turn_off
+    device_id: 330cb50f26f13ab7fd05f3444e6e2983
+    entity_id: light.globus
+    domain: light
+  - type: turn_off
+    device_id: e85f8e90861b6024fd80e4091cb4b1bd
+    entity_id: light.ruiz1
+    domain: light
+  - type: turn_off
+    device_id: 3abea10233b8aa502879b51d3698e084
+    entity_id: light.ruiz2
+    domain: light
+  - type: turn_off
+    device_id: 580bf8973b1b1fd2e67d9c06311d17d3
+    entity_id: light.katzenbaum
+    domain: light
+  mode: single
+- id: '1605247431207'
+  alias: Wohnzimmer Szene  ON Sunset
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition: []
+  action:
+  - scene: scene.hue_wohnzimmer_on_ambient
+  mode: single
+- id: '1605247871692'
+  alias: Wohnung Hue OFF, 01:00, random 1-30, not_home
+  description: ''
+  trigger:
+  - platform: time
+    at: 01:00:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: not_home
+  action:
+  - delay: '{{ ''00:%02i:00''%range(01,30) | random }}'
+  - scene: scene.hue_wohnzimmer_off
+  - scene: scene.hue_buro_off
+  - scene: scene.hue_schlafzimmer_off
+  - type: turn_off
+    device_id: b7c070812bc10ef90d842a1118d0e2fd
+    entity_id: light.gang
+    domain: light
+  mode: single
+- id: '1605249083791'
+  alias: Büro Szene ON Sunset, home
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.hue_buro_on_ambient
+  mode: single
+- id: '1605249667376'
+  alias: Büro Szene ON Sunset, not_home (Simulation)
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: not_home
+  action:
+  - repeat:
+      while:
+      - condition: sun
+        after: sunset
+        before: sunrise
+      - condition: time
+        before: 01:00:00
+        after: '16:00:00'
+      sequence:
+      - delay: '{{ ''00:%02i:00''%range(01,10) | random }}'
+      - scene: scene.hue_buro_on_ambient
+      - delay: '{{ ''00:%02i:00''%range(20,30) | random }}'
+      - scene: scene.hue_buro_off
+  mode: single
+- id: '1605250019017'
+  alias: Gang Hue  ON, every 10 Minutes, home
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /10
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - type: turn_on
+    device_id: b7c070812bc10ef90d842a1118d0e2fd
+    entity_id: light.gang
+    domain: light
+    brightness_pct: 10
+  mode: single
+- id: '1605384993305'
+  alias: Gang Schrank Lüfter ON
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.mystrom_schrank_lufter_temperature
+    above: '32'
+  condition: []
+  action:
+  - scene: scene.schrank_lufter_on
+  mode: single
+- id: '1605385322737'
+  alias: Gang Schrank Lüfter OFF
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.mystrom_schrank_lufter_temperature
+    below: '28'
+  condition: []
+  action:
+  - scene: scene.mystrom_schrank_lufter_off
+  mode: single
+- id: '1605386438213'
+  alias: Keller Entfeuchter ON
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.netatmo_netatmokeller_humidity
+    above: 59
+  condition: []
+  action:
+  - scene: scene.mystrom_entfeuchter_on
+  mode: single
+- id: '1605386467471'
+  alias: Keller Entfeuchter OFF
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.netatmo_netatmokeller_humidity
+    below: 56
+  condition: []
+  action:
+  - scene: scene.mystrom_entfeuchter_off
+  mode: single
+- id: '1607766697349'
+  alias: Test Automatisierung mit Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: testid
+  condition: []
+  action:
+  - type: turn_on
+    device_id: d6a46dfbf137bb9972b913dab48c3a03
+    entity_id: light.buro_decke_stephan
+    domain: light
+  mode: single
+- id: '1613892335068'
+  alias: Wohnung Kameras ON (P,W,R) (home -> not_home)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.awesome_people
+    from: home
+    to: not_home
+  condition: []
+  action:
+  - scene: scene.mystrom_presence_on
+  - scene: scene.mystrom_welcome_on
+  - scene: scene.mystrom_reolink_on
+  mode: single
+- id: '1613892576072'
+  alias: Wohnung Kameras ON (P,W,R) (home, sleep co2 > 1000)
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.netatmo_steffs_home_living_sleep_co2
+    above: '1000'
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.mystrom_presence_on
+  - scene: scene.mystrom_welcome_on
+  - scene: scene.mystrom_reolink_on
+  mode: single
+- id: '1613892789706'
+  alias: Wohnung Kameras OFF (P,W) (not_home -> home, vor sunset - 60 Min)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.awesome_people
+    from: not_home
+    to: home
+  condition:
+  - condition: sun
+    before: sunset
+    before_offset: -01:00:00
+  action:
+  - scene: scene.mystrom_presence_off
+  - scene: scene.mystrom_welcome_off
+  mode: single
+- id: '1613894596079'
+  alias: Wohnung Kameras ON (P,W) (home, sunset - 45 min)
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -00:45:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.mystrom_presence_on
+  - scene: scene.mystrom_welcome_on
+  mode: single
+- id: '1613895437670'
+  alias: Wohnung Kameras OFF (P,W) (home, sunrise + 45 min)
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 00:45:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.mystrom_presence_off
+  - scene: scene.mystrom_welcome_off
+  mode: single
+- id: '1613895565229'
+  alias: Wohnung Kameras OFF (R) (home, sunrise + 45 Min) --- TODO ---
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 00:45:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - scene: scene.mystrom_reolink_off
+  mode: single
+- id: '1614287759637'
+  alias: 'Wohnung Kameras OFF (R) (not_home -> home) '
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.awesome_people
+    from: not_home
+    to: home
+  condition: []
+  action:
+  - scene: scene.mystrom_reolink_off
+  mode: single

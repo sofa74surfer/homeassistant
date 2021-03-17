@@ -1,0 +1,174 @@
+epson_projector_on:
+  alias: 'Remote: Epson PowerOn'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: PowerOn
+      device: 63914848
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+epson_projector_off:
+  alias: 'Remote: Epson PowerOff'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: PowerOff
+      device: 63914848
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+remote_nad_poweron:
+  alias: 'Remote: NAD PowerOn'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: PowerOn
+      device: 53587639
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+remote_nad_poweroff:
+  alias: 'Remote: NAD PowerOff'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: PowerOff
+      device: 53587639
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+remote_samsung_poweron:
+  alias: 'Remote: Samsung PowerOn'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: PowerOn
+      device: 18766837
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+remote_samsung_poweroff:
+  alias: 'Remote: Samsung PowerOff'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: PowerOff
+      device: 18766837
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+remote_nad_avpreset1_mac:
+  alias: 'Remote: NAD AV Preset 1 (Mac)'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: AvPreset1
+      device: 53587639
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+remote_nad_avpreset2_appletv:
+  alias: 'Remote: NAD AV Preset 2 (Apple TV)'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: AvPreset2
+      device: 53587639
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+remote_nad_avpreset4_epsonhdmi:
+  alias: 'Remote: NAD AV Preset 4 (Epson HDMI)'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: AvPreset4
+      device: 53587639
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+remote_nad_avpreset3_swisscomtv:
+  alias: 'Remote: NAD AV Preset 3 (Swisscom TV)'
+  sequence:
+  - service: remote.send_command
+    data:
+      command: AvPreset3
+      device: 53587639
+    entity_id: remote.harmony_hub
+  mode: single
+  icon: hass:remote
+dingz_markise1_led_red:
+  alias: Dingz Markise1 LED Rot
+  sequence:
+  - service: rest_command.dingz_markise1_led
+    data:
+      action: 'on'
+      color: 0;100;3
+  mode: single
+  icon: hass:lightbulb
+dingz_markise1_led_violett:
+  alias: Dingz Markise1 LED Violett
+  sequence:
+  - service: rest_command.dingz_markise1_led
+    data:
+      action: 'on'
+      color: 300;100;3
+  mode: single
+  icon: hass:lightbulb
+dingz_markise1_led_grun:
+  alias: Dingz Markise1 LED Grün
+  sequence:
+  - service: rest_command.dingz_markise1_led
+    data:
+      action: 'on'
+      color: 120;100;3
+  mode: single
+  icon: hass:lightbulb
+dingz_markise1_led_original:
+  alias: Dingz Markise1 LED Original
+  sequence:
+  - service: rest_command.dingz_markise1_led
+    data:
+      action: 'on'
+      color: 180;100;3
+  mode: single
+  icon: hass:lightbulb
+dingz_esstisch_dimmer_60:
+  alias: Dingz Katzenbaum Dimmer 60%
+  sequence:
+  - service: rest_command.dingz_wohnzimmer_dimmer
+    data:
+      dimmer: 3
+      enum: 'on'
+      value: 60
+  mode: single
+  icon: hass:lightbulb
+dingz_katzenbaum_light_on:
+  alias: Dingz Katzenbaum Light On
+  sequence:
+  - service: rest_command.dingz_wohnzimmer_dimmer_onoff
+    data:
+      dimmer: 3
+      enum: 'on'
+  mode: single
+  icon: hass:lightbulb
+dingz_katzenbaum_light_off:
+  alias: Dingz Katzenbaum Light Off
+  sequence:
+  - service: rest_command.dingz_wohnzimmer_dimmer_onoff
+    data:
+      dimmer: 3
+      enum: 'off'
+  mode: single
+  icon: hass:lightbulb
+dingz_katzenbaum_light_level:
+  alias: Dingz Katzenbaum Light Level
+  sequence:
+  - service: rest_command.dingz_wohnzimmer_dimmer
+    data:
+      dimmer: 3
+      enum: 'on'
+      value: '{{ brightness }}'
+  mode: single
+  icon: hass:lightbulb

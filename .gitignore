@@ -1,0 +1,13 @@
+# Excluded Folders for Home Assistant
+.ssl/
+blueprints/
+image/
+ssl/
+tts/
+secrets.yaml
+home-assistant.log
+node-red/
+groups.yaml
+.storage/
+.HA_VERSION
+home-assistant_v2.db

@@ -1,0 +1,12 @@
+platform: rest
+method: GET
+resource: http://192.168.1.197/api/v1/state
+name: Dingz Schlafzimmer State
+value_template: "OK"
+json_attributes:
+  - "dimmers"
+  - "blinds"
+  - "led"
+  - "sensors"
+  - "thermostat"
+  - "wifi"

@@ -1,0 +1,592 @@
+- id: '1605080578863'
+  name: Hue Gang Stufe 001 - Violett - Minus 6 und kälter
+  entities:
+    light.gang:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 15
+      hs_color:
+      - 283.333
+      - 56.471
+      rgb_color:
+      - 214
+      - 110
+      - 255
+      xy_color:
+      - 0.321
+      - 0.174
+      effect: none
+      friendly_name: Gang
+      supported_features: 61
+      state: 'on'
+  icon: hass:led-strip-variant
+- id: '1605080670586'
+  name: Hue Gang Stufe 002 - Hellblau - Minus 5 bis 2 Grad
+  entities:
+    light.gang:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 15
+      hs_color:
+      - 210.629
+      - 56.078
+      rgb_color:
+      - 112
+      - 182
+      - 255
+      xy_color:
+      - 0.193
+      - 0.23
+      effect: none
+      friendly_name: Gang
+      supported_features: 61
+      state: 'on'
+  icon: hass:led-strip-variant
+- id: '1605081590381'
+  name: Hue Gang Stufe 003 - Grün - 3 bis 10 Grad
+  entities:
+    light.gang:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 15
+      hs_color:
+      - 100.706
+      - 100
+      rgb_color:
+      - 81
+      - 255
+      - 0
+      xy_color:
+      - 0.215
+      - 0.711
+      effect: none
+      friendly_name: Gang
+      supported_features: 61
+      state: 'on'
+  icon: hass:led-strip-variant
+- id: '1605081699454'
+  name: Hue Gang Stufe 004 - Gelb - 11 bis 20 Grad
+  entities:
+    light.gang:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 15
+      hs_color:
+      - 60.408
+      - 57.647
+      rgb_color:
+      - 254
+      - 255
+      - 108
+      xy_color:
+      - 0.416
+      - 0.475
+      effect: none
+      friendly_name: Gang
+      supported_features: 61
+      state: 'on'
+  icon: hass:led-strip-variant
+- id: '1605081809961'
+  name: Hue Gang Stufe 005 - Orange - 21 bis 30 Grad
+  entities:
+    light.gang:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 15
+      hs_color:
+      - 32.105
+      - 89.412
+      rgb_color:
+      - 255
+      - 148
+      - 26
+      xy_color:
+      - 0.581
+      - 0.393
+      effect: none
+      friendly_name: Gang
+      supported_features: 61
+      state: 'on'
+  icon: hass:led-strip-variant
+- id: '1605081927948'
+  name: Hue Gang Stufe 006 - Rot - 31 Grad und wärmer
+  entities:
+    light.gang:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 15
+      hs_color:
+      - 359.762
+      - 98.824
+      rgb_color:
+      - 255
+      - 2
+      - 3
+      xy_color:
+      - 0.7
+      - 0.299
+      effect: none
+      friendly_name: Gang
+      supported_features: 61
+      state: 'on'
+  icon: hass:led-strip-variant
+- id: '1605131119496'
+  name: Hue Schlafzimmer On Ambient
+  entities:
+    light.schlafzimmer:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 97
+      hs_color:
+      - 23.271
+      - 83.922
+      rgb_color:
+      - 255
+      - 123
+      - 40
+      xy_color:
+      - 0.607
+      - 0.363
+      effect: none
+      friendly_name: Schlafzimmer
+      supported_features: 63
+      state: 'on'
+    light.schlafzimmer_pia:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 1
+      hs_color:
+      - 35.93
+      - 67.451
+      rgb_color:
+      - 255
+      - 185
+      - 82
+      xy_color:
+      - 0.508
+      - 0.413
+      effect: none
+      friendly_name: Schlafzimmer Pia
+      supported_features: 63
+      state: 'on'
+    light.schlafzimmer_stephan:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 1
+      hs_color:
+      - 35.93
+      - 67.451
+      rgb_color:
+      - 255
+      - 185
+      - 82
+      xy_color:
+      - 0.508
+      - 0.413
+      effect: none
+      friendly_name: Schlafzimmer Stephan
+      supported_features: 63
+      state: 'on'
+  icon: hass:lightbulb-group
+- id: '1605216217313'
+  name: Hue Wohnzimmer On Ambient
+  entities:
+    light.fernseher_links:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 26
+      hs_color:
+      - 65.957
+      - 55.294
+      rgb_color:
+      - 241
+      - 255
+      - 114
+      xy_color:
+      - 0.397
+      - 0.48
+      effect: none
+      friendly_name: Fernseher links
+      supported_features: 61
+      state: 'on'
+    light.fernseher_rechts:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 26
+      hs_color:
+      - 151.765
+      - 46.667
+      rgb_color:
+      - 135
+      - 255
+      - 199
+      xy_color:
+      - 0.226
+      - 0.423
+      effect: none
+      friendly_name: Fernseher rechts
+      supported_features: 61
+      state: 'on'
+    light.sideboard:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 26
+      hs_color:
+      - 26.129
+      - 72.941
+      rgb_color:
+      - 255
+      - 150
+      - 69
+      xy_color:
+      - 0.558
+      - 0.38
+      effect: none
+      friendly_name: Sideboard
+      supported_features: 61
+      state: 'on'
+    light.globus:
+      min_mireds: 153
+      max_mireds: 454
+      brightness: 26
+      color_temp: 451
+      friendly_name: Globus
+      supported_features: 43
+      state: 'on'
+    light.katzenbaum:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 26
+      hs_color:
+      - 25.297
+      - 72.549
+      rgb_color:
+      - 255
+      - 147
+      - 70
+      xy_color:
+      - 0.561
+      - 0.376
+      effect: none
+      friendly_name: Katzenbaum
+      supported_features: 61
+      state: 'on'
+    light.ruiz1:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 168
+      hs_color:
+      - 120
+      - 0.392
+      rgb_color:
+      - 254
+      - 255
+      - 254
+      xy_color:
+      - 0.322
+      - 0.33
+      effect: none
+      friendly_name: Ruiz1
+      supported_features: 61
+      state: 'on'
+    light.ruiz2:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 166
+      hs_color:
+      - 165
+      - 1.569
+      rgb_color:
+      - 250
+      - 255
+      - 253
+      xy_color:
+      - 0.319
+      - 0.332
+      effect: none
+      friendly_name: Ruiz2
+      supported_features: 61
+      state: 'on'
+  icon: hass:lightbulb-group
+- id: '1605248085888'
+  name: Hue Wohnzimmer OFF
+  entities:
+    light.fernseher_links:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Fernseher links
+      supported_features: 61
+      state: 'off'
+    light.fernseher_rechts:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Fernseher rechts
+      supported_features: 61
+      state: 'off'
+    light.ruiz1:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Ruiz1
+      supported_features: 61
+      state: 'off'
+    light.ruiz2:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Ruiz2
+      supported_features: 61
+      state: 'off'
+    light.sideboard:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Sideboard
+      supported_features: 61
+      state: 'off'
+    light.globus:
+      min_mireds: 153
+      max_mireds: 454
+      friendly_name: Globus
+      supported_features: 43
+      state: 'off'
+    light.katzenbaum:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Katzenbaum
+      supported_features: 61
+      state: 'off'
+  icon: hass:lightbulb-group-off
+- id: '1605248169217'
+  name: Hue Schlafzimmer OFF
+  entities:
+    light.schlafzimmer:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Schlafzimmer
+      supported_features: 63
+      state: 'off'
+    light.schlafzimmer_pia:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Schlafzimmer Pia
+      supported_features: 63
+      state: 'off'
+    light.schlafzimmer_stephan:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Schlafzimmer Stephan
+      supported_features: 63
+      state: 'off'
+  icon: hass:lightbulb-group-off
+- id: '1605248232688'
+  name: Hue Büro OFF
+  entities:
+    light.buro_decke_pia:
+      min_mireds: 153
+      max_mireds: 454
+      friendly_name: Büro Decke Pia
+      supported_features: 43
+      state: 'off'
+    light.buro_decke_stephan:
+      min_mireds: 153
+      max_mireds: 454
+      friendly_name: Büro Decke Stephan
+      supported_features: 43
+      state: 'off'
+    light.buro_deko_pia:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Büro Deko Pia
+      supported_features: 61
+      state: 'off'
+    light.buro_deko_pult:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Büro Deko Pult
+      supported_features: 61
+      state: 'off'
+    light.buro_deko_usm:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Büro Deko USM
+      supported_features: 61
+      state: 'off'
+  icon: hass:lightbulb-group-off
+- id: '1605248804647'
+  name: Hue Büro On Ambient
+  entities:
+    light.buro_deko_pia:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 26
+      hs_color:
+      - 163.793
+      - 68.235
+      rgb_color:
+      - 81
+      - 255
+      - 207
+      xy_color:
+      - 0.18
+      - 0.42
+      effect: none
+      friendly_name: Büro Deko Pia
+      supported_features: 61
+      state: 'on'
+    light.buro_deko_pult:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 26
+      hs_color:
+      - 4.478
+      - 52.549
+      rgb_color:
+      - 255
+      - 131
+      - 121
+      xy_color:
+      - 0.529
+      - 0.322
+      effect: none
+      friendly_name: Büro Deko Pult
+      supported_features: 61
+      state: 'on'
+    light.buro_deko_usm:
+      effect_list:
+      - colorloop
+      - random
+      brightness: 26
+      hs_color:
+      - 44.503
+      - 59.216
+      rgb_color:
+      - 255
+      - 215
+      - 103
+      xy_color:
+      - 0.46
+      - 0.433
+      effect: none
+      friendly_name: Büro Deko USM
+      supported_features: 61
+      state: 'on'
+  icon: hass:lightbulb-group
+- id: '1605385130776'
+  name: myStrom Schrank Lüfter ON
+  entities:
+    switch.schrank_lufter:
+      current_power_w: 0
+      friendly_name: Schrank Lüfter
+      state: 'on'
+  icon: hass:power-plug
+- id: '1605385213597'
+  name: myStrom Schrank Lüfter OFF
+  entities:
+    switch.schrank_lufter:
+      current_power_w: 0
+      friendly_name: Schrank Lüfter
+      state: 'off'
+  icon: hass:power-plug-off
+- id: '1605385635645'
+  name: myStrom Entfeuchter OFF
+  entities:
+    switch.entfeuchter:
+      current_power_w: 0
+      friendly_name: Entfeuchter
+      state: 'off'
+  icon: hass:power-plug-off
+- id: '1605385684764'
+  name: myStrom Entfeuchter ON
+  entities:
+    switch.entfeuchter:
+      current_power_w: 28.6
+      friendly_name: Entfeuchter
+      state: 'on'
+  icon: hass:power-plug
+- id: '1605387923115'
+  name: myStrom Reolink OFF
+  entities:
+    switch.reolink:
+      current_power_w: 0
+      friendly_name: Reolink
+      state: 'off'
+  icon: hass:power-plug-off
+- id: '1605387952313'
+  name: myStrom Welcome OFF
+  entities:
+    switch.welcome:
+      current_power_w: 0
+      friendly_name: Welcome
+      state: 'off'
+  icon: hass:power-plug-off
+- id: '1605387980350'
+  name: myStrom Presence OFF
+  entities:
+    switch.presence:
+      current_power_w: 0
+      friendly_name: Presence
+      state: 'off'
+  icon: hass:power-plug-off
+- id: '1605388015116'
+  name: myStrom Reolink ON
+  entities:
+    switch.reolink:
+      current_power_w: 0
+      friendly_name: Reolink
+      state: 'on'
+  icon: hass:power-plug
+- id: '1605388051976'
+  name: myStrom Welcome ON
+  entities:
+    switch.welcome:
+      current_power_w: 2.5
+      friendly_name: Welcome
+      state: 'on'
+  icon: hass:power-plug
+- id: '1605388084616'
+  name: myStrom Presence ON
+  entities:
+    switch.presence:
+      current_power_w: 0
+      friendly_name: Presence
+      state: 'on'
+  icon: hass:power-plug

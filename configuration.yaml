@@ -7,13 +7,13 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+binary_sensor: !include binary_sensors.yaml
+light: !include lights.yaml
 
 ########### INCLUDES ##### Additional Dir List
 sensor: !include_dir_list sensors/
-binary_sensor: !include_dir_list binary_sensors/
 switch: !include_dir_list switches/
 rest_command: !include_dir_merge_named rest_commands/
-light: !include_dir_list lights/
 
 ########### INCLUDES ##### Additional Explizit YAML
 #sensor: !include include/sensor_hue_battery.yaml
@@ -22,7 +22,7 @@ light: !include_dir_list lights/
 remote:
   - platform: harmony
     name: Harmony Hub
-    host: 192.168.1.162
+    host: !secret ip_harmony
     activity: Film wiedergeben
     delay_secs: 0.6
 
@@ -30,7 +30,7 @@ media_player:
   - platform: nad
     type: Telnet
     port: 23
-    host: 192.168.1.56
+    host: !secret ip_nad
     name: NAD Receiver
     min_volume: -60
     max_volume: -20
@@ -43,14 +43,14 @@ media_player:
       5: 'BluOS'
   - platform: bluesound
     hosts:
-      - host: 192.168.1.56
+      - host: !secret ip_nad
         name: NAD Bluesound
         port: 11000
 
 surepetcare:
   username: !secret surepetcare_login
   password: !secret surepetcare_password
-  feeders: [375323, 556301]
-  flaps: [566075]
-  pets: [171666, 175347]
+  feeders: !secret surepetcare_feeders
+  flaps: !secret surepetcare_flaps
+  pets: !secret surepetcare_pets
 

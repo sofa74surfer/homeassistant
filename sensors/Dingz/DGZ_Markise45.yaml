@@ -1,6 +1,7 @@
 platform: rest
 method: GET
-resource: http://192.168.1.193/api/v1/state
+resource: !secret url_sensor_dingz_markise45
+# http://ip/api/v1/state
 name: Dingz Markise45 State
 value_template: "OK"
 json_attributes:

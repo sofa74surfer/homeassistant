@@ -590,3 +590,129 @@
       friendly_name: Presence
       state: 'on'
   icon: hass:power-plug
+- id: '1616047174677'
+  name: Hue Bad On Ambient
+  entities:
+    light.bad:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 191
+      hs_color:
+      - 23.056
+      - 84.706
+      rgb_color:
+      - 255
+      - 122
+      - 38
+      xy_color:
+      - 0.609
+      - 0.362
+      effect: none
+      friendly_name: Bad
+      supported_features: 63
+      state: 'on'
+  icon: hass:lightbulb
+- id: '1616047217850'
+  name: Hue Bad OFF
+  entities:
+    light.bad:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Bad
+      supported_features: 63
+      state: 'off'
+  icon: hass:lightbulb-off
+- id: '1616047362230'
+  name: Hue Bad On Full White
+  entities:
+    light.bad:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 255
+      hs_color:
+      - 0
+      - 0.392
+      rgb_color:
+      - 255
+      - 254
+      - 254
+      xy_color:
+      - 0.324
+      - 0.329
+      effect: none
+      friendly_name: Bad
+      supported_features: 63
+      state: 'on'
+  icon: hass:lightbulb
+- id: '1616049982785'
+  name: Hue Dusche Off
+  entities:
+    light.dusche:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Dusche
+      supported_features: 63
+      state: 'off'
+  icon: hass:lightbulb-off
+- id: '1616050033709'
+  name: Hue Dusche On Ambient
+  entities:
+    light.dusche:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 64
+      hs_color:
+      - 22.991
+      - 83.922
+      rgb_color:
+      - 255
+      - 123
+      - 40
+      xy_color:
+      - 0.607
+      - 0.363
+      effect: none
+      friendly_name: Dusche
+      supported_features: 63
+      state: 'on'
+  icon: hass:lightbulb
+- id: '1616050072207'
+  name: Hue Dusche On Full
+  entities:
+    light.dusche:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 255
+      hs_color:
+      - 23.38
+      - 83.529
+      rgb_color:
+      - 255
+      - 124
+      - 42
+      xy_color:
+      - 0.605
+      - 0.363
+      effect: none
+      friendly_name: Dusche
+      supported_features: 63
+      state: 'on'
+  icon: hass:lightbulb

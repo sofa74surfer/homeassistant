@@ -1,6 +1,7 @@
 platform: rest
 method: GET
-resource: http://192.168.1.205/report
+resource: !secret url_sensor_mystrom_kuhlschrank
+# http://ip/report
 name: MyStrom Kühlschrank Report
 value_template: "OK"
 json_attributes:

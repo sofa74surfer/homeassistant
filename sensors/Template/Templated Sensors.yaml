@@ -298,6 +298,13 @@ sensors:
     device_class: power
     unit_of_measurement: 'W'
     unique_id: template.sensor_power_hifi_center
+#/config/switches/ECS_Kaffeemaschine.yaml
+  mystrom_kaffeemaschine_power:
+    friendly_name: 'Kaffeemaschine MyStrom W'
+    value_template: '{{ states.sensor.mystrom_kaffeemaschine_report.attributes[''power'']|float|round(1) }}'
+    device_class: power
+    unit_of_measurement: 'W'
+    unique_id: template.sensor_power_kaffeemaschine
 #/config/switches/ECS_Keller.yaml.inactiv
   mystrom_keller_power:
     friendly_name: 'Keller MyStrom W'
@@ -388,7 +395,7 @@ sensors:
 # ####### ########################## #######
 
 # Alles kumuliert
-  mystrom_and_dingz_all_power:
+  mystrom_and_dingz_power_all:
     friendly_name: 'Power All W'
     value_template: "{{ 
       (
@@ -397,6 +404,7 @@ sensors:
       states.sensor.mystrom_entfeuchter_report.attributes['power'] +
       states.sensor.mystrom_geschirrspuler_report.attributes['power'] +
       states.sensor.mystrom_hifi_center_report.attributes['power'] +
+      states.sensor.mystrom_kaffeemaschine_report.attributes['power'] +
       states.sensor.mystrom_keller_report.attributes['power'] +
       states.sensor.mystrom_kuhlschrank_report.attributes['power'] +
       states.sensor.mystrom_luftung_report.attributes['power'] +
@@ -467,6 +475,7 @@ sensors:
     value_template: "{{ 
       (
       states.sensor.mystrom_geschirrspuler_report.attributes['power'] +
+      states.sensor.mystrom_kaffeemaschine_report.attributes['power'] +
       states.sensor.mystrom_kuhlschrank_report.attributes['power'] +
       states.sensor.dingz_kuche_state.attributes['sensors']['power_outputs'][1]['value'] +
       states.sensor.dingz_wohnzimmer_state.attributes['sensors']['power_outputs'][2]['value'] +
@@ -503,27 +512,3 @@ sensors:
     device_class: power
     unit_of_measurement: 'W'
     unique_id: template.sensor_power_keller_all
-
-
-#    "
-#        {{
-#          states('sensor.ecs_keller_nas_w')|float|round(2) +
-#          states('sensor.ecs_keller_entfeuchter_w')|float|round(2) +
-#          states('sensor.ecs_gang_nas_w')|float|round(2) +
-#          states('sensor.ecs_beamer_w')|float|round(2) +
-#          states('sensor.ecs_buro_stephan_w')|float|round(2)
-#        }}
-#    "
-
-# {{ states.sensor.dingz_kuche_state.attributes['sensors']['room_temperature'] }}
-
-#platform: rest
-#method: GET
-#name: Bad °C
-#value_template: '{{ value_json.temperature|float|round(1) }}'
-#resource: http://192.168.1.190/api/v1/temp
-#scan_interval: 60
-#device_class: temperature
-#unit_of_measurement: '°C'
-
-#    icon_template: '{%- if state_attr("binary_sensor.motion_deko_usm_motion", "battery_level") <= 5 %}mdi:battery-outline{%- elif state_attr("binary_sensor.motion_deko_usm_motion", "battery_level") >= 95 %}mdi:battery{% else %}mdi:battery-{{(state_attr("binary_sensor.motion_deko_usm_motion", "battery_level")|float / 10)|round*10}}{%- endif %}'

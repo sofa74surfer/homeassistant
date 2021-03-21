@@ -1,6 +1,7 @@
 platform: rest
 method: GET
-resource: http://192.168.1.209/report
+resource: !secret url_sensor_mystrom_sideboard
+# http://ip/report
 name: MyStrom Sideboard Report
 value_template: "OK"
 json_attributes:

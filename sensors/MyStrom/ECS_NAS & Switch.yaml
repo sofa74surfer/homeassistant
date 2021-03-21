@@ -1,6 +1,7 @@
 platform: rest
 method: GET
-resource: http://192.168.1.201/report
+resource: !secret url_sensor_mystrom_nas_and_switch
+# http://ip/report
 name: MyStrom NAS & Switch Report
 value_template: "OK"
 json_attributes:

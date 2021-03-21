@@ -20,6 +20,7 @@ Automationen
 
 * Licht Szenen in den Morgen und Abendstunden schalten (Licht: Hue)
 * Licht Simulationen (Präsenz: Ubiquity, Licht: Hue)
+* Licht anhand Bewegung, Sonne & Zeit (Motion: Dingz, Licht: Hue)
 * Licht abhängig der Aussentemperatur farblich varieren (Sensor: Netatmo, Licht: Hue)
 * Lüftung aktivieren bei höheren Temperaturen im Server Schrank (Sensor: MyStrom, Schalter: MyStrom)
 * Entfeuchtung aktivieren bei Überschreitung eines Schwellwertes (Sensor: Netatmo, Schalter: MyStrom)

@@ -1,3 +1,3 @@
 platform: mystrom
 name: NAS & Switch
-host: 192.168.1.201
+host: !secret ip_mystrom_nas_and_switch

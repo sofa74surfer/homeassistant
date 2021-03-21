@@ -101,74 +101,51 @@ remote_nad_avpreset3_swisscomtv:
 dingz_markise1_led_red:
   alias: Dingz Markise1 LED Rot
   sequence:
-  - service: rest_command.dingz_markise1_led
+  - service: rest_command.dingz_generic_led
     data:
       action: 'on'
       color: 0;100;3
+      ip: !secret ip_dingz_markise1
   mode: single
   icon: hass:lightbulb
 dingz_markise1_led_violett:
   alias: Dingz Markise1 LED Violett
   sequence:
-  - service: rest_command.dingz_markise1_led
+  - service: rest_command.dingz_generic_led
     data:
       action: 'on'
       color: 300;100;3
+      ip: !secret ip_dingz_markise1
   mode: single
   icon: hass:lightbulb
 dingz_markise1_led_grun:
   alias: Dingz Markise1 LED Grün
   sequence:
-  - service: rest_command.dingz_markise1_led
+  - service: rest_command.dingz_generic_led
     data:
       action: 'on'
       color: 120;100;3
+      ip: !secret ip_dingz_markise1
   mode: single
   icon: hass:lightbulb
 dingz_markise1_led_original:
   alias: Dingz Markise1 LED Original
   sequence:
-  - service: rest_command.dingz_markise1_led
+  - service: rest_command.dingz_generic_led
     data:
       action: 'on'
       color: 180;100;3
+      ip: !secret ip_dingz_markise1
   mode: single
   icon: hass:lightbulb
-dingz_esstisch_dimmer_60:
-  alias: Dingz Katzenbaum Dimmer 60%
+dingz_light_level_generic:
+  alias: Dingz Light Level Generic
   sequence:
-  - service: rest_command.dingz_wohnzimmer_dimmer
+  - service: rest_command.dingz_generic_dimmer
     data:
-      dimmer: 3
-      enum: 'on'
-      value: 60
-  mode: single
-  icon: hass:lightbulb
-dingz_katzenbaum_light_on:
-  alias: Dingz Katzenbaum Light On
-  sequence:
-  - service: rest_command.dingz_wohnzimmer_dimmer_onoff
-    data:
-      dimmer: 3
-      enum: 'on'
-  mode: single
-  icon: hass:lightbulb
-dingz_katzenbaum_light_off:
-  alias: Dingz Katzenbaum Light Off
-  sequence:
-  - service: rest_command.dingz_wohnzimmer_dimmer_onoff
-    data:
-      dimmer: 3
-      enum: 'off'
-  mode: single
-  icon: hass:lightbulb
-dingz_katzenbaum_light_level:
-  alias: Dingz Katzenbaum Light Level
-  sequence:
-  - service: rest_command.dingz_wohnzimmer_dimmer
-    data:
-      dimmer: 3
-      enum: 'on'
+      dimmer: '{{ dimmer }}'
+      enum: '{{ enum }}'
       value: '{{ brightness }}'
+      ip: '{{ ip }}'
   mode: single
   icon: hass:lightbulb

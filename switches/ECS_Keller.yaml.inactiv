@@ -1,3 +1,3 @@
 platform: mystrom
 name: Keller
-host: 192.168.1.208
+host: !secret ip_mystrom_keller

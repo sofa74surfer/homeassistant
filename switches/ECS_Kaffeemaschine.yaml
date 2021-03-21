@@ -1,0 +1,3 @@
+platform: mystrom
+name: Kaffeemaschine
+host: !secret ip_mystrom_kaffeemaschine

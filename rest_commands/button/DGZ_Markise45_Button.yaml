@@ -1,3 +1,0 @@
-  dingz_markise45_button:
-    url: http://192.168.1.193/api/v1/button/{{ button }}/{{ action }}
-    method: POST

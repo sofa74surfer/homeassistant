@@ -1,6 +1,7 @@
 platform: rest
 method: GET
-resource: http://192.168.1.212/report
+resource: !secret url_sensor_mystrom_terrasse
+# http://ip/report
 name: MyStrom Terrasse Report
 value_template: "OK"
 json_attributes:

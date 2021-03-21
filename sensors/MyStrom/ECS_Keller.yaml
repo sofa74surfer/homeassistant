@@ -1,6 +1,7 @@
 platform: rest
 method: GET
-resource: http://192.168.1.208/report
+resource: !secret url_sensor_mystrom_keller
+# http://ip/report
 name: MyStrom Keller Report
 value_template: "OK"
 json_attributes:

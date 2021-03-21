@@ -1,3 +1,0 @@
-  dingz_wohnzimmer_dimmer_onoff:
-    url: http://192.168.1.195/api/v1/dimmer/{{ dimmer }}/{{ enum }}
-    method: POST

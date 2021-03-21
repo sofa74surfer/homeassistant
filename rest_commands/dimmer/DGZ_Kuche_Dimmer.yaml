@@ -1,5 +1,0 @@
-  dingz_kuche_dimmer:
-    url: http://192.168.1.194/api/v1/dimmer/{{ dimmer }}/{{ enum }}
-    method: POST
-    payload: 'value={{ value }}'
-    content_type: 'application/x-www-form-urlencoded; charset=utf-8'

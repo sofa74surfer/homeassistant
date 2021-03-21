@@ -1,6 +1,7 @@
 platform: rest
 method: GET
-resource: http://192.168.1.203/report
+resource: !secret url_sensor_mystrom_waschmaschine
+# http://ip/report
 name: MyStrom Waschmaschine Report
 value_template: "OK"
 json_attributes:

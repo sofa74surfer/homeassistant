@@ -1,8 +1,10 @@
 platform: rest
 method: GET
-resource: http://192.168.1.190/api/v1/state
+resource: !secret url_sensor_dingz_bad
+# http://ip/api/v1/state
 name: Dingz Bad State
 value_template: "OK"
+scan_interval: 5
 json_attributes:
   - "dimmers"
   - "blinds"

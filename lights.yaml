@@ -1,0 +1,95 @@
+  - platform: template
+    lights:
+
+    # ####### ############################### #######
+    # ####### Dingz Light Template Wohnzimmer #######
+    # ####### ############################### #######
+
+    # ####### Dingz Katzenbaum Light
+      dingz_katzenbaum_light:
+        unique_id: dingz_katzenbaum_light
+        friendly_name: "Dingz Katzenbaum"
+        level_template: "{{ (states.sensor.dingz_wohnzimmer_state.attributes
+    ['dimmers'][3]['output']*255/100)|int }}"
+        value_template: "{{ states.sensor.dingz_wohnzimmer_state.attributes['dimmers'][3]['on']}}"
+        turn_on:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_katzenbaum_light
+          data:
+            brightness: "40"
+            enum: "on"
+            dimmer: 3
+            ip: !secret ip_dingz_wohnzimmer
+        turn_off:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_katzenbaum_light
+          data:
+            brightness: "0"
+            enum: "on"
+            dimmer: 3
+            ip: !secret ip_dingz_wohnzimmer
+        set_level:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_katzenbaum_light
+          data:
+            brightness: "{{ (brightness * 100 / 255) | int }}"
+            enum: "on"
+            dimmer: 3
+            ip: !secret ip_dingz_wohnzimmer
+
+    # ####### ########################### #######
+    # ####### Dingz Light Template Dusche #######
+    # ####### ########################### #######
+
+    # ####### Dingz Dusche Decke Light
+      dingz_dusche_decke_light:
+        unique_id: dingz_dusche_decke_light
+        friendly_name: "Dingz Dusche Decke"
+        level_template: "{{ (states.sensor.dingz_dusche_state.attributes
+    ['dimmers'][2]['output']*255/100)|int }}"
+        value_template: "{{ states.sensor.dingz_dusche_state.attributes['dimmers'][2]['on']}}"
+        turn_on:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_dusche_decke_light
+          data:
+            brightness: "40"
+            enum: "on"
+            dimmer: 2
+            ip: !secret ip_dingz_dusche
+        turn_off:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_dusche_decke_light
+          data:
+            brightness: "0"
+            enum: "off"
+            dimmer: 2
+            ip: !secret ip_dingz_dusche
+        set_level:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_dusche_decke_light
+          data:
+            brightness: "{{ (brightness * 100 / 255) | int }}"
+            enum: "on"
+            dimmer: 2
+            ip: !secret ip_dingz_dusche
+    # ####### Dingz Dusche Spiegel Light
+      dingz_dusche_spiegel_light:
+        unique_id: dingz_dusche_spiegel_light
+        friendly_name: "Dingz Dusche Spiegel"
+        value_template: "{{ states.sensor.dingz_dusche_state.attributes['dimmers'][3]['on']}}"
+        turn_on:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_dusche_spiegel_light
+          data:
+            brightness: "100"
+            enum: "on"
+            dimmer: 3
+            ip: !secret ip_dingz_dusche
+        turn_off:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_dusche_spiegel_light
+          data:
+            brightness: "0"
+            enum: "off"
+            dimmer: 3
+            ip: !secret ip_dingz_dusche

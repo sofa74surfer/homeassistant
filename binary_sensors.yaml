@@ -1,0 +1,20 @@
+  - platform: template
+    sensors:
+
+# ####### ################# #######
+# ####### Presence Sensoren #######
+# ####### ################# #######
+
+# ####### Dingz Bad Presence
+      dingz_bad_state_person_present:
+        friendly_name: "Dingz Bad Presence"
+        value_template: "{{ states.sensor.dingz_bad_state.attributes['sensors']['person_present']|float > 0 }}"
+        device_class: motion
+        unique_id: dingz_bad_state_person_present
+
+# ####### Dingz Dusche Presence
+      dingz_dusche_state_person_present:
+        friendly_name: "Dingz Dusche Presence"
+        value_template: "{{ states.sensor.dingz_dusche_state.attributes['sensors']['person_present']|float > 0 }}"
+        device_class: motion
+        unique_id: dingz_dusche_state_person_present

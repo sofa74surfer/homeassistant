@@ -1,3 +1,0 @@
-  dingz_wohnzimmer_button:
-    url: http://192.168.1.195/api/v1/button/{{ button }}/{{ action }}
-    method: POST

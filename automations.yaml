@@ -106,7 +106,7 @@
     state: not_home
   action:
   - type: turn_off
-    device_id: b7c070812bc10ef90d842a1118d0e2fd
+    device_id: dc41bd82f147d78bd4d07285cf947d9d
     entity_id: light.gang
     domain: light
   mode: single
@@ -121,7 +121,7 @@
     entity_id: group.awesome_people
     state: not_home
   action:
-  - delay: '{{ ''00:%02i:00''%range(01,30) | random }}'
+  - wait_template: '{{ ''00:%02i:00''%range(01,30) | random }}'
   - scene: scene.hue_schlafzimmer_on_ambient
   mode: single
 - id: '1605131875883'
@@ -135,17 +135,17 @@
     entity_id: group.awesome_people
     state: not_home
   action:
-  - delay: '{{ ''00:%02i:00''%range(01,20) | random }}'
+  - wait_template: '{{ ''00:%02i:00''%range(01,20) | random }}'
   - type: turn_off
-    device_id: 8ed0457539dbddc51a48b7131d9052f4
+    device_id: 0dd0ce477d4f719fd4fc8341b067bc85
     entity_id: light.schlafzimmer
     domain: light
   - type: turn_off
-    device_id: 102868ddbbb70ae31bf29015163b2377
+    device_id: 44c495113e18e26db13a2f4bdc5442a4
     entity_id: light.schlafzimmer_pia
     domain: light
   - type: turn_off
-    device_id: d6346b6b5496edaf277b7cc83658cc75
+    device_id: bcf481a9e79122849c323a61b91105d9
     entity_id: light.schlafzimmer_stephan
     domain: light
   mode: single
@@ -171,34 +171,7 @@
     offset: 01:00:00
   condition: []
   action:
-  - type: turn_off
-    device_id: bc4e2b8027de165a9d7628e411e489e0
-    entity_id: light.fernseher_links
-    domain: light
-  - type: turn_off
-    device_id: 0dd875b3b51061ea9b2dd05653705a41
-    entity_id: light.fernseher_rechts
-    domain: light
-  - type: turn_off
-    device_id: 235f47d131e98d3da54e4e67ce4fe675
-    entity_id: light.sideboard
-    domain: light
-  - type: turn_off
-    device_id: 330cb50f26f13ab7fd05f3444e6e2983
-    entity_id: light.globus
-    domain: light
-  - type: turn_off
-    device_id: e85f8e90861b6024fd80e4091cb4b1bd
-    entity_id: light.ruiz1
-    domain: light
-  - type: turn_off
-    device_id: 3abea10233b8aa502879b51d3698e084
-    entity_id: light.ruiz2
-    domain: light
-  - type: turn_off
-    device_id: 580bf8973b1b1fd2e67d9c06311d17d3
-    entity_id: light.katzenbaum
-    domain: light
+  - scene: scene.hue_wohnzimmer_off
   mode: single
 - id: '1605247431207'
   alias: Wohnzimmer Szene  ON Sunset
@@ -221,12 +194,12 @@
     entity_id: group.awesome_people
     state: not_home
   action:
-  - delay: '{{ ''00:%02i:00''%range(01,30) | random }}'
+  - wait_template: '{{ ''00:%02i:00''%range(01,30) | random }}'
   - scene: scene.hue_wohnzimmer_off
   - scene: scene.hue_buro_off
   - scene: scene.hue_schlafzimmer_off
   - type: turn_off
-    device_id: b7c070812bc10ef90d842a1118d0e2fd
+    device_id: dc41bd82f147d78bd4d07285cf947d9d
     entity_id: light.gang
     domain: light
   mode: single
@@ -256,16 +229,24 @@
   action:
   - repeat:
       while:
-      - condition: sun
-        after: sunset
-        before: sunrise
-      - condition: time
-        before: 01:00:00
-        after: '16:00:00'
+      - condition: or
+        conditions:
+        - condition: and
+          conditions:
+          - condition: sun
+            after: sunset
+          - condition: time
+            after: '16:00:00'
+        - condition: and
+          conditions:
+          - condition: sun
+            before: sunrise
+          - condition: time
+            before: 01:00:00
       sequence:
-      - delay: '{{ ''00:%02i:00''%range(01,10) | random }}'
+      - wait_template: '{{ ''00:%02i:00''%range(01,10) | random }}'
       - scene: scene.hue_buro_on_ambient
-      - delay: '{{ ''00:%02i:00''%range(20,30) | random }}'
+      - wait_template: '{{ ''00:%02i:00''%range(20,30) | random }}'
       - scene: scene.hue_buro_off
   mode: single
 - id: '1605250019017'
@@ -280,7 +261,7 @@
     state: home
   action:
   - type: turn_on
-    device_id: b7c070812bc10ef90d842a1118d0e2fd
+    device_id: dc41bd82f147d78bd4d07285cf947d9d
     entity_id: light.gang
     domain: light
     brightness_pct: 10
@@ -312,8 +293,8 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.netatmo_netatmokeller_humidity
-    above: 59
+    entity_id: sensor.netatmo_steffs_home_keller_humidity
+    above: '59'
   condition: []
   action:
   - scene: scene.mystrom_entfeuchter_on
@@ -323,24 +304,11 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.netatmo_netatmokeller_humidity
-    below: 56
+    entity_id: sensor.netatmo_steffs_home_keller_humidity
+    below: '56'
   condition: []
   action:
   - scene: scene.mystrom_entfeuchter_off
-  mode: single
-- id: '1607766697349'
-  alias: Test Automatisierung mit Webhook
-  description: ''
-  trigger:
-  - platform: webhook
-    webhook_id: testid
-  condition: []
-  action:
-  - type: turn_on
-    device_id: d6a46dfbf137bb9972b913dab48c3a03
-    entity_id: light.buro_decke_stephan
-    domain: light
   mode: single
 - id: '1613892335068'
   alias: Wohnung Kameras ON (P,W,R) (home -> not_home)
@@ -443,4 +411,79 @@
   condition: []
   action:
   - scene: scene.mystrom_reolink_off
+  mode: single
+- id: '1616048845700'
+  alias: Bad Hue Light on Motion Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: bad_light_on_motion
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: sun
+          after: sunrise
+        - condition: sun
+          before: sunset
+      sequence:
+      - scene: scene.hue_bad_on_full_white
+    default:
+    - scene: scene.hue_bad_on_ambient
+  - delay:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+  - scene: scene.hue_bad_off
+  mode: restart
+- id: '1616050267437'
+  alias: Dusche Hue Light on Motion Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: dusche_light_on_motion
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: sun
+        after: sunset
+      sequence:
+      - scene: scene.hue_dusche_on_full
+    - conditions:
+      - condition: sun
+        before: sunrise
+      sequence:
+      - scene: scene.hue_dusche_on_ambient
+    default: []
+  - delay:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+  - scene: scene.hue_dusche_off
+  mode: restart
+- id: '1616071228508'
+  alias: Dusche Licht OFF (no motion)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_deko_usm_motion
+    to: '"off"'
+    for: '"00:10:00"'
+    from: '"on"'
+  condition: []
+  action:
+  - scene: scene.hue_dusche_off
+  - service: script.dingz_dusche_decke_light_level
+    entity_id: light.dingz_dusche_decke_light
+    data:
+      brightness: '0'
+  - service: script.dingz_dusche_spiegel_light_level
+    entity_id: light.dingz_dusche_spiegel_light
+    data:
+      brightness: '0'
   mode: single

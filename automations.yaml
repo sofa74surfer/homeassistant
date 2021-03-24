@@ -1,115 +1,3 @@
-- id: '1605079406491'
-  alias: Gang Hue Stufe 001, Violett, -99 to -6, home
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
-    above: -100
-    below: '-5'
-    for: 0:10:00
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.hue_gang_stufe_001_violett_minus_6_und_kalter
-  mode: single
-- id: '1605082936921'
-  alias: Gang Hue Stufe 002, Hellblau, -5 to +2, home
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
-    above: -6
-    below: '3'
-    for: 0:10:00
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.hue_gang_stufe_002_hellblau_minus_5_bis_2_grad
-  mode: single
-- id: '1605082987124'
-  alias: Gang Hue Stufe 003, Grün, +3 to +10, home
-  description: ''
-  trigger:
-  - platform: numeric_state
-    above: '2'
-    below: '11'
-    for: 0:10:00
-    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.hue_gang_stufe_003_grun_3_bis_10_grad
-  mode: single
-- id: '1605083027369'
-  alias: Gang Hue Stufe 004, Gelb, +11 to +20, home
-  description: ''
-  trigger:
-  - platform: numeric_state
-    above: '10'
-    below: '21'
-    for: 0:10:0
-    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.hue_gang_stufe_004_gelb_11_bis_20_grad
-  mode: single
-- id: '1605083101843'
-  alias: Gang Hue Stufe 005, Orange, +21 to +30, home
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
-    above: 20
-    below: '31'
-    for: 0:10:00
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.hue_gang_stufe_005_orange_21_bis_30_grad
-  mode: single
-- id: '1605083135467'
-  alias: Gang Hue Stufe 006, Rot, +31 to +99, home
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
-    above: 30
-    below: '100'
-    for: 0:10:00
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.hue_gang_stufe_006_rot_31_grad_und_warmer
-  mode: single
-- id: '1605125587628'
-  alias: Gang Hue OFF, not_home
-  description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: '10'
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: not_home
-  action:
-  - type: turn_off
-    device_id: dc41bd82f147d78bd4d07285cf947d9d
-    entity_id: light.gang
-    domain: light
-  mode: single
 - id: '1605130829896'
   alias: Schlafzimmer Szene  ON 22:00, random 1-30, not_home
   description: ''
@@ -231,84 +119,19 @@
       while:
       - condition: or
         conditions:
-        - condition: and
-          conditions:
-          - condition: sun
-            after: sunset
-          - condition: time
-            after: '16:00:00'
-        - condition: and
-          conditions:
-          - condition: sun
-            before: sunrise
-          - condition: time
-            before: 01:00:00
+        - condition: sun
+          after: sunset
+        - condition: time
+          before: 01:00:00
       sequence:
-      - wait_template: '{{ ''00:%02i:00''%range(01,10) | random }}'
+      - wait_template: 'false'
+        timeout: '{{ ''00:%02i:00''%range(01,10) | random }}'
+        continue_on_timeout: true
       - scene: scene.hue_buro_on_ambient
-      - wait_template: '{{ ''00:%02i:00''%range(20,30) | random }}'
+      - wait_template: 'false'
+        timeout: '{{ ''00:%02i:00''%range(10,20) | random }}'
+        continue_on_timeout: true
       - scene: scene.hue_buro_off
-  mode: single
-- id: '1605250019017'
-  alias: Gang Hue  ON, every 10 Minutes, home
-  description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: /10
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - type: turn_on
-    device_id: dc41bd82f147d78bd4d07285cf947d9d
-    entity_id: light.gang
-    domain: light
-    brightness_pct: 10
-  mode: single
-- id: '1605384993305'
-  alias: Gang Schrank Lüfter ON
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.mystrom_schrank_lufter_temperature
-    above: '32'
-  condition: []
-  action:
-  - scene: scene.schrank_lufter_on
-  mode: single
-- id: '1605385322737'
-  alias: Gang Schrank Lüfter OFF
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.mystrom_schrank_lufter_temperature
-    below: '28'
-  condition: []
-  action:
-  - scene: scene.mystrom_schrank_lufter_off
-  mode: single
-- id: '1605386438213'
-  alias: Keller Entfeuchter ON
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.netatmo_steffs_home_keller_humidity
-    above: '59'
-  condition: []
-  action:
-  - scene: scene.mystrom_entfeuchter_on
-  mode: single
-- id: '1605386467471'
-  alias: Keller Entfeuchter OFF
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.netatmo_steffs_home_keller_humidity
-    below: '56'
-  condition: []
-  action:
-  - scene: scene.mystrom_entfeuchter_off
   mode: single
 - id: '1613892335068'
   alias: Wohnung Kameras ON (P,W,R) (home -> not_home)
@@ -472,18 +295,157 @@
   trigger:
   - platform: state
     entity_id: binary_sensor.motion_deko_usm_motion
-    to: '"off"'
-    for: '"00:10:00"'
-    from: '"on"'
+    to: 'off'
+    for: 00:10:00
   condition: []
   action:
-  - scene: scene.hue_dusche_off
-  - service: script.dingz_dusche_decke_light_level
-    entity_id: light.dingz_dusche_decke_light
+  - service: script.dingz_light_level_generic
     data:
-      brightness: '0'
-  - service: script.dingz_dusche_spiegel_light_level
-    entity_id: light.dingz_dusche_spiegel_light
+      dimmer: 2
+      enum: 'off'
+      brightness: 0
+      ip: 192.168.1.196
+  - service: script.dingz_light_level_generic
     data:
-      brightness: '0'
+      dimmer: 3
+      enum: 'off'
+      brightness: 0
+      ip: 192.168.1.196
+  mode: single
+- id: '1616393998146'
+  alias: Gang Hue Stufe 001 bis 006, abhängig Temperatur, @home
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: '*'
+    minutes: /5
+    seconds: '0'
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: group.awesome_people
+        state: home
+      sequence:
+      - choose:
+        - conditions:
+          - condition: numeric_state
+            entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+            below: '-5'
+          sequence:
+          - scene: scene.hue_gang_stufe_001_violett_minus_6_und_kalter
+        - conditions:
+          - condition: numeric_state
+            entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+            below: '3'
+          sequence:
+          - scene: scene.hue_gang_stufe_002_hellblau_minus_5_bis_2_grad
+        - conditions:
+          - condition: numeric_state
+            entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+            below: '11'
+          sequence:
+          - scene: scene.hue_gang_stufe_003_grun_3_bis_10_grad
+        - conditions:
+          - condition: numeric_state
+            entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+            below: '21'
+          sequence:
+          - scene: scene.hue_gang_stufe_004_gelb_11_bis_20_grad
+        - conditions:
+          - condition: numeric_state
+            entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
+            below: '31'
+          sequence:
+          - scene: scene.hue_gang_stufe_005_orange_21_bis_30_grad
+        default:
+        - scene: scene.hue_gang_stufe_006_rot_31_grad_und_warmer
+    default:
+    - type: turn_off
+      device_id: dc41bd82f147d78bd4d07285cf947d9d
+      entity_id: light.gang
+      domain: light
+  mode: single
+- id: '1616394722797'
+  alias: Gang Schrank Lüfter ON-OFF, abhängig Temperatur
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: /1
+    minutes: '0'
+    seconds: '0'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.mystrom_schrank_lufter_temperature
+        above: '32'
+      sequence:
+      - scene: scene.mystrom_schrank_lufter_on
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.mystrom_schrank_lufter_temperature
+        below: '28'
+      sequence:
+      - scene: scene.mystrom_schrank_lufter_off
+    default: []
+  mode: single
+- id: '1616394930906'
+  alias: Keller Entfeuchter ON-OFF, abhängig Luftfeuchtigkeit
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: /1
+    minutes: '0'
+    seconds: '0'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.netatmo_steffs_home_keller_humidity
+        above: '59'
+      sequence:
+      - scene: scene.mystrom_entfeuchter_on
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.netatmo_steffs_home_keller_humidity
+        below: '56'
+      sequence:
+      - scene: scene.mystrom_entfeuchter_off
+    default: []
+  mode: single
+- id: '1616563856843'
+  alias: Test Simulation
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:50:00
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: home
+  action:
+  - repeat:
+      while:
+      - condition: and
+        conditions:
+        - condition: sun
+          after: sunrise
+        - condition: sun
+          before: sunset
+      sequence:
+      - wait_template: 'false'
+        timeout: '{{ ''00:%02i:00''%range(01,03) | random }}'
+        continue_on_timeout: true
+      - scene: scene.hue_wohnzimmer_on_ambient
+      - wait_template: 'false'
+        continue_on_timeout: true
+        timeout: '{{ ''00:%02i:00''%range(01,03) | random }}'
+      - scene: scene.hue_wohnzimmer_off
   mode: single

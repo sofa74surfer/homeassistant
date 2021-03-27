@@ -9,9 +9,8 @@
       dingz_katzenbaum_light:
         unique_id: dingz_katzenbaum_light
         friendly_name: "Dingz Katzenbaum"
-        level_template: "{{ (states.sensor.dingz_wohnzimmer_state.attributes
-    ['dimmers'][3]['output']*255/100)|int }}"
-        value_template: "{{ states.sensor.dingz_wohnzimmer_state.attributes['dimmers'][3]['on']}}"
+        level_template: "{{ (state_attr('sensor.dingz_wohnzimmer_state', 'dimmers')[3]['output']*255/100)|int }}"
+        value_template: "{{ state_attr('sensor.dingz_wohnzimmer_state', 'dimmers')[3]['on']}}"
         turn_on:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_katzenbaum_light
@@ -20,14 +19,16 @@
             enum: "on"
             dimmer: 3
             ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
         turn_off:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_katzenbaum_light
           data:
             brightness: "0"
-            enum: "on"
+            enum: "off"
             dimmer: 3
             ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
         set_level:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_katzenbaum_light
@@ -36,14 +37,14 @@
             enum: "on"
             dimmer: 3
             ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
 
     # ####### Dingz Esstisch Light
       dingz_esstisch_light:
         unique_id: dingz_esstisch_light
         friendly_name: "Dingz Esstisch"
-        level_template: "{{ (states.sensor.dingz_wohnzimmer_state.attributes
-    ['dimmers'][2]['output']*255/100)|int }}"
-        value_template: "{{ states.sensor.dingz_wohnzimmer_state.attributes['dimmers'][2]['on']}}"
+        level_template: "{{ (state_attr('sensor.dingz_wohnzimmer_state', 'dimmers')[2]['output']*255/100)|int }}"
+        value_template: "{{ state_attr('sensor.dingz_wohnzimmer_state', 'dimmers')[2]['on']}}"
         turn_on:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_esstisch_light
@@ -52,14 +53,16 @@
             enum: "on"
             dimmer: 2
             ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
         turn_off:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_esstisch_light
           data:
             brightness: "0"
-            enum: "on"
+            enum: "off"
             dimmer: 2
             ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
         set_level:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_esstisch_light
@@ -68,6 +71,7 @@
             enum: "on"
             dimmer: 2
             ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
 
     # ####### ########################## #######
     # ####### Dingz Light Template Küche #######
@@ -77,9 +81,8 @@
       dingz_kuche_schrank_light:
         unique_id: dingz_kuche_schrank_light
         friendly_name: "Dingz Küche Schrank"
-        level_template: "{{ (states.sensor.dingz_wohnzimmer_state.attributes
-    ['dimmers'][1]['output']*255/100)|int }}"
-        value_template: "{{ states.sensor.dingz_wohnzimmer_state.attributes['dimmers'][1]['on']}}"
+        level_template: "{{ (state_attr('sensor.dingz_wohnzimmer_state', 'dimmers')[1]['output']*255/100)|int }}"
+        value_template: "{{ state_attr('sensor.dingz_wohnzimmer_state', 'dimmers')[1]['on']}}"
         turn_on:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_kuche_schrank_light
@@ -88,14 +91,16 @@
             enum: "on"
             dimmer: 1
             ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
         turn_off:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_kuche_schrank_light
           data:
             brightness: "0"
-            enum: "on"
+            enum: "off"
             dimmer: 1
             ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
         set_level:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_kuche_schrank_light
@@ -104,14 +109,14 @@
             enum: "on"
             dimmer: 1
             ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
 
     # ####### Dingz Küche Decke Innen Light
       dingz_kuche_decke_innen_light:
         unique_id: dingz_kuche_decke_innen_light
         friendly_name: "Dingz Küche Decke Innen"
-        level_template: "{{ (states.sensor.dingz_kuche_state.attributes
-    ['dimmers'][1]['output']*255/100)|int }}"
-        value_template: "{{ states.sensor.dingz_kuche_state.attributes['dimmers'][1]['on']}}"
+        level_template: "{{ (state_attr('sensor.dingz_kuche_state', 'dimmers')[1]['output']*255/100)|int }}"
+        value_template: "{{ state_attr('sensor.dingz_kuche_state', 'dimmers')[1]['on']}}"
         turn_on:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_kuche_decke_innen_light
@@ -120,14 +125,16 @@
             enum: "on"
             dimmer: 1
             ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
         turn_off:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_kuche_decke_innen_light
           data:
             brightness: "0"
-            enum: "on"
+            enum: "off"
             dimmer: 1
             ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
         set_level:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_kuche_decke_innen_light
@@ -136,14 +143,14 @@
             enum: "on"
             dimmer: 1
             ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
 
     # ####### Dingz Küche Decke Aussen Light
       dingz_kuche_decke_aussen_light:
         unique_id: dingz_kuche_decke_aussen_light
         friendly_name: "Dingz Küche Decke Aussen"
-        level_template: "{{ (states.sensor.dingz_kuche_state.attributes
-    ['dimmers'][2]['output']*255/100)|int }}"
-        value_template: "{{ states.sensor.dingz_kuche_state.attributes['dimmers'][2]['on']}}"
+        level_template: "{{ (state_attr('sensor.dingz_kuche_state', 'dimmers')[2]['output']*255/100)|int }}"
+        value_template: "{{ state_attr('sensor.dingz_kuche_state', 'dimmers')[2]['on']}}"
         turn_on:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_kuche_decke_aussen_light
@@ -152,14 +159,16 @@
             enum: "on"
             dimmer: 2
             ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
         turn_off:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_kuche_decke_aussen_light
           data:
             brightness: "0"
-            enum: "on"
+            enum: "off"
             dimmer: 2
             ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
         set_level:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_kuche_decke_aussen_light
@@ -168,6 +177,7 @@
             enum: "on"
             dimmer: 2
             ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
 
     # ####### ############################# #######
     # ####### Dingz Light Template Terrasse #######
@@ -177,7 +187,7 @@
       dingz_terrasse_light:
         unique_id: dingz_terrasse_light
         friendly_name: "Dingz Terrasse"
-        value_template: "{{ states.sensor.dingz_kuche_state.attributes['dimmers'][3]['on']}}"
+        value_template: "{{ state_attr('sensor.dingz_kuche_state', 'dimmers')[3]['on']}}"
         turn_on:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_terrasse_light
@@ -186,14 +196,16 @@
             enum: "on"
             dimmer: 3
             ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
         turn_off:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_terrasse_light
           data:
             brightness: "0"
-            enum: "on"
+            enum: "off"
             dimmer: 3
             ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
 
     # ####### ######################## #######
     # ####### Dingz Light Template Bad #######
@@ -203,9 +215,8 @@
       dingz_bad_decke_light:
         unique_id: dingz_bad_decke_light
         friendly_name: "Dingz Bad Decke"
-        level_template: "{{ (states.sensor.dingz_bad_state.attributes
-    ['dimmers'][0]['output']*255/100)|int }}"
-        value_template: "{{ states.sensor.dingz_bad_state.attributes['dimmers'][0]['on']}}"
+        level_template: "{{ (state_attr('sensor.dingz_bad_state', 'dimmers')[0]['output']*255/100)|int }}"
+        value_template: "{{ state_attr('sensor.dingz_bad_state', 'dimmers')[0]['on']}}"
         turn_on:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_bad_decke_light
@@ -214,6 +225,7 @@
             enum: "on"
             dimmer: 0
             ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
         turn_off:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_bad_decke_light
@@ -222,6 +234,7 @@
             enum: "off"
             dimmer: 0
             ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
         set_level:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_bad_decke_light
@@ -230,28 +243,29 @@
             enum: "on"
             dimmer: 0
             ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
 
     # ####### Dingz Bad Spiegel Light
       dingz_bad_spiegel_light:
         unique_id: dingz_bad_spiegel_light
         friendly_name: "Dingz Bad Spiegel"
-        value_template: "{{ states.sensor.dingz_bad_state.attributes['dimmers'][1]['on']}}"
+        value_template: "{{ state_attr('sensor.dingz_bad_state', 'dimmers')[1]['on']}}"
         turn_on:
-          service: script.dingz_light_level_generic
+          service: script.dingz_light_level_generic_onoff
           entity_id: light.dingz_bad_spiegel_light
           data:
-            brightness: "100"
             enum: "on"
             dimmer: 1
             ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
         turn_off:
-          service: script.dingz_light_level_generic
+          service: script.dingz_light_level_generic_onoff
           entity_id: light.dingz_bad_spiegel_light
           data:
-            brightness: "0"
             enum: "off"
             dimmer: 1
             ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
 
     # ####### ########################### #######
     # ####### Dingz Light Template Dusche #######
@@ -261,9 +275,8 @@
       dingz_dusche_decke_light:
         unique_id: dingz_dusche_decke_light
         friendly_name: "Dingz Dusche Decke"
-        level_template: "{{ (states.sensor.dingz_dusche_state.attributes
-    ['dimmers'][2]['output']*255/100)|int }}"
-        value_template: "{{ states.sensor.dingz_dusche_state.attributes['dimmers'][2]['on']}}"
+        level_template: "{{ (state_attr('sensor.dingz_dusche_state', 'dimmers')[2]['output']*255/100)|int }}"
+        value_template: "{{ state_attr('sensor.dingz_dusche_state', 'dimmers')[2]['on']}}"
         turn_on:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_dusche_decke_light
@@ -272,6 +285,7 @@
             enum: "on"
             dimmer: 2
             ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
         turn_off:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_dusche_decke_light
@@ -280,6 +294,7 @@
             enum: "off"
             dimmer: 2
             ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
         set_level:
           service: script.dingz_light_level_generic
           entity_id: light.dingz_dusche_decke_light
@@ -288,25 +303,72 @@
             enum: "on"
             dimmer: 2
             ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
 
     # ####### Dingz Dusche Spiegel Light
       dingz_dusche_spiegel_light:
         unique_id: dingz_dusche_spiegel_light
         friendly_name: "Dingz Dusche Spiegel"
-        value_template: "{{ states.sensor.dingz_dusche_state.attributes['dimmers'][3]['on']}}"
+        value_template: "{{ state_attr('sensor.dingz_dusche_state', 'dimmers')[3]['on']}}"
         turn_on:
-          service: script.dingz_light_level_generic
+          service: script.dingz_light_level_generic_onoff
           entity_id: light.dingz_dusche_spiegel_light
           data:
-            brightness: "100"
             enum: "on"
             dimmer: 3
             ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
         turn_off:
-          service: script.dingz_light_level_generic
+          service: script.dingz_light_level_generic_onoff
           entity_id: light.dingz_dusche_spiegel_light
           data:
-            brightness: "0"
             enum: "off"
             dimmer: 3
             ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
+
+    # ####### ############################## #######
+    # ####### Dingz Light Template Dingz LED #######
+    # ####### ############################## #######
+
+    # ####### Dingz Markise1 LED
+      dingz_markise1_led:
+        unique_id: dingz_markise1_led
+        friendly_name: "Dingz Markise1 LED"
+        level_template: "{{ ((state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+        value_template: "{{ state_attr('sensor.dingz_markise1_state', 'led')['on'] }}"
+        color_template: "({{ state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[0] | int }}, {{ state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[1] | int }})"
+        turn_on:
+          service: script.dingz_led_level_generic_onoff
+          entity_id: led.dingz_markise1_led
+          data:
+            action: "on"
+            ip: !secret ip_dingz_markise1
+            force_entity: sensor.dingz_markise1_state
+        turn_off:
+          service: script.dingz_led_level_generic_onoff
+          entity_id: led.dingz_markise1_led
+          data:
+            action: "off"
+            ip: !secret ip_dingz_markise1
+            force_entity: sensor.dingz_markise1_state
+        set_level:
+          service: script.dingz_led_level_generic
+          entity_id: led.dingz_markise1_led
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_markise1
+            force_entity: sensor.dingz_markise1_state
+        set_color:
+          service: script.dingz_led_level_generic
+          entity_id: led.dingz_markise1_led
+          data:
+            action: "on"
+            colh: "{{ h }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_markise1
+            force_entity: sensor.dingz_markise1_state

@@ -104,8 +104,10 @@ dingz_markise1_led_red:
   - service: rest_command.dingz_generic_led
     data:
       action: 'on'
-      color: 0;100;3
-      ip: !secret ip_dingz_markise1
+      colh: '0'
+      cols: '100'
+      colv: '3'
+      ip: 192.168.1.191
   mode: single
   icon: hass:lightbulb
 dingz_markise1_led_violett:
@@ -114,8 +116,10 @@ dingz_markise1_led_violett:
   - service: rest_command.dingz_generic_led
     data:
       action: 'on'
-      color: 300;100;3
-      ip: !secret ip_dingz_markise1
+      colh: '300'
+      cols: '100'
+      colv: '3'
+      ip: 192.168.1.191
   mode: single
   icon: hass:lightbulb
 dingz_markise1_led_grun:
@@ -124,8 +128,10 @@ dingz_markise1_led_grun:
   - service: rest_command.dingz_generic_led
     data:
       action: 'on'
-      color: 120;100;3
-      ip: !secret ip_dingz_markise1
+      colh: '120'
+      cols: '100'
+      colv: '3'
+      ip: 192.168.1.191
   mode: single
   icon: hass:lightbulb
 dingz_markise1_led_original:
@@ -134,8 +140,50 @@ dingz_markise1_led_original:
   - service: rest_command.dingz_generic_led
     data:
       action: 'on'
-      color: 180;100;3
-      ip: !secret ip_dingz_markise1
+      colh: '180'
+      cols: '100'
+      colv: '3'
+      ip: 192.168.1.191
+  mode: single
+  icon: hass:lightbulb
+dingz_led_level_generic_onoff:
+  alias: Dingz LED Level Generic onoff
+  sequence:
+  - service: rest_command.dingz_generic_led_onoff
+    data:
+      action: '{{ action }}'
+      ip: '{{ ip }}'
+  - service: homeassistant.update_entity
+    target:
+      entity_id: '{{ force_entity }}'
+  mode: single
+  icon: hass:lightbulb
+dingz_led_level_generic:
+  alias: Dingz LED Level Generic
+  sequence:
+  - service: rest_command.dingz_generic_led
+    data:
+      action: '{{ action }}'
+      colh: '{{ colh }}'
+      cols: '{{ cols }}'
+      colv: '{{ colv }}'
+      ip: '{{ ip }}'
+  - service: homeassistant.update_entity
+    target:
+      entity_id: '{{ force_entity }}'
+  mode: single
+  icon: hass:lightbulb
+dingz_light_level_generic_onoff:
+  alias: Dingz Light Level Generic onoff
+  sequence:
+  - service: rest_command.dingz_generic_dimmer_onoff
+    data:
+      dimmer: '{{ dimmer }}'
+      enum: '{{ enum }}'
+      ip: '{{ ip }}'
+  - service: homeassistant.update_entity
+    target:
+      entity_id: '{{ force_entity }}'
   mode: single
   icon: hass:lightbulb
 dingz_light_level_generic:
@@ -147,5 +195,8 @@ dingz_light_level_generic:
       enum: '{{ enum }}'
       value: '{{ brightness }}'
       ip: '{{ ip }}'
+  - service: homeassistant.update_entity
+    target:
+      entity_id: '{{ force_entity }}'
   mode: single
   icon: hass:lightbulb

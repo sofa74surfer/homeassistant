@@ -125,11 +125,11 @@
           before: 01:00:00
       sequence:
       - wait_template: 'false'
-        timeout: '{{ ''00:%02i:00''%range(01,10) | random }}'
+        timeout: '{{ ''00:%02i:00''%range(01,20) | random }}'
         continue_on_timeout: true
       - scene: scene.hue_buro_on_ambient
       - wait_template: 'false'
-        timeout: '{{ ''00:%02i:00''%range(10,20) | random }}'
+        timeout: '{{ ''00:%02i:00''%range(01,20) | random }}'
         continue_on_timeout: true
       - scene: scene.hue_buro_off
   mode: single
@@ -419,33 +419,4 @@
       sequence:
       - scene: scene.mystrom_entfeuchter_off
     default: []
-  mode: single
-- id: '1616563856843'
-  alias: Test Simulation
-  description: ''
-  trigger:
-  - platform: time
-    at: 07:50:00
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - repeat:
-      while:
-      - condition: and
-        conditions:
-        - condition: sun
-          after: sunrise
-        - condition: sun
-          before: sunset
-      sequence:
-      - wait_template: 'false'
-        timeout: '{{ ''00:%02i:00''%range(01,03) | random }}'
-        continue_on_timeout: true
-      - scene: scene.hue_wohnzimmer_on_ambient
-      - wait_template: 'false'
-        continue_on_timeout: true
-        timeout: '{{ ''00:%02i:00''%range(01,03) | random }}'
-      - scene: scene.hue_wohnzimmer_off
   mode: single

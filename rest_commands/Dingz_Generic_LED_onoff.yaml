@@ -1,5 +1,5 @@
-dingz_generic_led:
+dingz_generic_led_onoff:
     url: http://{{ ip }}/api/v1/led/set
     method: POST
-    payload: 'action={{ action }}&color={{ colh }};{{ cols }};{{ colv }}&mode=hsv'
+    payload: 'action={{ action }}'
     content_type: 'application/x-www-form-urlencoded; charset=utf-8'

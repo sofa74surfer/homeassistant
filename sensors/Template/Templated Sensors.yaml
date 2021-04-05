@@ -19,12 +19,26 @@ sensors:
     unique_id: template.sensor_battery_motion_pia_buro
     device_class: battery
     unit_of_measurement: "%"
+# ####### Bad
+  motion_bad_battery_level:
+    friendly_name: "Motion Bad battery level"
+    value_template: "{{state_attr('binary_sensor.motion_bad_motion', 'battery_level')}}"
+    unique_id: template.sensor_battery_motion_bad
+    device_class: battery
+    unit_of_measurement: "%"
+# ####### Dusche
+  motion_dusche_battery_level:
+    friendly_name: "Motion Dusche battery level"
+    value_template: "{{state_attr('binary_sensor.motion_dusche_motion', 'battery_level')}}"
+    unique_id: template.sensor_battery_motion_dusche
+    device_class: battery
+    unit_of_measurement: "%"
 
 # ####### ######################### #######
 # ####### Temperatur Sensoren Dingz #######
 # ####### ######################### #######
 
-# ####### Bad Bad
+# ####### Dingz Bad
   dingz_bad_temperature:
     friendly_name: "Bad Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_bad_state', 'sensors')['room_temperature']|float|round(1) }}"
@@ -80,6 +94,27 @@ sensors:
     device_class: temperature
     unit_of_measurement: "°C"
     unique_id: template.sensor_temperature_markise45
+# ####### Dingz Büro Stephan
+  dingz_buro_stephan_temperature:
+    friendly_name: "Büro Stephan Dingz °C"
+    value_template: "{{ state_attr('sensor.dingz_buro_stephan_state', 'sensors')['room_temperature']|float|round(1) }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_temperature_buro_stephan
+# ####### Dingz Büro Pia
+  dingz_buro_pia_temperature:
+    friendly_name: "Büro Pia Dingz °C"
+    value_template: "{{ state_attr('sensor.dingz_buro_pia_state', 'sensors')['room_temperature']|float|round(1) }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_temperature_buro_pia
+# ####### Dingz Gang
+  dingz_gang_temperature:
+    friendly_name: "Gang Dingz °C"
+    value_template: "{{ state_attr('sensor.dingz_gang_state', 'sensors')['room_temperature']|float|round(1) }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_temperature_gang
 
 # ####### ########################### #######
 # ####### Temperatur Sensoren MyStrom #######
@@ -258,6 +293,47 @@ sensors:
     device_class: power
     unit_of_measurement: "W"
     unique_id: template.sensor_power_wohnzimmer
+#/config/sensors/Dingz/DGZ_Büro_Stephan.yaml
+  dingz_buro_stephan_power:
+    friendly_name: "Büro Stephan Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    unit_of_measurement: "W"
+    unique_id: template.sensor_power_buro_stephan
+#/config/sensors/Dingz/DGZ_Büro_Pia.yaml
+  dingz_buro_pia_power:
+    friendly_name: "Büro Pia Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    unit_of_measurement: "W"
+    unique_id: template.sensor_power_buro_pia
+#/config/sensors/Dingz/DGZ_Gang.yaml
+  dingz_gang_power:
+    friendly_name: "Gang Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    unit_of_measurement: "W"
+    unique_id: template.sensor_power_gang
 
 # ####### ######################## #######
 # ####### Wattage Sensoren MyStrom #######
@@ -420,7 +496,6 @@ sensors:
       state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][0]['value'] +
       state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][1]['value'] +
       state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][2]['value'] +
-      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][3]['value'] +
       state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][1]['value'] +
       state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][2]['value'] +
       state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][3]['value'] +
@@ -445,12 +520,53 @@ sensors:
       state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][3]['value'] +
       state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][1]['value'] +
       state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][2]['value'] +
-      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][3]['value'] 
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][3]['value']
       )|float|round(1)
       }}"
     device_class: power
     unit_of_measurement: "W"
     unique_id: template.sensor_power_all
+
+# Licht kumuliert
+  mystrom_and_dingz_power_light:
+    friendly_name: "Power Light W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1)
+      }}"
+    device_class: power
+    unit_of_measurement: "W"
+    unique_id: template.sensor_power_light
 
 # Wohnzimmer kumuliert
   mystrom_and_dingz_wohnzimmer_power_all:

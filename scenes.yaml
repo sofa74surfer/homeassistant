@@ -1,143 +1,5 @@
-- id: '1605080578863'
-  name: Hue Gang Stufe 001 - Violett - Minus 6 und kälter
-  entities:
-    light.gang:
-      effect_list:
-      - colorloop
-      - random
-      brightness: 15
-      hs_color:
-      - 283.333
-      - 56.471
-      rgb_color:
-      - 214
-      - 110
-      - 255
-      xy_color:
-      - 0.321
-      - 0.174
-      effect: none
-      friendly_name: Gang
-      supported_features: 61
-      state: 'on'
-  icon: hass:led-strip-variant
-- id: '1605080670586'
-  name: Hue Gang Stufe 002 - Hellblau - Minus 5 bis 2 Grad
-  entities:
-    light.gang:
-      effect_list:
-      - colorloop
-      - random
-      brightness: 15
-      hs_color:
-      - 210.629
-      - 56.078
-      rgb_color:
-      - 112
-      - 182
-      - 255
-      xy_color:
-      - 0.193
-      - 0.23
-      effect: none
-      friendly_name: Gang
-      supported_features: 61
-      state: 'on'
-  icon: hass:led-strip-variant
-- id: '1605081590381'
-  name: Hue Gang Stufe 003 - Grün - 3 bis 10 Grad
-  entities:
-    light.gang:
-      effect_list:
-      - colorloop
-      - random
-      brightness: 15
-      hs_color:
-      - 100.706
-      - 100
-      rgb_color:
-      - 81
-      - 255
-      - 0
-      xy_color:
-      - 0.215
-      - 0.711
-      effect: none
-      friendly_name: Gang
-      supported_features: 61
-      state: 'on'
-  icon: hass:led-strip-variant
-- id: '1605081699454'
-  name: Hue Gang Stufe 004 - Gelb - 11 bis 20 Grad
-  entities:
-    light.gang:
-      effect_list:
-      - colorloop
-      - random
-      brightness: 15
-      hs_color:
-      - 60.408
-      - 57.647
-      rgb_color:
-      - 254
-      - 255
-      - 108
-      xy_color:
-      - 0.416
-      - 0.475
-      effect: none
-      friendly_name: Gang
-      supported_features: 61
-      state: 'on'
-  icon: hass:led-strip-variant
-- id: '1605081809961'
-  name: Hue Gang Stufe 005 - Orange - 21 bis 30 Grad
-  entities:
-    light.gang:
-      effect_list:
-      - colorloop
-      - random
-      brightness: 15
-      hs_color:
-      - 32.105
-      - 89.412
-      rgb_color:
-      - 255
-      - 148
-      - 26
-      xy_color:
-      - 0.581
-      - 0.393
-      effect: none
-      friendly_name: Gang
-      supported_features: 61
-      state: 'on'
-  icon: hass:led-strip-variant
-- id: '1605081927948'
-  name: Hue Gang Stufe 006 - Rot - 31 Grad und wärmer
-  entities:
-    light.gang:
-      effect_list:
-      - colorloop
-      - random
-      brightness: 15
-      hs_color:
-      - 359.762
-      - 98.824
-      rgb_color:
-      - 255
-      - 2
-      - 3
-      xy_color:
-      - 0.7
-      - 0.299
-      effect: none
-      friendly_name: Gang
-      supported_features: 61
-      state: 'on'
-  icon: hass:led-strip-variant
 - id: '1605131119496'
-  name: Hue Schlafzimmer On Ambient
+  name: Hue Schlafzimmer ON Ambient
   entities:
     light.schlafzimmer:
       min_mireds: 153
@@ -145,17 +7,8 @@
       effect_list:
       - colorloop
       - random
-      brightness: 97
-      hs_color:
-      - 23.271
-      - 83.922
-      rgb_color:
-      - 255
-      - 123
-      - 40
-      xy_color:
-      - 0.607
-      - 0.363
+      brightness: 9
+      color_temp: 466
       effect: none
       friendly_name: Schlafzimmer
       supported_features: 63
@@ -166,17 +19,8 @@
       effect_list:
       - colorloop
       - random
-      brightness: 1
-      hs_color:
-      - 35.93
-      - 67.451
-      rgb_color:
-      - 255
-      - 185
-      - 82
-      xy_color:
-      - 0.508
-      - 0.413
+      brightness: 8
+      color_temp: 466
       effect: none
       friendly_name: Schlafzimmer Pia
       supported_features: 63
@@ -187,17 +31,8 @@
       effect_list:
       - colorloop
       - random
-      brightness: 1
-      hs_color:
-      - 35.93
-      - 67.451
-      rgb_color:
-      - 255
-      - 185
-      - 82
-      xy_color:
-      - 0.508
-      - 0.413
+      brightness: 8
+      color_temp: 466
       effect: none
       friendly_name: Schlafzimmer Stephan
       supported_features: 63
@@ -510,38 +345,6 @@
       supported_features: 61
       state: 'on'
   icon: hass:lightbulb-group
-- id: '1605385130776'
-  name: myStrom Schrank Lüfter ON
-  entities:
-    switch.schrank_lufter:
-      current_power_w: 0
-      friendly_name: Schrank Lüfter
-      state: 'on'
-  icon: hass:power-plug
-- id: '1605385213597'
-  name: myStrom Schrank Lüfter OFF
-  entities:
-    switch.schrank_lufter:
-      current_power_w: 0
-      friendly_name: Schrank Lüfter
-      state: 'off'
-  icon: hass:power-plug-off
-- id: '1605385635645'
-  name: myStrom Entfeuchter OFF
-  entities:
-    switch.entfeuchter:
-      current_power_w: 0
-      friendly_name: Entfeuchter
-      state: 'off'
-  icon: hass:power-plug-off
-- id: '1605385684764'
-  name: myStrom Entfeuchter ON
-  entities:
-    switch.entfeuchter:
-      current_power_w: 28.6
-      friendly_name: Entfeuchter
-      state: 'on'
-  icon: hass:power-plug
 - id: '1605387923115'
   name: myStrom Reolink OFF
   entities:
@@ -599,22 +402,22 @@
       effect_list:
       - colorloop
       - random
-      brightness: 191
+      brightness: 255
       hs_color:
-      - 23.056
-      - 84.706
+      - 23.38
+      - 83.529
       rgb_color:
       - 255
-      - 122
-      - 38
+      - 124
+      - 42
       xy_color:
-      - 0.609
-      - 0.362
+      - 0.605
+      - 0.363
       effect: none
       friendly_name: Bad
       supported_features: 63
       state: 'on'
-  icon: hass:lightbulb
+  icon: hass:lightbulb-on-outline
 - id: '1616047217850'
   name: Hue Bad OFF
   entities:
@@ -640,19 +443,19 @@
       brightness: 255
       hs_color:
       - 0
-      - 0.392
+      - 0.784
       rgb_color:
       - 255
-      - 254
-      - 254
+      - 253
+      - 253
       xy_color:
-      - 0.324
+      - 0.325
       - 0.329
       effect: none
       friendly_name: Bad
       supported_features: 63
       state: 'on'
-  icon: hass:lightbulb
+  icon: hass:lightbulb-on
 - id: '1616049982785'
   name: Hue Dusche Off
   entities:
@@ -677,20 +480,20 @@
       - random
       brightness: 64
       hs_color:
-      - 22.991
-      - 83.922
+      - 23.143
+      - 82.353
       rgb_color:
       - 255
-      - 123
-      - 40
+      - 126
+      - 44
       xy_color:
-      - 0.607
-      - 0.363
+      - 0.601
+      - 0.364
       effect: none
       friendly_name: Dusche
       supported_features: 63
       state: 'on'
-  icon: hass:lightbulb
+  icon: hass:lightbulb-on-outline
 - id: '1616050072207'
   name: Hue Dusche On Full
   entities:
@@ -702,6 +505,31 @@
       - random
       brightness: 255
       hs_color:
+      - 23.143
+      - 82.353
+      rgb_color:
+      - 255
+      - 126
+      - 44
+      xy_color:
+      - 0.601
+      - 0.364
+      effect: none
+      friendly_name: Dusche
+      supported_features: 63
+      state: 'on'
+  icon: hass:lightbulb-on
+- id: '1616862684767'
+  name: Hue Bad On Night
+  entities:
+    light.bad:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 102
+      hs_color:
       - 23.38
       - 83.529
       rgb_color:
@@ -712,7 +540,75 @@
       - 0.605
       - 0.363
       effect: none
-      friendly_name: Dusche
+      friendly_name: Bad
       supported_features: 63
       state: 'on'
-  icon: hass:lightbulb
+  icon: hass:lightbulb-on-outline
+- id: '1616871056873'
+  name: Dingz Bad OFF
+  entities:
+    light.dingz_bad_spiegel_light:
+      friendly_name: Dingz Bad Spiegel
+      supported_features: 0
+      state: 'off'
+    light.dingz_bad_decke_wc_light:
+      friendly_name: Dingz Bad Decke WC
+      supported_features: 1
+      state: 'off'
+    light.dingz_bad_decke_watu_light:
+      friendly_name: Dingz Bad Decke WaTu
+      supported_features: 1
+      state: 'off'
+  icon: hass:lightbulb-multiple-off
+- id: '1616871110484'
+  name: Dingz Dusche OFF
+  entities:
+    light.dingz_dusche_decke_light:
+      friendly_name: Dingz Dusche Decke
+      supported_features: 1
+      state: 'off'
+    light.dingz_dusche_spiegel_light:
+      friendly_name: Dingz Dusche Spiegel
+      supported_features: 0
+      state: 'off'
+  icon: hass:lightbulb-multiple-off
+- id: '1617125934931'
+  name: Hue Schlafzimmer ON Bright
+  entities:
+    light.schlafzimmer:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 255
+      color_temp: 370
+      effect: none
+      friendly_name: Schlafzimmer
+      supported_features: 63
+      state: 'on'
+    light.schlafzimmer_pia:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 255
+      color_temp: 370
+      effect: none
+      friendly_name: Schlafzimmer Pia
+      supported_features: 63
+      state: 'on'
+    light.schlafzimmer_stephan:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - colorloop
+      - random
+      brightness: 255
+      color_temp: 370
+      effect: none
+      friendly_name: Schlafzimmer Stephan
+      supported_features: 63
+      state: 'on'
+  icon: hass:lightbulb-group

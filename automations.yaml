@@ -133,111 +133,10 @@
         continue_on_timeout: true
       - scene: scene.hue_buro_off
   mode: single
-- id: '1613892335068'
-  alias: Wohnung Kameras ON (P,W,R) (home -> not_home)
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: group.awesome_people
-    from: home
-    to: not_home
-  condition: []
-  action:
-  - scene: scene.mystrom_presence_on
-  - scene: scene.mystrom_welcome_on
-  - scene: scene.mystrom_reolink_on
-  mode: single
-- id: '1613892576072'
-  alias: Wohnung Kameras ON (P,W,R) (home, sleep co2 > 1000)
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.netatmo_steffs_home_living_sleep_co2
-    above: '1000'
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.mystrom_presence_on
-  - scene: scene.mystrom_welcome_on
-  - scene: scene.mystrom_reolink_on
-  mode: single
-- id: '1613892789706'
-  alias: Wohnung Kameras OFF (P,W) (not_home -> home, vor sunset - 60 Min)
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: group.awesome_people
-    from: not_home
-    to: home
-  condition:
-  - condition: sun
-    before: sunset
-    before_offset: -01:00:00
-  action:
-  - scene: scene.mystrom_presence_off
-  - scene: scene.mystrom_welcome_off
-  mode: single
-- id: '1613894596079'
-  alias: Wohnung Kameras ON (P,W) (home, sunset - 45 min)
-  description: ''
-  trigger:
-  - platform: sun
-    event: sunset
-    offset: -00:45:00
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.mystrom_presence_on
-  - scene: scene.mystrom_welcome_on
-  mode: single
-- id: '1613895437670'
-  alias: Wohnung Kameras OFF (P,W) (home, sunrise + 45 min)
-  description: ''
-  trigger:
-  - platform: sun
-    event: sunrise
-    offset: 00:45:00
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.mystrom_presence_off
-  - scene: scene.mystrom_welcome_off
-  mode: single
-- id: '1613895565229'
-  alias: Wohnung Kameras OFF (R) (home, sunrise + 45 Min) --- TODO ---
-  description: ''
-  trigger:
-  - platform: sun
-    event: sunrise
-    offset: 00:45:00
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
-  action:
-  - scene: scene.mystrom_reolink_off
-  mode: single
-- id: '1614287759637'
-  alias: 'Wohnung Kameras OFF (R) (not_home -> home) '
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: group.awesome_people
-    from: not_home
-    to: home
-  condition: []
-  action:
-  - scene: scene.mystrom_reolink_off
-  mode: single
 - id: '1616048845700'
   alias: Bad Hue Light on Motion Webhook
-  description: ''
+  description: Night (Sun < 0, 23:00-08:00, > 700 co2) | Ambient (Sun < 0) | Full
+    (Default)
   trigger:
   - platform: webhook
     webhook_id: bad_light_on_motion
@@ -247,14 +146,27 @@
     - conditions:
       - condition: and
         conditions:
-        - condition: sun
-          after: sunrise
-        - condition: sun
-          before: sunset
+        - condition: numeric_state
+          entity_id: sun.sun
+          below: '0'
+          attribute: elevation
+        - condition: time
+          after: '23:00:00'
+          before: 08:00:00
+        - condition: numeric_state
+          entity_id: sensor.netatmo_steffs_home_living_sleep_co2
+          above: '700'
       sequence:
-      - scene: scene.hue_bad_on_full_white
+      - scene: scene.hue_bad_on_night
+    - conditions:
+      - condition: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        below: '0'
+      sequence:
+      - scene: scene.hue_bad_on_ambient
     default:
-    - scene: scene.hue_bad_on_ambient
+    - scene: scene.hue_bad_on_full_white
   - delay:
       hours: 0
       minutes: 10
@@ -264,7 +176,7 @@
   mode: restart
 - id: '1616050267437'
   alias: Dusche Hue Light on Motion Webhook
-  description: ''
+  description: Ambient (Sun < 0, 23:00-08:00, > 700 co2) | Full (Sun < 0) | None (Default)
   trigger:
   - platform: webhook
     webhook_id: dusche_light_on_motion
@@ -272,45 +184,57 @@
   action:
   - choose:
     - conditions:
-      - condition: sun
-        after: sunset
-      sequence:
-      - scene: scene.hue_dusche_on_full
-    - conditions:
-      - condition: sun
-        before: sunrise
+      - condition: and
+        conditions:
+        - condition: numeric_state
+          entity_id: sun.sun
+          attribute: elevation
+          below: '0'
+        - condition: time
+          after: '23:00:00'
+          before: 08:00:00
+        - condition: numeric_state
+          entity_id: sensor.netatmo_steffs_home_living_sleep_co2
+          above: '700'
       sequence:
       - scene: scene.hue_dusche_on_ambient
-    default: []
-  - delay:
-      hours: 0
-      minutes: 10
-      seconds: 0
-      milliseconds: 0
-  - scene: scene.hue_dusche_off
+      - delay:
+          hours: 0
+          minutes: 5
+          seconds: 0
+          milliseconds: 0
+      - scene: scene.dingz_dusche_off
+    - conditions:
+      - condition: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        below: '0'
+      sequence:
+      - scene: scene.hue_dusche_on_full
+      - delay:
+          hours: 0
+          minutes: 15
+          seconds: 0
+          milliseconds: 0
+      - scene: scene.hue_dusche_off
+    default:
+    - scene: scene.hue_dusche_off
   mode: restart
 - id: '1616071228508'
   alias: Dusche Licht OFF (no motion)
   description: ''
   trigger:
   - platform: state
-    entity_id: binary_sensor.motion_deko_usm_motion
+    entity_id: binary_sensor.motion_dusche_motion
     to: 'off'
     for: 00:10:00
   condition: []
   action:
-  - service: script.dingz_light_level_generic
-    data:
-      dimmer: 2
-      enum: 'off'
-      brightness: 0
-      ip: 192.168.1.196
-  - service: script.dingz_light_level_generic
-    data:
-      dimmer: 3
-      enum: 'off'
-      brightness: 0
-      ip: 192.168.1.196
+  - service: light.turn_off
+    target:
+      entity_id:
+      - light.dingz_dusche_decke_light
+      - light.dingz_dusche_spiegel_light
   mode: single
 - id: '1616393998146'
   alias: Gang Hue Stufe 001 bis 006, abhängig Temperatur, @home
@@ -337,33 +261,63 @@
             entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
             below: '-5'
           sequence:
-          - scene: scene.hue_gang_stufe_001_violett_minus_6_und_kalter
+          - service: light.turn_on
+            data:
+              color_name: violet
+              brightness_pct: 15
+            target:
+              device_id: dc41bd82f147d78bd4d07285cf947d9d
         - conditions:
           - condition: numeric_state
             entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
             below: '3'
           sequence:
-          - scene: scene.hue_gang_stufe_002_hellblau_minus_5_bis_2_grad
+          - service: light.turn_on
+            data:
+              color_name: skyblue
+              brightness_pct: 15
+            target:
+              device_id: dc41bd82f147d78bd4d07285cf947d9d
         - conditions:
           - condition: numeric_state
             entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
             below: '11'
           sequence:
-          - scene: scene.hue_gang_stufe_003_grun_3_bis_10_grad
+          - service: light.turn_on
+            data:
+              color_name: green
+              brightness_pct: 15
+            target:
+              device_id: dc41bd82f147d78bd4d07285cf947d9d
         - conditions:
           - condition: numeric_state
             entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
             below: '21'
           sequence:
-          - scene: scene.hue_gang_stufe_004_gelb_11_bis_20_grad
+          - service: light.turn_on
+            data:
+              color_name: yellow
+              brightness_pct: 15
+            target:
+              device_id: dc41bd82f147d78bd4d07285cf947d9d
         - conditions:
           - condition: numeric_state
             entity_id: sensor.netatmo_steffs_home_living_outdoor_temperature
             below: '31'
           sequence:
-          - scene: scene.hue_gang_stufe_005_orange_21_bis_30_grad
+          - service: light.turn_on
+            data:
+              color_name: orange
+              brightness_pct: 15
+            target:
+              device_id: dc41bd82f147d78bd4d07285cf947d9d
         default:
-        - scene: scene.hue_gang_stufe_006_rot_31_grad_und_warmer
+        - service: light.turn_on
+          data:
+            color_name: red
+            brightness_pct: 15
+          target:
+            device_id: dc41bd82f147d78bd4d07285cf947d9d
     default:
     - type: turn_off
       device_id: dc41bd82f147d78bd4d07285cf947d9d
@@ -386,13 +340,17 @@
         entity_id: sensor.mystrom_schrank_lufter_temperature
         above: '32'
       sequence:
-      - scene: scene.mystrom_schrank_lufter_on
+      - service: switch.turn_on
+        target:
+          entity_id: switch.schrank_lufter
     - conditions:
       - condition: numeric_state
         entity_id: sensor.mystrom_schrank_lufter_temperature
         below: '28'
       sequence:
-      - scene: scene.mystrom_schrank_lufter_off
+      - service: switch.turn_off
+        target:
+          entity_id: switch.schrank_lufter
     default: []
   mode: single
 - id: '1616394930906'
@@ -411,12 +369,319 @@
         entity_id: sensor.netatmo_steffs_home_keller_humidity
         above: '59'
       sequence:
-      - scene: scene.mystrom_entfeuchter_on
+      - service: switch.turn_on
+        target:
+          entity_id: switch.entfeuchter
     - conditions:
       - condition: numeric_state
         entity_id: sensor.netatmo_steffs_home_keller_humidity
         below: '56'
       sequence:
-      - scene: scene.mystrom_entfeuchter_off
+      - service: switch.turn_off
+        target:
+          entity_id: switch.entfeuchter
     default: []
+  mode: single
+- id: '1616871141759'
+  alias: Bad Licht OFF (no motion)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_bad_motion
+    to: 'off'
+    for: 00:10:00
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      entity_id:
+      - light.dingz_bad_spiegel_light
+      - light.dingz_bad_decke_wc_light
+      - light.dingz_bad_decke_watu_light
+  mode: single
+- id: '1617084313798'
+  alias: Wohnung Kamera ON-OFF (home, not_home, co2, sun, power)
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: '*'
+    minutes: /5
+    seconds: '1'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: group.awesome_people
+        state: not_home
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id:
+          - switch.presence
+          - switch.welcome
+          - switch.reolink
+      - service: script.turn_on
+        target:
+          entity_id: script.dingz_led_markise1_und_schlafzimmer_red
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: numeric_state
+          entity_id: sun.sun
+          attribute: elevation
+          below: '0'
+        - condition: numeric_state
+          entity_id: sensor.netatmo_steffs_home_living_sleep_co2
+          above: '700'
+        - condition: numeric_state
+          entity_id: sensor.mystrom_hifi_center_power
+          below: '50'
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id:
+          - switch.presence
+          - switch.welcome
+          - switch.reolink
+      - service: script.turn_on
+        target:
+          entity_id: script.dingz_led_markise1_und_schlafzimmer_red
+    - conditions:
+      - condition: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        below: '0'
+      sequence:
+      - service: switch.turn_on
+        target:
+          entity_id:
+          - switch.presence
+          - switch.welcome
+      - service: switch.turn_off
+        target:
+          entity_id: switch.reolink
+      - service: script.turn_on
+        target:
+          entity_id: script.dingz_led_markise1_und_schlafzimmer_violett
+    default:
+    - service: switch.turn_off
+      target:
+        entity_id:
+        - switch.presence
+        - switch.reolink
+        - switch.welcome
+    - service: script.turn_on
+      target:
+        entity_id: script.dingz_led_markise1_und_schlafzimmer_grun
+  mode: single
+- id: '1617126118364'
+  alias: Schlafzimmer Hue Light Ambient Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: schlafzimmer_light_on_ambient
+  condition: []
+  action:
+  - scene: scene.hue_schlafzimmer_on_ambient
+  mode: single
+- id: '1617126303592'
+  alias: Schlafzimmer Hue Light Bright Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: schlafzimmer_light_on_bright
+  condition: []
+  action:
+  - scene: scene.hue_schlafzimmer_on_bright
+  mode: single
+- id: '1617126330007'
+  alias: Schlafzimmer Hue Light OFF Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: schlafzimmer_light_off
+  condition: []
+  action:
+  - scene: scene.hue_schlafzimmer_off
+  mode: single
+- id: '1617131412607'
+  alias: Wohnung Light OFF Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: wohnung_light_off
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      entity_id:
+      - light.dingz_katzenbaum_light
+      - light.dingz_esstisch_light
+      - light.dingz_kuche_decke_aussen_light
+      - light.dingz_kuche_decke_innen_light
+      - light.dingz_kuche_schrank_light
+      - light.dingz_terrasse_light
+      - light.dingz_bad_decke_light
+      - light.dingz_bad_spiegel_light
+      - light.dingz_dusche_decke_light
+      - light.dingz_dusche_spiegel_light
+      - light.dingz_buro_pia_boden_light
+      - light.dingz_buro_stephan_boden_light
+  - service: light.turn_off
+    target:
+      entity_id:
+      - light.katzenbaum
+      - light.fernseher_links
+      - light.fernseher_rechts
+      - light.ruiz1
+      - light.ruiz2
+      - light.sideboard
+      - light.globus
+      - light.buro_deko_usm
+      - light.buro_decke_stephan
+      - light.buro_deko_pult
+      - light.buro_deko_pia
+      - light.buro_decke_pia
+      - light.bad
+      - light.dusche
+  mode: single
+- id: '1617132794904'
+  alias: Wohnung Light PANIK Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: wohnung_light_panik
+  condition: []
+  action:
+  - service: light.turn_on
+    data:
+      brightness: 255
+    target:
+      entity_id:
+      - light.dingz_katzenbaum_light
+      - light.dingz_esstisch_light
+      - light.dingz_kuche_decke_aussen_light
+      - light.dingz_kuche_decke_innen_light
+      - light.dingz_kuche_schrank_light
+      - light.dingz_terrasse_light
+      - light.dingz_bad_decke_light
+      - light.dingz_bad_spiegel_light
+      - light.dingz_dusche_decke_light
+      - light.dingz_dusche_spiegel_light
+      - light.dingz_buro_pia_boden_light
+      - light.dingz_buro_stephan_boden_light
+  - service: light.turn_on
+    data:
+      brightness: 255
+      color_name: white
+    target:
+      entity_id:
+      - light.katzenbaum
+      - light.fernseher_links
+      - light.fernseher_rechts
+      - light.ruiz1
+      - light.ruiz2
+      - light.sideboard
+      - light.globus
+      - light.buro_deko_usm
+      - light.buro_decke_stephan
+      - light.buro_deko_pult
+      - light.buro_deko_pia
+      - light.buro_decke_pia
+      - light.bad
+      - light.dusche
+  mode: single
+- id: '1617386935918'
+  alias: Büro Stephan Light Toggle Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: buro_stephan_light_toggle
+  condition: []
+  action:
+  - service: light.toggle
+    data:
+      color_temp: 313
+      brightness_pct: 50
+    target:
+      device_id: 5db4bf233bea079061c66ad5776109a5
+  mode: restart
+- id: '1617387798636'
+  alias: Büro Pia Light Toggle Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: buro_pia_light_toggle
+  condition: []
+  action:
+  - service: light.toggle
+    data:
+      color_temp: 313
+      brightness_pct: 50
+    target:
+      device_id:
+      - 0585e667614c337721ad24abad0f2d30
+  mode: restart
+- id: '1617387827027'
+  alias: Büro Pia Light Toggle Full Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: buro_pia_light_toggle_full
+  condition: []
+  action:
+  - service: light.turn_on
+    data:
+      color_temp: 313
+      brightness_pct: 100
+    target:
+      device_id:
+      - 0585e667614c337721ad24abad0f2d30
+  mode: restart
+- id: '1617387856078'
+  alias: Büro Stephan Light Toggle Full Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: buro_stephan_light_toggle_full
+  condition: []
+  action:
+  - service: light.turn_on
+    data:
+      color_temp: 313
+      brightness_pct: 100
+    target:
+      device_id: 5db4bf233bea079061c66ad5776109a5
+  mode: restart
+- id: '1617388190803'
+  alias: Büro Stephan Licht OFF (no motion)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_deko_usm_motion
+    to: 'off'
+    for: 00:10:00
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      device_id: 5db4bf233bea079061c66ad5776109a5
+      entity_id: light.dingz_buro_stephan_boden_light
+  mode: single
+- id: '1617388247400'
+  alias: Büro Pia Licht OFF (no motion)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_pia_buro_motion
+    to: 'off'
+    for: 00:10:00
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      device_id:
+      - 0585e667614c337721ad24abad0f2d30
+      entity_id: light.dingz_buro_pia_boden_light
   mode: single

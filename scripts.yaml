@@ -98,52 +98,88 @@ remote_nad_avpreset3_swisscomtv:
     entity_id: remote.harmony_hub
   mode: single
   icon: hass:remote
-dingz_markise1_led_red:
-  alias: Dingz Markise1 LED Rot
+dingz_led_markise1_und_schlafzimmer_red:
+  alias: Dingz LED Markise1 und Schlafzimmer Rot
   sequence:
-  - service: rest_command.dingz_generic_led
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '0'
+      cols: '100'
+      colv: '20'
+      ip: !secret ip_dingz_markise1
+      force_entity: sensor.dingz_markise1_state
+  - service: script.dingz_led_level_generic
     data:
       action: 'on'
       colh: '0'
       cols: '100'
       colv: '3'
-      ip: 192.168.1.191
+      ip: !secret ip_dingz_schlafzimmer
+      force_entity: sensor.dingz_schlafzimmer_state
   mode: single
   icon: hass:lightbulb
-dingz_markise1_led_violett:
-  alias: Dingz Markise1 LED Violett
+dingz_led_markise1_und_schlafzimmer_violett:
+  alias: Dingz LED Markise1 und Schlafzimmer Violett
   sequence:
-  - service: rest_command.dingz_generic_led
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '300'
+      cols: '100'
+      colv: '20'
+      ip: !secret ip_dingz_markise1
+      force_entity: sensor.dingz_markise1_state
+  - service: script.dingz_led_level_generic
     data:
       action: 'on'
       colh: '300'
       cols: '100'
       colv: '3'
-      ip: 192.168.1.191
+      ip: !secret ip_dingz_schlafzimmer
+      force_entity: sensor.dingz_schlafzimmer_state
   mode: single
   icon: hass:lightbulb
-dingz_markise1_led_grun:
-  alias: Dingz Markise1 LED Grün
+dingz_led_markise1_und_schlafzimmer_grun:
+  alias: Dingz LED Markise1 und Schlafzimmer Grün
   sequence:
-  - service: rest_command.dingz_generic_led
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '120'
+      cols: '100'
+      colv: '20'
+      ip: !secret ip_dingz_markise1
+      force_entity: sensor.dingz_markise1_state
+  - service: script.dingz_led_level_generic
     data:
       action: 'on'
       colh: '120'
       cols: '100'
       colv: '3'
-      ip: 192.168.1.191
+      ip: !secret ip_dingz_schlafzimmer
+      force_entity: sensor.dingz_schlafzimmer_state
   mode: single
   icon: hass:lightbulb
-dingz_markise1_led_original:
-  alias: Dingz Markise1 LED Original
+dingz_led_markise1_und_schlafzimmer_original:
+  alias: Dingz LED Markise1 und Schlafzimmer Original
   sequence:
-  - service: rest_command.dingz_generic_led
+  - service: script.dingz_led_level_generic
     data:
       action: 'on'
       colh: '180'
       cols: '100'
       colv: '3'
-      ip: 192.168.1.191
+      ip: !secret ip_dingz_markise1
+      force_entity: sensor.dingz_markise1_state
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '241'
+      cols: '100'
+      colv: '6'
+      ip: !secret ip_dingz_schlafzimmer
+      force_entity: sensor.dingz_schlafzimmer_state
   mode: single
   icon: hass:lightbulb
 dingz_led_level_generic_onoff:
@@ -156,8 +192,9 @@ dingz_led_level_generic_onoff:
   - service: homeassistant.update_entity
     target:
       entity_id: '{{ force_entity }}'
-  mode: single
+  mode: parallel
   icon: hass:lightbulb
+  max: 10
 dingz_led_level_generic:
   alias: Dingz LED Level Generic
   sequence:
@@ -171,8 +208,9 @@ dingz_led_level_generic:
   - service: homeassistant.update_entity
     target:
       entity_id: '{{ force_entity }}'
-  mode: single
+  mode: parallel
   icon: hass:lightbulb
+  max: 10
 dingz_light_level_generic_onoff:
   alias: Dingz Light Level Generic onoff
   sequence:
@@ -184,8 +222,9 @@ dingz_light_level_generic_onoff:
   - service: homeassistant.update_entity
     target:
       entity_id: '{{ force_entity }}'
-  mode: single
+  mode: parallel
   icon: hass:lightbulb
+  max: 10
 dingz_light_level_generic:
   alias: Dingz Light Level Generic
   sequence:
@@ -198,5 +237,6 @@ dingz_light_level_generic:
   - service: homeassistant.update_entity
     target:
       entity_id: '{{ force_entity }}'
-  mode: single
+  mode: parallel
   icon: hass:lightbulb
+  max: 10

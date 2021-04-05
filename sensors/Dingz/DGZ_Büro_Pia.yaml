@@ -1,0 +1,13 @@
+platform: rest
+method: GET
+resource: !secret url_sensor_dingz_buro_pia
+# http://ip/api/v1/state
+name: Dingz Büro Pia State
+value_template: "OK"
+json_attributes:
+  - "dimmers"
+  - "blinds"
+  - "led"
+  - "sensors"
+  - "thermostat"
+  - "wifi"

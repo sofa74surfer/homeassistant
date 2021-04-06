@@ -83,13 +83,23 @@
     state: not_home
   action:
   - wait_template: '{{ ''00:%02i:00''%range(01,30) | random }}'
-  - scene: scene.hue_wohnzimmer_off
-  - scene: scene.hue_buro_off
-  - scene: scene.hue_schlafzimmer_off
-  - type: turn_off
-    device_id: dc41bd82f147d78bd4d07285cf947d9d
-    entity_id: light.gang
-    domain: light
+  - service: light.turn_off
+    target:
+      device_id:
+      - b28c9fc2638dabe557d668f8fe5d850a
+      - acfefc1c100e78d453c1bac39dd70aef
+      - 7311881c0a7f8b0afbd6f6a5a528ef24
+      - ac6ce71602cab6a778b11311e8bf2289
+      - 006b2b6fefaded7a9935cfda6a293fd0
+      - 3fcd9c52772d29258c057a92f6ad93f4
+      - 69b65c02742784b54e7e79090a687c57
+      - 11ef0a038d5d9f41ef9a9bf59ae407f7
+      - 726d481100938c5e071ba497abc81934
+      - 86da64d15c9f0bff9032382310cc74a6
+      - 0dd0ce477d4f719fd4fc8341b067bc85
+      - 44c495113e18e26db13a2f4bdc5442a4
+      - bcf481a9e79122849c323a61b91105d9
+      - dc41bd82f147d78bd4d07285cf947d9d
   mode: single
 - id: '1605249083791'
   alias: Büro Szene ON Sunset, home
@@ -157,22 +167,39 @@
           entity_id: sensor.netatmo_steffs_home_living_sleep_co2
           above: '700'
       sequence:
-      - scene: scene.hue_bad_on_night
+      - service: light.turn_on
+        data:
+          color_name: orange
+          brightness_pct: 40
+        target:
+          device_id: 827d7f7f64773f425de48f835e5687c6
     - conditions:
       - condition: numeric_state
         entity_id: sun.sun
         attribute: elevation
         below: '0'
       sequence:
-      - scene: scene.hue_bad_on_ambient
+      - service: light.turn_on
+        data:
+          color_name: orange
+          brightness_pct: 100
+        target:
+          device_id: 827d7f7f64773f425de48f835e5687c6
     default:
-    - scene: scene.hue_bad_on_full_white
+    - service: light.turn_on
+      data:
+        color_name: white
+        brightness_pct: 100
+      target:
+        device_id: 827d7f7f64773f425de48f835e5687c6
   - delay:
       hours: 0
       minutes: 10
       seconds: 0
       milliseconds: 0
-  - scene: scene.hue_bad_off
+  - service: light.turn_off
+    target:
+      device_id: 827d7f7f64773f425de48f835e5687c6
   mode: restart
 - id: '1616050267437'
   alias: Dusche Hue Light on Motion Webhook
@@ -197,28 +224,41 @@
           entity_id: sensor.netatmo_steffs_home_living_sleep_co2
           above: '700'
       sequence:
-      - scene: scene.hue_dusche_on_ambient
+      - service: light.turn_on
+        data:
+          color_name: orange
+          brightness_pct: 25
+        target:
+          device_id: 3c66872e742475b7c48d7220520e9aed
       - delay:
           hours: 0
           minutes: 5
           seconds: 0
           milliseconds: 0
-      - scene: scene.dingz_dusche_off
+      - service: light.turn_off
+        target:
+          device_id: 3c66872e742475b7c48d7220520e9aed
     - conditions:
       - condition: numeric_state
         entity_id: sun.sun
         attribute: elevation
         below: '0'
       sequence:
-      - scene: scene.hue_dusche_on_full
+      - service: light.turn_on
+        data:
+          color_name: orange
+          brightness_pct: 100
+        target:
+          device_id: 3c66872e742475b7c48d7220520e9aed
       - delay:
           hours: 0
           minutes: 15
           seconds: 0
           milliseconds: 0
-      - scene: scene.hue_dusche_off
-    default:
-    - scene: scene.hue_dusche_off
+      - service: light.turn_off
+        target:
+          device_id: 3c66872e742475b7c48d7220520e9aed
+    default: []
   mode: restart
 - id: '1616071228508'
   alias: Dusche Licht OFF (no motion)
@@ -235,6 +275,7 @@
       entity_id:
       - light.dingz_dusche_decke_light
       - light.dingz_dusche_spiegel_light
+      device_id: 3c66872e742475b7c48d7220520e9aed
   mode: single
 - id: '1616393998146'
   alias: Gang Hue Stufe 001 bis 006, abhängig Temperatur, @home
@@ -398,6 +439,7 @@
       - light.dingz_bad_spiegel_light
       - light.dingz_bad_decke_wc_light
       - light.dingz_bad_decke_watu_light
+      device_id: 827d7f7f64773f425de48f835e5687c6
   mode: single
 - id: '1617084313798'
   alias: Wohnung Kamera ON-OFF (home, not_home, co2, sun, power)
@@ -522,29 +564,34 @@
       - light.dingz_kuche_decke_innen_light
       - light.dingz_kuche_schrank_light
       - light.dingz_terrasse_light
-      - light.dingz_bad_decke_light
       - light.dingz_bad_spiegel_light
       - light.dingz_dusche_decke_light
       - light.dingz_dusche_spiegel_light
       - light.dingz_buro_pia_boden_light
       - light.dingz_buro_stephan_boden_light
-  - service: light.turn_off
-    target:
-      entity_id:
-      - light.katzenbaum
-      - light.fernseher_links
-      - light.fernseher_rechts
-      - light.ruiz1
-      - light.ruiz2
-      - light.sideboard
-      - light.globus
-      - light.buro_deko_usm
-      - light.buro_decke_stephan
-      - light.buro_deko_pult
-      - light.buro_deko_pia
-      - light.buro_decke_pia
-      - light.bad
-      - light.dusche
+      - light.dingz_bad_decke_watu_light
+      - light.dingz_bad_decke_wc_light
+      - light.dingz_gang_light
+      - light.dingz_ankleide_light
+      device_id:
+      - b28c9fc2638dabe557d668f8fe5d850a
+      - acfefc1c100e78d453c1bac39dd70aef
+      - 7311881c0a7f8b0afbd6f6a5a528ef24
+      - ac6ce71602cab6a778b11311e8bf2289
+      - 006b2b6fefaded7a9935cfda6a293fd0
+      - 3fcd9c52772d29258c057a92f6ad93f4
+      - 69b65c02742784b54e7e79090a687c57
+      - dc41bd82f147d78bd4d07285cf947d9d
+      - 0585e667614c337721ad24abad0f2d30
+      - 5db4bf233bea079061c66ad5776109a5
+      - 11ef0a038d5d9f41ef9a9bf59ae407f7
+      - 726d481100938c5e071ba497abc81934
+      - 86da64d15c9f0bff9032382310cc74a6
+      - 827d7f7f64773f425de48f835e5687c6
+      - 3c66872e742475b7c48d7220520e9aed
+      - 0dd0ce477d4f719fd4fc8341b067bc85
+      - 44c495113e18e26db13a2f4bdc5442a4
+      - bcf481a9e79122849c323a61b91105d9
   mode: single
 - id: '1617132794904'
   alias: Wohnung Light PANIK Webhook
@@ -565,32 +612,39 @@
       - light.dingz_kuche_decke_innen_light
       - light.dingz_kuche_schrank_light
       - light.dingz_terrasse_light
-      - light.dingz_bad_decke_light
       - light.dingz_bad_spiegel_light
       - light.dingz_dusche_decke_light
       - light.dingz_dusche_spiegel_light
       - light.dingz_buro_pia_boden_light
       - light.dingz_buro_stephan_boden_light
+      - light.dingz_ankleide_light
+      - light.dingz_gang_light
+      - light.dingz_bad_decke_watu_light
+      - light.dingz_bad_decke_wc_light
   - service: light.turn_on
     data:
       brightness: 255
       color_name: white
     target:
-      entity_id:
-      - light.katzenbaum
-      - light.fernseher_links
-      - light.fernseher_rechts
-      - light.ruiz1
-      - light.ruiz2
-      - light.sideboard
-      - light.globus
-      - light.buro_deko_usm
-      - light.buro_decke_stephan
-      - light.buro_deko_pult
-      - light.buro_deko_pia
-      - light.buro_decke_pia
-      - light.bad
-      - light.dusche
+      device_id:
+      - b28c9fc2638dabe557d668f8fe5d850a
+      - acfefc1c100e78d453c1bac39dd70aef
+      - 7311881c0a7f8b0afbd6f6a5a528ef24
+      - ac6ce71602cab6a778b11311e8bf2289
+      - 006b2b6fefaded7a9935cfda6a293fd0
+      - 3fcd9c52772d29258c057a92f6ad93f4
+      - 69b65c02742784b54e7e79090a687c57
+      - dc41bd82f147d78bd4d07285cf947d9d
+      - 0585e667614c337721ad24abad0f2d30
+      - 5db4bf233bea079061c66ad5776109a5
+      - 11ef0a038d5d9f41ef9a9bf59ae407f7
+      - 726d481100938c5e071ba497abc81934
+      - 86da64d15c9f0bff9032382310cc74a6
+      - 827d7f7f64773f425de48f835e5687c6
+      - 3c66872e742475b7c48d7220520e9aed
+      - 0dd0ce477d4f719fd4fc8341b067bc85
+      - 44c495113e18e26db13a2f4bdc5442a4
+      - bcf481a9e79122849c323a61b91105d9
   mode: single
 - id: '1617386935918'
   alias: Büro Stephan Light Toggle Webhook

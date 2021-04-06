@@ -257,7 +257,7 @@
           data:
             brightness: "40"
             enum: "on"
-            dimmer: 0
+            dimmer: 2
             ip: !secret ip_dingz_bad
             force_entity: sensor.dingz_bad_state
         turn_off:
@@ -266,7 +266,7 @@
           data:
             brightness: "0"
             enum: "off"
-            dimmer: 0
+            dimmer: 2
             ip: !secret ip_dingz_bad
             force_entity: sensor.dingz_bad_state
         set_level:
@@ -275,7 +275,7 @@
           data:
             brightness: "{{ (brightness * 100 / 255) | int }}"
             enum: "on"
-            dimmer: 0
+            dimmer: 2
             ip: !secret ip_dingz_bad
             force_entity: sensor.dingz_bad_state
 
@@ -358,6 +358,40 @@
           data:
             enum: "off"
             dimmer: 3
+            ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
+
+    # ####### Dingz Ankleide Light
+      dingz_ankleide_light:
+        unique_id: dingz_ankleide_light
+        friendly_name: "Dingz Ankleide"
+        level_template: "{{ (state_attr('sensor.dingz_dusche_state', 'dimmers')[1]['output']*255/100)|int }}"
+        value_template: "{{ state_attr('sensor.dingz_dusche_state', 'dimmers')[1]['on']}}"
+        turn_on:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_ankleide_light
+          data:
+            brightness: "40"
+            enum: "on"
+            dimmer: 1
+            ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
+        turn_off:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_ankleide_light
+          data:
+            brightness: "0"
+            enum: "off"
+            dimmer: 1
+            ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
+        set_level:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_ankleide_light
+          data:
+            brightness: "{{ (brightness * 100 / 255) | int }}"
+            enum: "on"
+            dimmer: 1
             ip: !secret ip_dingz_dusche
             force_entity: sensor.dingz_dusche_state
 

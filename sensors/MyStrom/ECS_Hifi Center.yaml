@@ -4,6 +4,10 @@ resource: !secret url_sensor_mystrom_hifi_center
 # http://ip/report
 name: MyStrom Hifi Center Report
 value_template: "OK"
+#value_template: "{{ now().second }}"
+scan_interval: 15
+force_update: true
 json_attributes:
   - "power"
+  - "Ws"
   - "relay"

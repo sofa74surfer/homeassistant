@@ -1,0 +1,7 @@
+platform: statistics
+unique_id: illumination_statistic_homematic_lx
+entity_id: sensor.homematic_wetterstation_illumination
+name: "Illumination Statistic Homematic lx"
+state_characteristic: median
+sampling_size: 4
+precision: 0

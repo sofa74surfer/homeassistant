@@ -1,0 +1,7 @@
+platform: statistics
+unique_id: statistic_home_living_sleep_co2
+entity_id: sensor.netatmo_steffs_home_living_sleep_co2
+name: "Statistic Home Living Sleep co2"
+state_characteristic: mean
+sampling_size: 3
+precision: 0

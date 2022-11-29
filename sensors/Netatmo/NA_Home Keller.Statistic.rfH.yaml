@@ -1,0 +1,7 @@
+platform: statistics
+unique_id: statistic_home_keller_rfh
+entity_id: sensor.netatmo_keller_feuchtigkeit
+name: "Statistic Home Keller rfH"
+state_characteristic: mean
+sampling_size: 3
+precision: 0

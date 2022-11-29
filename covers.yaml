@@ -1,0 +1,289 @@
+  - platform: template
+    covers:
+
+    # ####### ############################### #######
+    # ####### Dingz Cover Template Markise 1  #######
+    # ####### ############################### #######
+
+    # ####### Dingz Markise1 Cover Wohnzimmer Links
+      dingz_markise1_cover:
+        unique_id: dingz_markise1_cover
+        friendly_name: "Dingz Markise1 Wohnzimmer Links"
+        device_class: blind
+        value_template: "
+{% if state_attr('sensor.dingz_markise1_state', 'blinds')[0]['moving'] == 'up' %}
+opening   
+{% elif state_attr('sensor.dingz_markise1_state', 'blinds')[0]['moving'] == 'down' %}
+closing
+{% elif state_attr('sensor.dingz_markise1_state', 'blinds')[0]['moving'] == 'stop' and state_attr('sensor.dingz_markise1_wohnzimmer_links_state', 'current')['blind']|float > 0 %}
+open
+{% else %}
+closed
+{% endif %}
+"
+        position_template: "{{ state_attr('sensor.dingz_markise1_wohnzimmer_links_state', 'current')['blind']}}"
+        open_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise1_cover
+          data:
+            action: "up"
+            idx: 0
+            ip: !secret ip_dingz_markise1
+            force_entity1: sensor.dingz_markise1_state
+            force_entity2: sensor.dingz_markise1_wohnzimmer_links_state
+        close_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise1_cover
+          data:
+            action: "down"
+            idx: 0
+            ip: !secret ip_dingz_markise1
+            force_entity1: sensor.dingz_markise1_state
+            force_entity2: sensor.dingz_markise1_wohnzimmer_links_state
+        stop_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise1_cover
+          data:
+            action: "stop"
+            idx: 0
+            ip: !secret ip_dingz_markise1
+            force_entity1: sensor.dingz_markise1_state
+            force_entity2: sensor.dingz_markise1_wohnzimmer_links_state
+        set_cover_position:
+          service: script.dingz_cover_moveto_generic
+          entity_id: cover.dingz_markise1_cover
+          data:
+            position: "{{position}}"
+            lamella: 0
+            idx: 0
+            ip: !secret ip_dingz_markise1
+            force_entity1: sensor.dingz_markise1_state
+            force_entity2: sensor.dingz_markise1_wohnzimmer_links_state
+
+    # ####### ################################ #######
+    # ####### Dingz Cover Template Markise 23  #######
+    # ####### ################################ #######
+
+    # ####### Dingz Markise2 Cover Wohnzimmer Rechts
+      dingz_markise2_cover:
+        unique_id: dingz_markise2_cover
+        friendly_name: "Dingz Markise2 Wohnzimmer Rechts"
+        device_class: blind
+        value_template: "
+{% if state_attr('sensor.dingz_markise23_state', 'blinds')[0]['moving'] == 'up' %}
+opening   
+{% elif state_attr('sensor.dingz_markise23_state', 'blinds')[0]['moving'] == 'down' %}
+closing
+{% elif state_attr('sensor.dingz_markise23_state', 'blinds')[0]['moving'] == 'stop' and state_attr('sensor.dingz_markise2_wohnzimmer_rechts_state', 'current')['blind']|float > 0 %}
+open
+{% else %}
+closed
+{% endif %}
+"
+        position_template: "{{ state_attr('sensor.dingz_markise2_wohnzimmer_rechts_state', 'current')['blind']}}"
+        open_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise2_cover
+          data:
+            action: "up"
+            idx: 0
+            ip: !secret ip_dingz_markise23
+            force_entity1: sensor.dingz_markise23_state
+            force_entity2: sensor.dingz_markise2_wohnzimmer_rechts_state
+        close_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise2_cover
+          data:
+            action: "down"
+            idx: 0
+            ip: !secret ip_dingz_markise23
+            force_entity1: sensor.dingz_markise23_state
+            force_entity2: sensor.dingz_markise2_wohnzimmer_rechts_state
+        stop_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise2_cover
+          data:
+            action: "stop"
+            idx: 0
+            ip: !secret ip_dingz_markise23
+            force_entity1: sensor.dingz_markise23_state
+            force_entity2: sensor.dingz_markise2_wohnzimmer_rechts_state
+        set_cover_position:
+          service: script.dingz_cover_moveto_generic
+          entity_id: cover.dingz_markise2_cover
+          data:
+            position: "{{position}}"
+            lamella: 0
+            idx: 0
+            ip: !secret ip_dingz_markise23
+            force_entity1: sensor.dingz_markise23_state
+            force_entity2: sensor.dingz_markise2_wohnzimmer_rechts_state
+
+    # ####### Dingz Markise3 Cover Katzenbaum
+      dingz_markise3_cover:
+        unique_id: dingz_markise3_cover
+        friendly_name: "Dingz Markise3 Katzenbaum"
+        device_class: blind
+        value_template: "
+{% if state_attr('sensor.dingz_markise23_state', 'blinds')[1]['moving'] == 'up' %}
+opening   
+{% elif state_attr('sensor.dingz_markise23_state', 'blinds')[1]['moving'] == 'down' %}
+closing
+{% elif state_attr('sensor.dingz_markise23_state', 'blinds')[1]['moving'] == 'stop' and state_attr('sensor.dingz_markise3_katzenbaum_state', 'current')['blind']|float > 0 %}
+open
+{% else %}
+closed
+{% endif %}
+"
+        position_template: "{{ state_attr('sensor.dingz_markise3_katzenbaum_state', 'current')['blind']}}"
+        open_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise3_cover
+          data:
+            action: "up"
+            idx: 1
+            ip: !secret ip_dingz_markise23
+            force_entity1: sensor.dingz_markise23_state
+            force_entity2: sensor.dingz_markise3_katzenbaum_state
+        close_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise3_cover
+          data:
+            action: "down"
+            idx: 1
+            ip: !secret ip_dingz_markise23
+            force_entity1: sensor.dingz_markise23_state
+            force_entity2: sensor.dingz_markise3_katzenbaum_state
+        stop_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise3_cover
+          data:
+            action: "stop"
+            idx: 1
+            ip: !secret ip_dingz_markise23
+            force_entity1: sensor.dingz_markise23_state
+            force_entity2: sensor.dingz_markise3_katzenbaum_state
+        set_cover_position:
+          service: script.dingz_cover_moveto_generic
+          entity_id: cover.dingz_markise3_cover
+          data:
+            position: "{{position}}"
+            lamella: 0
+            idx: 1
+            ip: !secret ip_dingz_markise23
+            force_entity1: sensor.dingz_markise23_state
+            force_entity2: sensor.dingz_markise3_katzenbaum_state
+
+    # ####### ################################ #######
+    # ####### Dingz Cover Template Markise 45  #######
+    # ####### ################################ #######
+
+    # ####### Dingz Markise4 Cover Wald Links
+      dingz_markise4_cover:
+        unique_id: dingz_markise4_cover
+        friendly_name: "Dingz Markise4 Wald Links"
+        device_class: blind
+        value_template: "
+{% if state_attr('sensor.dingz_markise45_state', 'blinds')[0]['moving'] == 'up' %}
+opening   
+{% elif state_attr('sensor.dingz_markise45_state', 'blinds')[0]['moving'] == 'down' %}
+closing
+{% elif state_attr('sensor.dingz_markise45_state', 'blinds')[0]['moving'] == 'stop' and state_attr('sensor.dingz_markise4_wald_links_state', 'current')['blind']|float > 0 %}
+open
+{% else %}
+closed
+{% endif %}
+"
+        position_template: "{{ state_attr('sensor.dingz_markise4_wald_links_state', 'current')['blind']}}"
+        open_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise4_cover
+          data:
+            action: "up"
+            idx: 0
+            ip: !secret ip_dingz_markise45
+            force_entity1: sensor.dingz_markise45_state
+            force_entity2: sensor.dingz_markise4_wald_links_state
+        close_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise4_cover
+          data:
+            action: "down"
+            idx: 0
+            ip: !secret ip_dingz_markise45
+            force_entity1: sensor.dingz_markise45_state
+            force_entity2: sensor.dingz_markise4_wald_links_state
+        stop_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise4_cover
+          data:
+            action: "stop"
+            idx: 0
+            ip: !secret ip_dingz_markise45
+            force_entity1: sensor.dingz_markise45_state
+            force_entity2: sensor.dingz_markise4_wald_links_state
+        set_cover_position:
+          service: script.dingz_cover_moveto_generic
+          entity_id: cover.dingz_markise4_cover
+          data:
+            position: "{{position}}"
+            lamella: 0
+            idx: 0
+            ip: !secret ip_dingz_markise45
+            force_entity1: sensor.dingz_markise45_state
+            force_entity2: sensor.dingz_markise4_wald_links_state
+
+    # ####### Dingz Markise5 Cover Wald Rechts
+      dingz_markise5_cover:
+        unique_id: dingz_markise5_cover
+        friendly_name: "Dingz Markise5 Wald Rechts"
+        device_class: blind
+        value_template: "
+{% if state_attr('sensor.dingz_markise45_state', 'blinds')[1]['moving'] == 'up' %}
+opening   
+{% elif state_attr('sensor.dingz_markise45_state', 'blinds')[1]['moving'] == 'down' %}
+closing
+{% elif state_attr('sensor.dingz_markise45_state', 'blinds')[1]['moving'] == 'stop' and state_attr('sensor.dingz_markise5_wald_rechts_state', 'current')['blind']|float > 0 %}
+open
+{% else %}
+closed
+{% endif %}
+"
+        position_template: "{{ state_attr('sensor.dingz_markise5_wald_rechts_state', 'current')['blind']}}"
+        open_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise5_cover
+          data:
+            action: "up"
+            idx: 1
+            ip: !secret ip_dingz_markise45
+            force_entity1: sensor.dingz_markise45_state
+            force_entity2: sensor.dingz_markise5_wald_rechts_state
+        close_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise5_cover
+          data:
+            action: "down"
+            idx: 1
+            ip: !secret ip_dingz_markise45
+            force_entity1: sensor.dingz_markise45_state
+            force_entity2: sensor.dingz_markise5_wald_rechts_state
+        stop_cover:
+          service: script.dingz_cover_move_generic
+          entity_id: cover.dingz_markise5_cover
+          data:
+            action: "stop"
+            idx: 1
+            ip: !secret ip_dingz_markise45
+            force_entity1: sensor.dingz_markise45_state
+            force_entity2: sensor.dingz_markise5_wald_rechts_state
+        set_cover_position:
+          service: script.dingz_cover_moveto_generic
+          entity_id: cover.dingz_markise5_cover
+          data:
+            position: "{{position}}"
+            lamella: 0
+            idx: 1
+            ip: !secret ip_dingz_markise45
+            force_entity1: sensor.dingz_markise45_state
+            force_entity2: sensor.dingz_markise5_wald_rechts_state

@@ -1,3 +1,0 @@
-platform: mystrom
-name: Geschirrspüler
-host: !secret ip_mystrom_geschirrspuler

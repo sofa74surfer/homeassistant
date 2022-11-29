@@ -1,0 +1,42 @@
+platform: template
+sensors:
+
+# ####### ############################ #######
+# ####### Climate Sensoren HVAC Action #######
+# ####### ############################ #######
+
+# Homematic Thermostat Wohnzimmer HVAC
+  homematic_thermostat_wohnzimmer_hvac:
+    friendly_name: "Homematic Thermostat Wohnzimmer HVAC"
+    value_template: "{{ state_attr('climate.thermostat_wohnzimmer', 'hvac_action') }}"
+    unique_id: template.sensor_homematic_thermostat_wohnzimmer_hvac
+
+# Homematic Thermostat Stephan HVAC
+  homematic_thermostat_stephan_hvac:
+    friendly_name: "Homematic Thermostat Stephan HVAC"
+    value_template: "{{ state_attr('climate.thermostat_stephan', 'hvac_action') }}"
+    unique_id: template.sensor_homematic_thermostat_stephan_hvac
+
+# Homematic Thermostat Pia HVAC
+  homematic_thermostat_pia_hvac:
+    friendly_name: "Homematic Thermostat Pia HVAC"
+    value_template: "{{ state_attr('climate.thermostat_pia', 'hvac_action') }}"
+    unique_id: template.sensor_homematic_thermostat_pia_hvac
+
+# Homematic Thermostat Bad HVAC
+  homematic_thermostat_bad_hvac:
+    friendly_name: "Homematic Thermostat Bad HVAC"
+    value_template: "{{ state_attr('climate.thermostat_bad', 'hvac_action') }}"
+    unique_id: template.sensor_homematic_thermostat_bad_hvac
+
+# Homematic Thermostat Schlafzimmer HVAC
+  homematic_thermostat_schlafzimmer_hvac:
+    friendly_name: "Homematic Thermostat Schlafzimmer HVAC"
+    value_template: "{{ state_attr('climate.thermostat_schlafzimmer', 'hvac_action') }}"
+    unique_id: template.sensor_homematic_thermostat_schlafzimmer_hvac
+
+# Homematic Thermostat Dusche HVAC
+  homematic_thermostat_dusche_hvac:
+    friendly_name: "Homematic Thermostat Dusche HVAC"
+    value_template: "{{ state_attr('climate.thermostat_dusche', 'hvac_action') }}"
+    unique_id: template.sensor_homematic_thermostat_dusche_hvac

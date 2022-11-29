@@ -1,187 +1,54 @@
-epson_projector_on:
-  alias: 'Remote: Epson PowerOn'
+dingz_cover_move_generic:
+  alias: Dingz Cover Move Generic
   sequence:
-  - service: remote.send_command
+  - service: rest_command.dingz_generic_cover_move
     data:
-      command: PowerOn
-      device: 63914848
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-epson_projector_off:
-  alias: 'Remote: Epson PowerOff'
+      action: '{{ action }}'
+      idx: '{{ idx }}'
+      ip: '{{ ip }}'
+  - service: homeassistant.update_entity
+    target:
+      entity_id: '{{ force_entity1 }}'
+  - service: homeassistant.update_entity
+    target:
+      entity_id: '{{ force_entity2 }}'
+  mode: parallel
+  icon: hass:blinds
+  max: 10
+dingz_cover_move_to_generic:
+  alias: Dingz Cover Move To Generic
   sequence:
-  - service: remote.send_command
+  - service: rest_command.dingz_generic_cover_moveto
     data:
-      command: PowerOff
-      device: 63914848
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-remote_nad_poweron:
-  alias: 'Remote: NAD PowerOn'
+      blind: '{{ position }}'
+      lamella: '{{ lamella }}'
+      idx: '{{ idx }}'
+      ip: '{{ ip }}'
+  - service: homeassistant.update_entity
+    target:
+      entity_id: '{{ force_entity1 }}'
+  - service: homeassistant.update_entity
+    target:
+      entity_id: '{{ force_entity2 }}'
+  mode: parallel
+  icon: hass:blinds
+  max: 10
+dingz_led_level_generic:
+  alias: Dingz LED Level Generic
   sequence:
-  - service: remote.send_command
+  - service: rest_command.dingz_generic_led
     data:
-      command: PowerOn
-      device: 53587639
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-remote_nad_poweroff:
-  alias: 'Remote: NAD PowerOff'
-  sequence:
-  - service: remote.send_command
-    data:
-      command: PowerOff
-      device: 53587639
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-remote_samsung_poweron:
-  alias: 'Remote: Samsung PowerOn'
-  sequence:
-  - service: remote.send_command
-    data:
-      command: PowerOn
-      device: 18766837
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-remote_samsung_poweroff:
-  alias: 'Remote: Samsung PowerOff'
-  sequence:
-  - service: remote.send_command
-    data:
-      command: PowerOff
-      device: 18766837
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-remote_nad_avpreset1_mac:
-  alias: 'Remote: NAD AV Preset 1 (Mac)'
-  sequence:
-  - service: remote.send_command
-    data:
-      command: AvPreset1
-      device: 53587639
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-remote_nad_avpreset2_appletv:
-  alias: 'Remote: NAD AV Preset 2 (Apple TV)'
-  sequence:
-  - service: remote.send_command
-    data:
-      command: AvPreset2
-      device: 53587639
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-remote_nad_avpreset4_epsonhdmi:
-  alias: 'Remote: NAD AV Preset 4 (Epson HDMI)'
-  sequence:
-  - service: remote.send_command
-    data:
-      command: AvPreset4
-      device: 53587639
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-remote_nad_avpreset3_swisscomtv:
-  alias: 'Remote: NAD AV Preset 3 (Swisscom TV)'
-  sequence:
-  - service: remote.send_command
-    data:
-      command: AvPreset3
-      device: 53587639
-    entity_id: remote.harmony_hub
-  mode: single
-  icon: hass:remote
-dingz_led_markise1_und_schlafzimmer_red:
-  alias: Dingz LED Markise1 und Schlafzimmer Rot
-  sequence:
-  - service: script.dingz_led_level_generic
-    data:
-      action: 'on'
-      colh: '0'
-      cols: '100'
-      colv: '20'
-      ip: !secret ip_dingz_markise1
-      force_entity: sensor.dingz_markise1_state
-  - service: script.dingz_led_level_generic
-    data:
-      action: 'on'
-      colh: '0'
-      cols: '100'
-      colv: '3'
-      ip: !secret ip_dingz_schlafzimmer
-      force_entity: sensor.dingz_schlafzimmer_state
-  mode: single
+      action: '{{ action }}'
+      colh: '{{ colh }}'
+      cols: '{{ cols }}'
+      colv: '{{ colv }}'
+      ip: '{{ ip }}'
+  - service: homeassistant.update_entity
+    target:
+      entity_id: '{{ force_entity }}'
+  mode: parallel
   icon: hass:lightbulb
-dingz_led_markise1_und_schlafzimmer_violett:
-  alias: Dingz LED Markise1 und Schlafzimmer Violett
-  sequence:
-  - service: script.dingz_led_level_generic
-    data:
-      action: 'on'
-      colh: '300'
-      cols: '100'
-      colv: '20'
-      ip: !secret ip_dingz_markise1
-      force_entity: sensor.dingz_markise1_state
-  - service: script.dingz_led_level_generic
-    data:
-      action: 'on'
-      colh: '300'
-      cols: '100'
-      colv: '3'
-      ip: !secret ip_dingz_schlafzimmer
-      force_entity: sensor.dingz_schlafzimmer_state
-  mode: single
-  icon: hass:lightbulb
-dingz_led_markise1_und_schlafzimmer_grun:
-  alias: Dingz LED Markise1 und Schlafzimmer Grün
-  sequence:
-  - service: script.dingz_led_level_generic
-    data:
-      action: 'on'
-      colh: '120'
-      cols: '100'
-      colv: '20'
-      ip: !secret ip_dingz_markise1
-      force_entity: sensor.dingz_markise1_state
-  - service: script.dingz_led_level_generic
-    data:
-      action: 'on'
-      colh: '120'
-      cols: '100'
-      colv: '3'
-      ip: !secret ip_dingz_schlafzimmer
-      force_entity: sensor.dingz_schlafzimmer_state
-  mode: single
-  icon: hass:lightbulb
-dingz_led_markise1_und_schlafzimmer_original:
-  alias: Dingz LED Markise1 und Schlafzimmer Original
-  sequence:
-  - service: script.dingz_led_level_generic
-    data:
-      action: 'on'
-      colh: '180'
-      cols: '100'
-      colv: '3'
-      ip: !secret ip_dingz_markise1
-      force_entity: sensor.dingz_markise1_state
-  - service: script.dingz_led_level_generic
-    data:
-      action: 'on'
-      colh: '241'
-      cols: '100'
-      colv: '6'
-      ip: !secret ip_dingz_schlafzimmer
-      force_entity: sensor.dingz_schlafzimmer_state
-  mode: single
-  icon: hass:lightbulb
+  max: 10
 dingz_led_level_generic_onoff:
   alias: Dingz LED Level Generic onoff
   sequence:
@@ -195,15 +62,98 @@ dingz_led_level_generic_onoff:
   mode: parallel
   icon: hass:lightbulb
   max: 10
-dingz_led_level_generic:
-  alias: Dingz LED Level Generic
+dingz_led_markise1_und_schlafzimmer_grun:
+  alias: Dingz LED Markise1 und Schlafzimmer Grün
   sequence:
-  - service: rest_command.dingz_generic_led
+  - service: script.dingz_led_level_generic
     data:
-      action: '{{ action }}'
-      colh: '{{ colh }}'
-      cols: '{{ cols }}'
-      colv: '{{ colv }}'
+      action: 'on'
+      colh: '120'
+      cols: '100'
+      colv: '20'
+      ip: 192.168.1.191
+      force_entity: sensor.dingz_markise1_state
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '120'
+      cols: '100'
+      colv: '3'
+      ip: 192.168.1.197
+      force_entity: sensor.dingz_schlafzimmer_state
+  mode: single
+  icon: hass:lightbulb
+dingz_led_markise1_und_schlafzimmer_original:
+  alias: Dingz LED Markise1 und Schlafzimmer Original
+  sequence:
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '180'
+      cols: '100'
+      colv: '3'
+      ip: 192.168.1.191
+      force_entity: sensor.dingz_markise1_state
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '241'
+      cols: '100'
+      colv: '6'
+      ip: 192.168.1.197
+      force_entity: sensor.dingz_schlafzimmer_state
+  mode: single
+  icon: hass:lightbulb
+dingz_led_markise1_und_schlafzimmer_rot:
+  alias: Dingz LED Markise1 und Schlafzimmer Rot
+  sequence:
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '0'
+      cols: '100'
+      colv: '20'
+      ip: 192.168.1.191
+      force_entity: sensor.dingz_markise1_state
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '0'
+      cols: '100'
+      colv: '3'
+      ip: 192.168.1.197
+      force_entity: sensor.dingz_schlafzimmer_state
+  mode: single
+  icon: hass:lightbulb
+dingz_led_markise1_und_schlafzimmer_violett:
+  alias: Dingz LED Markise1 und Schlafzimmer Violett
+  sequence:
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '300'
+      cols: '100'
+      colv: '20'
+      ip: 192.168.1.191
+      force_entity: sensor.dingz_markise1_state
+  - service: script.dingz_led_level_generic
+    data:
+      action: 'on'
+      colh: '300'
+      cols: '100'
+      colv: '3'
+      ip: 192.168.1.197
+      force_entity: sensor.dingz_schlafzimmer_state
+  mode: single
+  icon: hass:lightbulb
+dingz_light_level_generic:
+  alias: Dingz Light Level Generic
+  sequence:
+  - service: rest_command.dingz_generic_dimmer
+    data:
+      dimmer: '{{ dimmer }}'
+      enum: '{{ enum }}'
+      value: '{{ brightness }}'
       ip: '{{ ip }}'
   - service: homeassistant.update_entity
     target:
@@ -224,19 +174,29 @@ dingz_light_level_generic_onoff:
       entity_id: '{{ force_entity }}'
   mode: parallel
   icon: hass:lightbulb
-  max: 10
-dingz_light_level_generic:
-  alias: Dingz Light Level Generic
+  max: 20
+test_script_lichtstufe:
+  alias: Test Script Lichtstufe
   sequence:
-  - service: rest_command.dingz_generic_dimmer
-    data:
-      dimmer: '{{ dimmer }}'
-      enum: '{{ enum }}'
-      value: '{{ brightness }}'
-      ip: '{{ ip }}'
-  - service: homeassistant.update_entity
-    target:
-      entity_id: '{{ force_entity }}'
-  mode: parallel
-  icon: hass:lightbulb
-  max: 10
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_number.nummer_status_licht_level
+        state: '0.0'
+      sequence: []
+    - conditions:
+      - condition: state
+        entity_id: input_number.nummer_status_licht_level
+        state: '1.0'
+      sequence: []
+    - conditions:
+      - condition: state
+        entity_id: input_number.nummer_status_licht_level
+        state: '2.0'
+      sequence: []
+    - conditions:
+      - condition: state
+        entity_id: input_number.nummer_status_licht_level
+        state: '3.0'
+      sequence: []
+  mode: single

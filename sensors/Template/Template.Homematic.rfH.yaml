@@ -1,0 +1,54 @@
+platform: template
+sensors:
+
+# ####### ################################### #######
+# ####### Climate Sensoren Luftfeuchtigkeit % #######
+# ####### ################################### #######
+
+# Homematic Thermostat Wohnzimmer Feuchtigkeit
+  homematic_thermostat_wohnzimmer_feuchtigkeit:
+    friendly_name: "Homematic Thermostat Wohnzimmer Feuchtigkeit"
+    value_template: "{{ state_attr('climate.thermostat_wohnzimmer', 'current_humidity') }}"
+    device_class: humidity
+    unit_of_measurement: "%"
+    unique_id: template.sensor_homematic_thermostat_wohnzimmer_feuchtigkeit
+
+# Homematic Thermostat Stephan Feuchtigkeit
+  homematic_thermostat_stephan_feuchtigkeit:
+    friendly_name: "Homematic Thermostat Stephan Feuchtigkeit"
+    value_template: "{{ state_attr('climate.thermostat_stephan', 'current_humidity') }}"
+    device_class: humidity
+    unit_of_measurement: "%"
+    unique_id: template.sensor_homematic_thermostat_stephan_feuchtigkeit
+
+# Homematic Thermostat Pia Feuchtigkeit
+  homematic_thermostat_pia_feuchtigkeit:
+    friendly_name: "Homematic Thermostat Pia Feuchtigkeit"
+    value_template: "{{ state_attr('climate.thermostat_pia', 'current_humidity') }}"
+    device_class: humidity
+    unit_of_measurement: "%"
+    unique_id: template.sensor_homematic_thermostat_pia_feuchtigkeit
+
+# Homematic Thermostat Bad Feuchtigkeit
+  homematic_thermostat_bad_feuchtigkeit:
+    friendly_name: "Homematic Thermostat Bad Feuchtigkeit"
+    value_template: "{{ state_attr('climate.thermostat_bad', 'current_humidity') }}"
+    device_class: humidity
+    unit_of_measurement: "%"
+    unique_id: template.sensor_homematic_thermostat_bad_feuchtigkeit
+
+# Homematic Thermostat Schlafzimmer Feuchtigkeit
+  homematic_thermostat_schlafzimmer_feuchtigkeit:
+    friendly_name: "Homematic Thermostat Schlafzimmer Feuchtigkeit"
+    value_template: "{{ state_attr('climate.thermostat_schlafzimmer', 'current_humidity') }}"
+    device_class: humidity
+    unit_of_measurement: "%"
+    unique_id: template.sensor_homematic_thermostat_schlafzimmer_feuchtigkeit
+
+# Homematic Thermostat Dusche Feuchtigkeit
+  homematic_thermostat_dusche_feuchtigkeit:
+    friendly_name: "Homematic Thermostat Dusche Feuchtigkeit"
+    value_template: "{{ state_attr('climate.thermostat_dusche', 'current_humidity') }}"
+    device_class: humidity
+    unit_of_measurement: "%"
+    unique_id: template.sensor_homematic_thermostat_dusche_feuchtigkeit

@@ -1,0 +1,9 @@
+platform: statistics
+unique_id: energy_statistic_hifi_center_w
+entity_id: sensor.mystrom_hifi_center_power
+name: "Energy Statistic Hifi Center w"
+state_characteristic: mean
+sampling_size: 2
+#max_age:
+#  minutes: 5
+precision: 0

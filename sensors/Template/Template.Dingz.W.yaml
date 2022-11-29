@@ -1,0 +1,232 @@
+platform: template
+sensors:
+
+# ####### ###################### #######
+# ####### Wattage Sensoren Dingz #######
+# ####### ###################### #######
+
+# https://community.home-assistant.io/t/mystrom-smart-switch-in-energy-consumption-overview-page/367686
+
+#/config/sensors/Dingz/DGZ_Bad.yaml
+  dingz_bad_power:
+    friendly_name: "Bad Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+#    state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_bad
+#/config/sensors/Dingz/DGZ_Dusche.yaml
+  dingz_dusche_power:
+    friendly_name: "Dusche Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_dusche
+#/config/sensors/Dingz/DGZ_Kuche.yaml
+  dingz_kuche_power:
+    friendly_name: "Küche Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_kuche
+#/config/sensors/Dingz/DGZ_Markise1.yaml
+  dingz_markise1_power:
+    friendly_name: "Markise 1 Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_markise1_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_markise1_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_markise1_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_markise1_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_markise
+#/config/sensors/Dingz/DGZ_Markise23.yaml
+  dingz_markise23_power:
+    friendly_name: "Markise 23 Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_markise23_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_markise23_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_markise23_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_markise23_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_markise23
+#/config/sensors/Dingz/DGZ_Markise45.yaml
+  dingz_markise45_power:
+    friendly_name: "Markise 45 Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_markise45_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_markise45_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_markise45_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_markise45_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_markise45
+#/config/sensors/Dingz/DGZ_Schlafzimmer.yaml
+  dingz_schlafzimmer_power:
+    friendly_name: "Schlafzimmer Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_schlafzimmer
+#/config/sensors/Dingz/DGZ_Wohnzimmer.yaml
+  dingz_wohnzimmer_power:
+    friendly_name: "Wohnzimmer Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_wohnzimmer
+#/config/sensors/Dingz/DGZ_Büro_Stephan.yaml
+  dingz_buro_stephan_power:
+    friendly_name: "Büro Stephan Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_buro_stephan
+#/config/sensors/Dingz/DGZ_Büro_Pia.yaml
+  dingz_buro_pia_power:
+    friendly_name: "Büro Pia Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_buro_pia
+#/config/sensors/Dingz/DGZ_Gang.yaml
+  dingz_gang_power:
+    friendly_name: "Gang Dingz W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1) 
+      }}"
+    device_class: power
+    #state_class: measurement
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_dingz_power_gang
+
+# Licht kumuliert
+  mystrom_and_dingz_power_light:
+    friendly_name: "Power Light W"
+    value_template: "{{ 
+      (
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_dusche_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][0]['value'] +
+      state_attr('sensor.dingz_buro_stephan_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_buro_pia_state', 'sensors')['power_outputs'][3]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][1]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][2]['value'] +
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][3]['value']
+      )|float|round(1)
+      }}"
+    device_class: power
+    unit_of_measurement: "W"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.sensor_power_light

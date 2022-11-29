@@ -1,3 +1,0 @@
-platform: mystrom
-name: Keller
-host: !secret ip_mystrom_keller

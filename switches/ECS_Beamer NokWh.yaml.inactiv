@@ -1,3 +1,0 @@
-platform: mystrom
-name: Beamer NokWh
-host: !secret ip_mystrom_beamer_nokwh

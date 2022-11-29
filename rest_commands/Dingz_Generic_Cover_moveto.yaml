@@ -1,0 +1,5 @@
+  dingz_generic_cover_moveto:
+    url: http://{{ ip }}/api/v1/shade/{{ idx }}
+    method: POST
+    payload: 'blind={{ blind }}&lamella={{ lamella }}'
+    content_type: 'application/x-www-form-urlencoded; charset=utf-8'

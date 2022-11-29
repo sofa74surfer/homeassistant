@@ -1,3 +1,0 @@
-platform: mystrom
-name: Büro Stephan
-host: !secret ip_mystrom_buro_stephan

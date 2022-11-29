@@ -4,10 +4,9 @@ resource: !secret url_sensor_dingz_markise45
 # http://ip/api/v1/state
 name: Dingz Markise45 State
 value_template: "OK"
+scan_interval: 60
+force_update: true
 json_attributes:
-  - "dimmers"
   - "blinds"
   - "led"
   - "sensors"
-  - "thermostat"
-  - "wifi"

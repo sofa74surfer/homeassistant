@@ -1,9 +1,0 @@
-platform: rest
-method: GET
-resource: !secret url_sensor_mystrom_geschirrspuler
-# http://ip/report
-name: MyStrom Geschirrspüler Report
-value_template: "OK"
-json_attributes:
-  - "power"
-  - "relay"

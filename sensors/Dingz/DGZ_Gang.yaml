@@ -4,10 +4,9 @@ resource: !secret url_sensor_dingz_gang
 # http://ip/api/v1/state
 name: Dingz Gang State
 value_template: "OK"
+scan_interval: 30
+force_update: true
 json_attributes:
   - "dimmers"
-  - "blinds"
   - "led"
   - "sensors"
-  - "thermostat"
-  - "wifi"

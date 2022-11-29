@@ -1,3 +1,0 @@
-platform: mystrom
-name: Lüftung
-host: !secret ip_mystrom_luftung

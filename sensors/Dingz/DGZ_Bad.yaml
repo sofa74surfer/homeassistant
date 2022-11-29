@@ -4,11 +4,9 @@ resource: !secret url_sensor_dingz_bad
 # http://ip/api/v1/state
 name: Dingz Bad State
 value_template: "OK"
-scan_interval: 5
+scan_interval: 60
+force_update: true
 json_attributes:
   - "dimmers"
-  - "blinds"
   - "led"
   - "sensors"
-  - "thermostat"
-  - "wifi"

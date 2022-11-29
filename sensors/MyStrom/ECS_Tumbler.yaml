@@ -1,9 +1,0 @@
-platform: rest
-method: GET
-resource: !secret url_sensor_mystrom_tumbler
-# http://ip/report
-name: MyStrom Tumbler Report
-value_template: "OK"
-json_attributes:
-  - "power"
-  - "relay"

@@ -1,0 +1,5 @@
+platform: integration
+source: sensor.mystrom_nas_switch_power
+name: "Energy Consumption Nas & Switch"
+unit_prefix: k
+round: 3

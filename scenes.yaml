@@ -1,43 +1,16 @@
 - id: '1605131119496'
   name: Hue Schlafzimmer ON Ambient
   entities:
-    light.schlafzimmer:
-      min_mireds: 153
-      max_mireds: 500
-      effect_list:
-      - colorloop
-      - random
-      brightness: 9
-      color_temp: 466
-      effect: none
-      friendly_name: Schlafzimmer
-      supported_features: 63
-      state: 'on'
-    light.schlafzimmer_pia:
-      min_mireds: 153
-      max_mireds: 500
-      effect_list:
-      - colorloop
-      - random
-      brightness: 8
-      color_temp: 466
-      effect: none
-      friendly_name: Schlafzimmer Pia
-      supported_features: 63
-      state: 'on'
-    light.schlafzimmer_stephan:
-      min_mireds: 153
-      max_mireds: 500
-      effect_list:
-      - colorloop
-      - random
-      brightness: 8
-      color_temp: 466
-      effect: none
-      friendly_name: Schlafzimmer Stephan
-      supported_features: 63
-      state: 'on'
+    light.dingz_schlafzimmer_boden_light:
+      supported_color_modes:
+      - onoff
+      friendly_name: Dingz Schlafzimmer Boden
+      supported_features: 0
+      state: 'off'
   icon: hass:lightbulb-group
+  metadata:
+    light.dingz_schlafzimmer_boden_light:
+      entity_only: true
 - id: '1605216217313'
   name: Hue Wohnzimmer On Ambient
   entities:
@@ -219,34 +192,16 @@
 - id: '1605248169217'
   name: Hue Schlafzimmer OFF
   entities:
-    light.schlafzimmer:
-      min_mireds: 153
-      max_mireds: 500
-      effect_list:
-      - colorloop
-      - random
-      friendly_name: Schlafzimmer
-      supported_features: 63
-      state: 'off'
-    light.schlafzimmer_pia:
-      min_mireds: 153
-      max_mireds: 500
-      effect_list:
-      - colorloop
-      - random
-      friendly_name: Schlafzimmer Pia
-      supported_features: 63
-      state: 'off'
-    light.schlafzimmer_stephan:
-      min_mireds: 153
-      max_mireds: 500
-      effect_list:
-      - colorloop
-      - random
-      friendly_name: Schlafzimmer Stephan
-      supported_features: 63
+    light.dingz_schlafzimmer_boden_light:
+      supported_color_modes:
+      - onoff
+      friendly_name: Dingz Schlafzimmer Boden
+      supported_features: 0
       state: 'off'
   icon: hass:lightbulb-group-off
+  metadata:
+    light.dingz_schlafzimmer_boden_light:
+      entity_only: true
 - id: '1605248232688'
   name: Hue Büro OFF
   entities:

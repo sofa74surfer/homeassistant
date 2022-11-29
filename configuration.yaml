@@ -5,6 +5,21 @@ default_config:
 # This integration handles redirects from the My Home Assistant service.
 my:
 
+# Konfiguration von Mitteilungen
+notify:
+  - name: !secret notify_name
+    platform: smtp
+    server: !secret notify_server
+    port: 587
+    timeout: 15
+    sender: !secret notify_mailaddress
+    encryption: starttls
+    username: !secret notify_mailaddress
+    password: !secret notify_password
+    recipient:
+      - !secret notify_mailaddress
+    sender_name: !secret notify_name
+
 # The wake_on_lan integration enables the ability to send magic packets to Wake on LAN capable devices to turn them on.
 wake_on_lan:
 
@@ -27,6 +42,7 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 binary_sensor: !include binary_sensors.yaml
 light: !include lights.yaml
+cover: !include covers.yaml
 
 ########### INCLUDES ##### Additional Dir List
 sensor: !include_dir_list sensors/
@@ -41,20 +57,20 @@ rest_command: !include_dir_merge_named rest_commands/
 #    delay_secs: 0.6
 
 media_player:
-  - platform: nad
-    type: Telnet
-    port: 23
-    host: !secret ip_nad
-    name: NAD Receiver
-    min_volume: -60
-    max_volume: -20
-    volume_step: 3
-    sources:
-      1: 'Mac'
-      2: 'Apple TV'
-      3: 'Swisscom TV'
-      4: 'Epson HDMI'
-      5: 'BluOS'
+#  - platform: nad
+#    type: Telnet
+#    port: 23
+#    host: !secret ip_nad
+#    name: NAD Receiver
+#    min_volume: -60
+#    max_volume: -20
+#    volume_step: 3
+#    sources:
+#      1: 'Mac'
+#      2: 'Apple TV'
+#      3: 'Swisscom TV'
+##      4: 'Epson HDMI'
+##      5: 'BluOS'
   - platform: bluesound
     hosts:
       - host: !secret ip_nad
@@ -62,13 +78,29 @@ media_player:
         port: !secret port_nad
 
 # HomeMatic IP CCU3
-homematic:
-  interfaces:
-    ip:
-      host: !secret ip_homematic
-      port: !secret port_homematic
-      resolvenames: "json"
-      username: "Admin"
-      password: !secret homematic_ccu_login
-      ssl: true
-      verify_ssl: false
+#homematic:
+#  interfaces:
+#    ip:
+#      host: !secret ip_homematic
+#      port: !secret port_homematic
+#      resolvenames: "json"
+#      username: "Admin"
+#      password: !secret homematic_ccu_login
+#      ssl: true
+#      verify_ssl: false
+
+influxdb:
+  host: !secret host_influxdb
+  port: 8086
+  database: !secret db_influxdb
+  username: !secret user_influxdb
+  password: !secret pw_influxdb
+  max_retries: 3
+  default_measurement: state
+  include: 
+    domains:
+      - switch
+      - climate
+      - person
+    entity_globs:
+      - sensor.qubino_3_phase_smart_meter_electric_consumption_w*

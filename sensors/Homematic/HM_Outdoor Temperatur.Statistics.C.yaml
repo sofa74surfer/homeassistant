@@ -1,0 +1,7 @@
+platform: statistics
+unique_id: temperature_statistic_homematic_c
+entity_id: sensor.homematic_wetterstation_actual_temperature
+name: "Temperatur Statistic Homematic C"
+state_characteristic: median
+sampling_size: 4
+precision: 0

@@ -1,5 +1,6 @@
 # Excluded Folders for Home Assistant
 .ssl/
+.ssh/
 blueprints/
 image/
 ssl/
@@ -13,3 +14,6 @@ groups.yaml
 home-assistant_v2*
 www/
 .cloud/
+custom_components/
+homematicip_local/
+*inactiv*

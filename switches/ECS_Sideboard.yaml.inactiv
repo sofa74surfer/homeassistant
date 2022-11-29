@@ -1,3 +1,0 @@
-platform: mystrom
-name: Sideboard
-host: !secret ip_mystrom_sideboard

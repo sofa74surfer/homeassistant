@@ -1,0 +1,7 @@
+platform: statistics
+unique_id: wind_speed_statistic_homematic_c
+entity_id: sensor.homematic_wetterstation_wind_speed
+name: "Wind Speed Statistic Homematic kmh"
+state_characteristic: median
+sampling_size: 4
+precision: 0

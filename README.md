@@ -5,23 +5,41 @@ Ziel war es, die bisherigen Automationen in IFTTT aus der Cloud zu holen und auf
 
 Integrationen
 
-* Dingz Lichtschalter (https://api.dingz.ch/)
-* MyStrom Wifi Switch (https://www.home-assistant.io/integrations/mystrom/)
-* Apple TV (https://www.home-assistant.io/integrations/apple_tv/)
-* NAD Receiver (https://www.home-assistant.io/integrations/nad/)
-* Sure Petcare (https://www.home-assistant.io/integrations/surepetcare/)
-* iRobot (https://www.home-assistant.io/integrations/roomba/)
-* Logitech Harmony (https://www.home-assistant.io/integrations/harmony/)
-* Netatmo (https://www.home-assistant.io/integrations/netatmo/)
-* Hue (https://www.home-assistant.io/integrations/hue)
-* Ubiquity Unifi (https://www.home-assistant.io/integrations/unifi/)
+* Dingz 
+    * Lichtschalter
+    * Markisen
+* MyStrom Wifi Switch 
+* Apple TV 
+* NAD Receiver 
+* Sure Petcare 
+* iRobot 
+* Netatmo
+* Hue 
+* Ubiquity Unifi 
+* Homematic (HACS, RasperryMatic; HW: HMIP-RFUSB-TK/eQ-3)
+    * Thermostate
+    * Wetterstation
+* Zwave (HW: Aeotec - Z-Wave+ 700 USB Z-Stick 7)
+    * Qubino Electric Smart Meter
+    * Aeotec Multisensor
+* Qnap
+* Notify
+* Wake on Lan
 
 Automationen
 
-* Licht Szenen in den Morgen und Abendstunden schalten (Licht: Hue)
-* Licht Simulationen (Präsenz: Ubiquity, Licht: Hue)
-* Licht anhand Bewegung, Sonne & Zeit (Motion: Dingz, Licht: Hue)
-* Licht abhängig der Aussentemperatur farblich varieren (Sensor: Netatmo, Licht: Hue)
-* Lüftung aktivieren bei höheren Temperaturen im Server Schrank (Sensor: MyStrom, Schalter: MyStrom)
-* Entfeuchtung aktivieren bei Überschreitung eines Schwellwertes (Sensor: Netatmo, Schalter: MyStrom)
-* Kameras aktivieren und deaktivieren (Präsenz: Ubiquity, Schalter: MyStrom)
+Eine kleine Auswahl ...
+
+* Lichter
+    * Licht Dimmwert setzen abhängig Aussenhelligkeit 
+    * Licht automatisch ein und aus
+* Strom
+    * Strom sparen bei Abweseneheit oder während Schlafenszeit
+* Markisen
+    * Markisen in der Nacht automatisch runter, wenn wir zu Bett gehen
+    * Markisen automatisch hoch, bei zu viel Wind
+    * Markisen automatich hoch, wenn wir aufstehen
+* Entfeuchten
+    * Entfeuchter im Keller aktivieren, wenn Schwellwert Luftfeuchtigkeit überschritten
+* Kühlung
+    * Lüfter im Schrank einschalten, wenn Temperatur im Schrank zu hoch

@@ -1,0 +1,19 @@
+platform: template
+sensors:
+
+# ####### ################################### #######
+# ####### Netatmo Sensoren Luftfeuchtigkeit % #######
+# ####### ################################### #######
+
+# Netatmo Keller Feuchtigkeit
+  netatmo_keller_feuchtigkeit:
+    friendly_name: "Netatmo Keller Feuchtigkeit"
+    value_template: "{% if states('sensor.netatmo_steffs_home_keller_humidity')|is_number -%}
+  {{ states('sensor.netatmo_steffs_home_keller_humidity') }}
+{%- else -%}
+  {{ states('sensor.netatmo_keller_feuchtigkeit') }}
+{%- endif %}"
+    device_class: humidity
+    unit_of_measurement: "%"
+    unique_id: template.sensor_netatmo_keller_feuchtigkeit
+

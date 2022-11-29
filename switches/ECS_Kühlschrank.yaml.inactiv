@@ -1,3 +1,0 @@
-platform: mystrom
-name: Kühlschrank
-host: !secret ip_mystrom_kuhlschrank

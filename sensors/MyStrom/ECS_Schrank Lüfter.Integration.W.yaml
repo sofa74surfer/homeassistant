@@ -1,0 +1,5 @@
+platform: integration
+source: sensor.mystrom_schrank_lufter_power
+name: "Energy Consumption Schrank Lüfter"
+unit_prefix: k
+round: 3

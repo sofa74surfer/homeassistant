@@ -1,3 +1,0 @@
-platform: mystrom
-name: Terrasse
-host: !secret ip_mystrom_terrasse

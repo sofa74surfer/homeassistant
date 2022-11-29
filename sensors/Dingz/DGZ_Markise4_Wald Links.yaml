@@ -1,0 +1,10 @@
+platform: rest
+method: GET
+resource: !secret url_sensor_dingz_markise4_wald_links
+# http://ip/api/v1/shade/n
+name: Dingz Markise4 Wald Links State
+value_template: "OK"
+scan_interval: 60
+force_update: true
+json_attributes:
+  - "current"

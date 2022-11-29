@@ -1,0 +1,3 @@
+  dingz_generic_cover_move:
+    url: http://{{ ip }}/api/v1/shade/{{ idx }}/{{ action }}
+    method: POST

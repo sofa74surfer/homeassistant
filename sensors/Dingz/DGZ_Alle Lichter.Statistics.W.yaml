@@ -1,0 +1,9 @@
+platform: statistics
+unique_id: energy_statistic_dingz_light_w
+entity_id: sensor.mystrom_and_dingz_power_light
+name: "Energy Statistic Dingz Lichter w"
+state_characteristic: mean
+sampling_size: 4
+#max_age:
+#  minutes: 2
+precision: 0

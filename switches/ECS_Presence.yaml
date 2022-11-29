@@ -1,3 +1,0 @@
-platform: mystrom
-name: Presence
-host: !secret ip_mystrom_presence

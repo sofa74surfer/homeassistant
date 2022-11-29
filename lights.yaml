@@ -277,9 +277,10 @@
         friendly_name: "Dingz Bad Spiegel"
         value_template: "{{ state_attr('sensor.dingz_bad_state', 'dimmers')[1]['on']}}"
         turn_on:
-          service: script.dingz_light_level_generic_onoff
+          service: script.dingz_light_level_generic
           entity_id: light.dingz_bad_spiegel_light
           data:
+            brightness: "50"
             enum: "on"
             dimmer: 1
             ip: !secret ip_dingz_bad
@@ -289,6 +290,15 @@
           entity_id: light.dingz_bad_spiegel_light
           data:
             enum: "off"
+            dimmer: 1
+            ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
+        set_level:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_bad_spiegel_light
+          data:
+            brightness: "{{ (brightness * 100 / 255) | int }}"
+            enum: "on"
             dimmer: 1
             ip: !secret ip_dingz_bad
             force_entity: sensor.dingz_bad_state
@@ -334,11 +344,13 @@
       dingz_dusche_spiegel_light:
         unique_id: dingz_dusche_spiegel_light
         friendly_name: "Dingz Dusche Spiegel"
+        level_template: "{{ (state_attr('sensor.dingz_dusche_state', 'dimmers')[3]['output']*255/100)|int }}"
         value_template: "{{ state_attr('sensor.dingz_dusche_state', 'dimmers')[3]['on']}}"
         turn_on:
-          service: script.dingz_light_level_generic_onoff
+          service: script.dingz_light_level_generic
           entity_id: light.dingz_dusche_spiegel_light
           data:
+            brightness: "50"
             enum: "on"
             dimmer: 3
             ip: !secret ip_dingz_dusche
@@ -348,6 +360,15 @@
           entity_id: light.dingz_dusche_spiegel_light
           data:
             enum: "off"
+            dimmer: 3
+            ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
+        set_level:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_dusche_spiegel_light
+          data:
+            brightness: "{{ (brightness * 100 / 255) | int }}"
+            enum: "on"
             dimmer: 3
             ip: !secret ip_dingz_dusche
             force_entity: sensor.dingz_dusche_state
@@ -389,6 +410,29 @@
     # ####### Dingz Light Template Büro #######
     # ####### ######################### #######
 
+    # ####### Dingz Büro Stephan Decke Light
+      dingz_buro_stephan_decke_light:
+        unique_id: dingz_buro_stephan_decke_light
+        friendly_name: "Dingz Büro Stephan Decke"
+        value_template: "{{ state_attr('sensor.dingz_buro_stephan_state', 'dimmers')[0]['on']}}"
+        turn_on:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_buro_stephan_decke_light
+          data:
+            brightness: "100"
+            enum: "on"
+            dimmer: 0
+            ip: !secret ip_dingz_buro_stephan
+            force_entity: sensor.dingz_buro_stephan_state
+        turn_off:
+          service: script.dingz_light_level_generic_onoff
+          entity_id: light.dingz_buro_stephan_decke_light
+          data:
+            enum: "off"
+            dimmer: 0
+            ip: !secret ip_dingz_buro_stephan
+            force_entity: sensor.dingz_buro_stephan_state
+
     # ####### Dingz Büro Stephan Boden Light
       dingz_buro_stephan_boden_light:
         unique_id: dingz_buro_stephan_boden_light
@@ -421,6 +465,29 @@
             dimmer: 2
             ip: !secret ip_dingz_buro_stephan
             force_entity: sensor.dingz_buro_stephan_state
+
+    # ####### Dingz Büro Pia Decke Light
+      dingz_buro_pia_decke_light:
+        unique_id: dingz_buro_pia_decke_light
+        friendly_name: "Dingz Büro Pia Decke"
+        value_template: "{{ state_attr('sensor.dingz_buro_pia_state', 'dimmers')[1]['on']}}"
+        turn_on:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_buro_pia_decke_light
+          data:
+            brightness: "100"
+            enum: "on"
+            dimmer: 1
+            ip: !secret ip_dingz_buro_pia
+            force_entity: sensor.dingz_buro_pia_state
+        turn_off:
+          service: script.dingz_light_level_generic_onoff
+          entity_id: light.dingz_buro_pia_decke_light
+          data:
+            enum: "off"
+            dimmer: 1
+            ip: !secret ip_dingz_buro_pia
+            force_entity: sensor.dingz_buro_pia_state
 
     # ####### Dingz Büro Pia Boden Light
       dingz_buro_pia_boden_light:
@@ -492,9 +559,36 @@
             ip: !secret ip_dingz_gang
             force_entity: sensor.dingz_gang_state
 
-    # ####### ############################## #######
-    # ####### Dingz Light Template Dingz LED #######
-    # ####### ############################## #######
+    # ####### ################################# #######
+    # ####### Dingz Light Template Schlafzimmer #######
+    # ####### ################################# #######
+
+    # ####### Dingz Schlafzimmer Boden Light
+      dingz_schlafzimmer_boden_light:
+        unique_id: dingz_schlafzimmer_boden_light
+        friendly_name: "Dingz Schlafzimmer Boden"
+        value_template: "{{ state_attr('sensor.dingz_schlafzimmer_state', 'dimmers')[2]['on']}}"
+        turn_on:
+          service: script.dingz_light_level_generic
+          entity_id: light.dingz_schlafzimmer_boden_light
+          data:
+            brightness: "100"
+            enum: "on"
+            dimmer: 2
+            ip: !secret ip_dingz_schlafzimmer
+            force_entity: sensor.dingz_dingz_schlafzimmer_state
+        turn_off:
+          service: script.dingz_light_level_generic_onoff
+          entity_id: light.dingz_schlafzimmer_boden_light
+          data:
+            enum: "off"
+            dimmer: 2
+            ip: !secret ip_dingz_schlafzimmer
+            force_entity: sensor.dingz_dingz_schlafzimmer_state
+
+    # # ####### ############################## #######
+    # # ####### Dingz Light Template Dingz LED #######
+    # # ####### ############################## #######
 
     # ####### Dingz Markise1 LED
       dingz_markise1_led:

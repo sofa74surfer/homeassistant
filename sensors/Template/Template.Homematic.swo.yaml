@@ -1,0 +1,55 @@
+platform: template
+sensors:
+
+# ####### ################################# #######
+# ####### Homematic Wetterstation Sensoren  #######
+# ####### ################################# #######
+
+# Homematic Wetterstation Temperatur
+  homematic_wetterstation_actual_temperature:
+    friendly_name: "Homematic Wetterstation Temperatur"
+    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature')|is_number -%}
+  {{ states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature') }}
+{%- else -%}
+  {{ states('sensor.homematic_wetterstation_actual_temperature') }}
+{%- endif %}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_wetterstation_actual_temperature
+
+# Homematic Wetterstation Luftfeuchtigkeit
+  homematic_wetterstation_humidity:
+    friendly_name: "Homematic Wetterstation Luftfeuchtigkeit"
+    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_humidity')|is_number -%}
+  {{ states('sensor.hmip_swo_pr_00185d89a9f0bf_humidity') }}
+{%- else -%}
+  {{ states('sensor.homematic_wetterstation_humidity') }}
+{%- endif %}"
+    device_class: humidity
+    unit_of_measurement: "%"
+    unique_id: template.sensor_homematic_wetterstation_humidity
+
+# Homematic Wetterstation Helligkeit
+  homematic_wetterstation_illumination:
+    friendly_name: "Homematic Wetterstation Helligkeit"
+    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_illumination')|is_number -%}
+  {{ states('sensor.hmip_swo_pr_00185d89a9f0bf_illumination') }}
+{%- else -%}
+  {{ states('sensor.homematic_wetterstation_illumination') }}
+{%- endif %}"
+    device_class: illuminance
+    unit_of_measurement: "lx"
+    unique_id: template.sensor_homematic_wetterstation_illumination
+
+# Homematic Wetterstation Windgeschwindigkei
+  homematic_wetterstation_wind_speed:
+    friendly_name: "Homematic Wetterstation Windgeschwindigkei"
+    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_wind_speed')|is_number -%}
+  {{ states('sensor.hmip_swo_pr_00185d89a9f0bf_wind_speed') }}
+{%- else -%}
+  {{ states('sensor.homematic_wetterstation_wind_speed') }}
+{%- endif %}"
+    unit_of_measurement: "km/h"
+    unique_id: template.sensor_homematic_wetterstation_wind_speed
+
+

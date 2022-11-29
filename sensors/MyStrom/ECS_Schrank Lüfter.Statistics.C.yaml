@@ -1,0 +1,9 @@
+platform: statistics
+unique_id: temperature_statistic_lufter_schrank_c
+entity_id: sensor.mystrom_schrank_lufter_temperature
+name: "Temperatur Statistic Schrank Lüfter C"
+state_characteristic: mean
+sampling_size: 5
+#max_age:
+#  minutes: 5
+precision: 0

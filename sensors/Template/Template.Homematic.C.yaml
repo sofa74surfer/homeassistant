@@ -1,0 +1,54 @@
+platform: template
+sensors:
+
+# ####### ############################## #######
+# ####### Climate Sensoren Temperatur °C #######
+# ####### ############################## #######
+
+# Homematic Thermostat Wohnzimmer Temperatur
+  homematic_thermostat_wohnzimmer_temperatur:
+    friendly_name: "Homematic Thermostat Wohnzimmer Temperatur"
+    value_template: "{{ state_attr('climate.thermostat_wohnzimmer', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_wohnzimmer_temperatur
+
+# Homematic Thermostat Stephan Temperatur
+  homematic_thermostat_stephan_temperatur:
+    friendly_name: "Homematic Thermostat Stephan Temperatur"
+    value_template: "{{ state_attr('climate.thermostat_stephan', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_stephan_temperatur
+
+# Homematic Thermostat Pia Temperatur
+  homematic_thermostat_pia_temperatur:
+    friendly_name: "Homematic Thermostat Pia Temperatur"
+    value_template: "{{ state_attr('climate.thermostat_pia', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_pia_temperatur
+
+# Homematic Thermostat Bad Temperatur
+  homematic_thermostat_bad_temperatur:
+    friendly_name: "Homematic Thermostat Bad Temperatur"
+    value_template: "{{ state_attr('climate.thermostat_bad', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_bad_temperatur
+
+# Homematic Thermostat Schlafzimmer Temperatur
+  homematic_thermostat_schlafzimmer_temperatur:
+    friendly_name: "Homematic Thermostat Schlafzimmer Temperatur"
+    value_template: "{{ state_attr('climate.thermostat_schlafzimmer', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_schlafzimmer_temperatur
+
+# Homematic Thermostat Dusche Temperatur
+  homematic_thermostat_dusche_temperatur:
+    friendly_name: "Homematic Thermostat Dusche Temperatur"
+    value_template: "{{ state_attr('climate.thermostat_dusche', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_dusche_temperatur

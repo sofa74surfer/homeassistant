@@ -6,33 +6,33 @@ sensors:
 # ####### ################ #######
 
 # ####### Deko USM Möbel im Büro 
-  motion_deko_usm_battery_level:
-    friendly_name: "Motion Deko USM battery level"
-    value_template: "{{state_attr('binary_sensor.motion_deko_usm_motion', 'battery_level')}}"
-    unique_id: template.sensor_battery_motion_deko_usm
-    device_class: battery
-    unit_of_measurement: "%"
+#  motion_deko_usm_battery_level:
+#    friendly_name: "Motion Deko USM battery level"
+#    value_template: "{{state_attr('binary_sensor.motion_deko_usm_motion', 'battery_level')}}"
+#    unique_id: template.sensor_battery_motion_deko_usm
+#    device_class: battery
+#    unit_of_measurement: "%"
 # ####### Pias Möbel im Büro
-  motion_pia_buro_battery_level:
-    friendly_name: "Motion Pia Büro battery level"
-    value_template: "{{state_attr('binary_sensor.motion_pia_buro_motion', 'battery_level')}}"
-    unique_id: template.sensor_battery_motion_pia_buro
-    device_class: battery
-    unit_of_measurement: "%"
+#  motion_pia_buro_battery_level:
+#    friendly_name: "Motion Pia Büro battery level"
+#    value_template: "{{state_attr('binary_sensor.motion_pia_buro_motion', 'battery_level')}}"
+#    unique_id: template.sensor_battery_motion_pia_buro
+#    device_class: battery
+#    unit_of_measurement: "%"
 # ####### Bad
-  motion_bad_battery_level:
-    friendly_name: "Motion Bad battery level"
-    value_template: "{{state_attr('binary_sensor.motion_bad_motion', 'battery_level')}}"
-    unique_id: template.sensor_battery_motion_bad
-    device_class: battery
-    unit_of_measurement: "%"
+#  motion_bad_battery_level:
+#    friendly_name: "Motion Bad battery level"
+#    value_template: "{{state_attr('binary_sensor.motion_bad_motion', 'battery_level')}}"
+#    unique_id: template.sensor_battery_motion_bad
+#    device_class: battery
+#    unit_of_measurement: "%"
 # ####### Dusche
-  motion_dusche_battery_level:
-    friendly_name: "Motion Dusche battery level"
-    value_template: "{{state_attr('binary_sensor.motion_dusche_motion', 'battery_level')}}"
-    unique_id: template.sensor_battery_motion_dusche
-    device_class: battery
-    unit_of_measurement: "%"
+#  motion_dusche_battery_level:
+#    friendly_name: "Motion Dusche battery level"
+#    value_template: "{{state_attr('binary_sensor.motion_dusche_motion', 'battery_level')}}"
+#    unique_id: template.sensor_battery_motion_dusche
+#    device_class: battery
+#    unit_of_measurement: "%"
 
 # ####### ######################### #######
 # ####### Temperatur Sensoren Dingz #######
@@ -44,138 +44,138 @@ sensors:
     value_template: "{{ state_attr('sensor.dingz_bad_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_bad
+    unique_id: template.sensor_dingz_temperature_bad
 # ####### Dingz Dusche
   dingz_dusche_temperature:
     friendly_name: "Dusche Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_dusche_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_dusche
+    unique_id: template.sensor_dingz_temperature_dusche
 # ####### Dingz Küche
   dingz_kuche_temperature:
     friendly_name: "Küche Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_kuche_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_kuche
+    unique_id: template.sensor_dingz_temperature_kuche
 # ####### Dingz Wohnzimmer
   dingz_wohnzimmer_temperature:
     friendly_name: "Wohnzimmer Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_wohnzimmer
+    unique_id: template.sensor_dingz_temperature_wohnzimmer
 # ####### Dingz Schlafzimmer
   dingz_schlafzimmer_temperature:
     friendly_name: "Schlafzimmer Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_schlafzimmer_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_schlafzimmer
+    unique_id: template.sensor_dingz_temperature_schlafzimmer
 # ####### Dingz Markise1
   dingz_markise1_temperature:
     friendly_name: "Markise 1 Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_markise1_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_markise1
+    unique_id: template.sensor_dingz_temperature_markise1
 # ####### Dingz Markise23
   dingz_markise23_temperature:
     friendly_name: "Markise 23 Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_markise23_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_markise23
+    unique_id: template.sensor_dingz_temperature_markise23
 # ####### Dingz Markise45
   dingz_markise45_temperature:
     friendly_name: "Markise 45 Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_markise45_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_markise45
+    unique_id: template.sensor_dingz_temperature_markise45
 # ####### Dingz Büro Stephan
   dingz_buro_stephan_temperature:
     friendly_name: "Büro Stephan Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_buro_stephan_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_buro_stephan
+    unique_id: template.sensor_dingz_temperature_buro_stephan
 # ####### Dingz Büro Pia
   dingz_buro_pia_temperature:
     friendly_name: "Büro Pia Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_buro_pia_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_buro_pia
+    unique_id: template.sensor_dingz_temperature_buro_pia
 # ####### Dingz Gang
   dingz_gang_temperature:
     friendly_name: "Gang Dingz °C"
     value_template: "{{ state_attr('sensor.dingz_gang_state', 'sensors')['room_temperature']|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_gang
+    unique_id: template.sensor_dingz_temperature_gang
 
 # ####### ########################### #######
 # ####### Temperatur Sensoren MyStrom #######
 # ####### ########################### #######
 
-#/config/switches/ECS_Beamer.yaml
-  mystrom_beamer_temperature:
-    friendly_name: "Beamer MyStrom °C"
-    value_template: "{{ state_attr('sensor.mystrom_beamer_report', 'temperature')|float|round(1) }}"
-    device_class: temperature
-    unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_beamer
+#/config/switches/ECS_Beamer NokWh.yaml.inactive
+#  mystrom_beamer_temperature:
+#    friendly_name: "Beamer MyStrom °C"
+#    value_template: "{{ state_attr('sensor.mystrom_beamer_report', 'temperature')|float|round(1) }}"
+#    device_class: temperature
+#    unit_of_measurement: "°C"
+#    unique_id: template.sensor_mystrom_temperature_beamer
 #/config/switches/ECS_Büro Stephan.yaml
   mystrom_buro_stephan_temperature:
     friendly_name: "Büro Stephan MyStrom °C"
     value_template: "{{ state_attr('sensor.mystrom_buro_stephan_report', 'temperature')|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_buro_stephan
+    unique_id: template.sensor_mystrom_temperature_buro_stephan
 #/config/switches/ECS_Entfeuchter.yaml
   mystrom_entfeuchter_temperature:
     friendly_name: "Entfeuchter MyStrom °C"
     value_template: "{{ state_attr('sensor.mystrom_entfeuchter_report', 'temperature')|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_entfeuchter
+    unique_id: template.sensor_mystrom_temperature_entfeuchter
 #/config/switches/ECS_Presence.yaml
   mystrom_presence_temperature:
     friendly_name: "Presence MyStrom °C"
     value_template: "{{ state_attr('sensor.mystrom_presence_report', 'temperature')|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_presence
-#/config/switches/ECS_Reolink.yaml
-  mystrom_reolink_temperature:
-    friendly_name: "Reolink MyStrom °C"
-    value_template: "{{ state_attr('sensor.mystrom_reolink_report', 'temperature')|float|round(1) }}"
+    unique_id: template.sensor_mystrom_temperature_presence
+#/config/switches/ECS_Beamer.yaml
+  mystrom_beamer_temperature:
+    friendly_name: "Beamer MyStrom °C"
+    value_template: "{{ state_attr('sensor.mystrom_beamer_report', 'temperature')|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_reolink
+    unique_id: template.sensor_mystrom_temperature_beamer
 #/config/switches/ECS_Schrank Lüfter.yaml
   mystrom_schrank_lufter_temperature:
     friendly_name: "Schrank Lüfter MyStrom °C"
     value_template: "{{ state_attr('sensor.mystrom_schrank_lufter_report', 'temperature')|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_schrank_lufter
+    unique_id: template.sensor_mystrom_temperature_schrank_lufter
 #/config/switches/ECS_Terrasse.yaml.inactiv
   mystrom_terrasse_temperature:
     friendly_name: "Terrasse MyStrom °C"
     value_template: "{{ state_attr('sensor.mystrom_terrasse_report', 'temperature')|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_terrasse
-#/config/switches/ECS_Welcome.yaml
-  mystrom_welcome_temperature:
-    friendly_name: "Welcome MyStrom °C"
-    value_template: "{{ state_attr('sensor.mystrom_welcome_report', 'temperature')|float|round(1) }}"
+    unique_id: template.sensor_mystrom_temperature_terrasse
+#/config/switches/ECS_Büro Pia.yaml
+  mystrom_buro_pia_temperature:
+    friendly_name: "Büro Pia MyStrom °C"
+    value_template: "{{ state_attr('sensor.mystrom_buro_pia_report', 'temperature')|float|round(1) }}"
     device_class: temperature
     unit_of_measurement: "°C"
-    unique_id: template.sensor_temperature_welcome
+    unique_id: template.sensor_mystrom_temperature_buro_pia
 
 # ####### ###################### #######
 # ####### Wattage Sensoren Dingz #######
@@ -193,8 +193,9 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_bad
+    unique_id: template.sensor_dingz_power_bad
 #/config/sensors/Dingz/DGZ_Dusche.yaml
   dingz_dusche_power:
     friendly_name: "Dusche Dingz W"
@@ -207,8 +208,9 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_dusche
+    unique_id: template.sensor_dingz_power_dusche
 #/config/sensors/Dingz/DGZ_Kuche.yaml
   dingz_kuche_power:
     friendly_name: "Küche Dingz W"
@@ -221,8 +223,9 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_kuche
+    unique_id: template.sensor_dingz_power_kuche
 #/config/sensors/Dingz/DGZ_Markise1.yaml
   dingz_markise1_power:
     friendly_name: "Markise 1 Dingz W"
@@ -235,8 +238,9 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_markise
+    unique_id: template.sensor_dingz_power_markise
 #/config/sensors/Dingz/DGZ_Markise23.yaml
   dingz_markise23_power:
     friendly_name: "Markise 23 Dingz W"
@@ -249,8 +253,9 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_markise23
+    unique_id: template.sensor_dingz_power_markise23
 #/config/sensors/Dingz/DGZ_Markise45.yaml
   dingz_markise45_power:
     friendly_name: "Markise 45 Dingz W"
@@ -263,8 +268,9 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_markise45
+    unique_id: template.sensor_dingz_power_markise45
 #/config/sensors/Dingz/DGZ_Schlafzimmer.yaml
   dingz_schlafzimmer_power:
     friendly_name: "Schlafzimmer Dingz W"
@@ -277,8 +283,9 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_schlafzimmer
+    unique_id: template.sensor_dingz_power_schlafzimmer
 #/config/sensors/Dingz/DGZ_Wohnzimmer.yaml
   dingz_wohnzimmer_power:
     friendly_name: "Wohnzimmer Dingz W"
@@ -291,8 +298,9 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_wohnzimmer
+    unique_id: template.sensor_dingz_power_wohnzimmer
 #/config/sensors/Dingz/DGZ_Büro_Stephan.yaml
   dingz_buro_stephan_power:
     friendly_name: "Büro Stephan Dingz W"
@@ -305,8 +313,9 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_buro_stephan
+    unique_id: template.sensor_dingz_power_buro_stephan
 #/config/sensors/Dingz/DGZ_Büro_Pia.yaml
   dingz_buro_pia_power:
     friendly_name: "Büro Pia Dingz W"
@@ -319,152 +328,173 @@ sensors:
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_buro_pia
+    unique_id: template.sensor_dingz_power_buro_pia
 #/config/sensors/Dingz/DGZ_Gang.yaml
   dingz_gang_power:
     friendly_name: "Gang Dingz W"
     value_template: "{{ 
       (
+      state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][0]['value'] +
       state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][1]['value'] +
       state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][2]['value'] +
       state_attr('sensor.dingz_gang_state', 'sensors')['power_outputs'][3]['value']
       )|float|round(1) 
       }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_gang
+    unique_id: template.sensor_dingz_power_gang
 
 # ####### ######################## #######
 # ####### Wattage Sensoren MyStrom #######
 # ####### ######################## #######
 
-#/config/switches/ECS_Beamer.yaml
-  mystrom_beamer_power:
-    friendly_name: "Beamer MyStrom W"
-    value_template: "{{ state_attr('sensor.mystrom_beamer_report', 'power')|float|round(1) }}"
-    device_class: power
-    unit_of_measurement: "W"
-    unique_id: template.sensor_power_beamer
+#/config/switches/ECS_Beamer NokWh.yaml.inactiv
+#  mystrom_beamer_power:
+#    friendly_name: "Beamer MyStrom W"
+#    value_template: "{{ state_attr('sensor.mystrom_beamer_report', 'power')|float|round(1) }}"
+#    device_class: power
+#    #state_class: measurement
+#    unit_of_measurement: "W"
+#    unique_id: template.sensor_mystrom_power_beamer
 #/config/switches/ECS_Büro Stephan.yaml
   mystrom_buro_stephan_power:
     friendly_name: "Büro Stephan MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_buro_stephan_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_buro_stephan
+    unique_id: template.sensor_mystrom_power_buro_stephan
 #/config/switches/ECS_Entfeuchter.yaml
   mystrom_entfeuchter_power:
     friendly_name: "Entfeuchter MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_entfeuchter_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_entfeuchter
+    unique_id: template.sensor_mystrom_power_entfeuchter
 #/config/switches/ECS_Geschirrspüler.yaml.inactiv
   mystrom_geschirrspuler_power:
     friendly_name: "Geschirrspüler MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_geschirrspuler_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_geschirrspuler
+    unique_id: template.sensor_mystrom_power_geschirrspuler
 #/config/switches/ECS_Hifi Center.yaml
   mystrom_hifi_center_power:
     friendly_name: "Hifi Center MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_hifi_center_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_hifi_center
+    unique_id: template.sensor_mystrom_power_hifi_center
 #/config/switches/ECS_Kaffeemaschine.yaml
   mystrom_kaffeemaschine_power:
     friendly_name: "Kaffeemaschine MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_kaffeemaschine_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_kaffeemaschine
+    unique_id: template.sensor_mystrom_power_kaffeemaschine
 #/config/switches/ECS_Keller.yaml.inactiv
   mystrom_keller_power:
     friendly_name: "Keller MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_keller_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_keller
+    unique_id: template.sensor_mystrom_power_keller
 #/config/switches/ECS_Kühlschrank.yaml.inactiv
   mystrom_kuhlschrank_power:
     friendly_name: "Kühlschrank MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_kuhlschrank_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_kuhlschrank
+    unique_id: template.sensor_mystrom_power_kuhlschrank
 #/config/switches/ECS_Lüftung.yaml.inactiv
   mystrom_luftung_power:
     friendly_name: "Lüftung MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_luftung_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_luftung
+    unique_id: template.sensor_mystrom_power_luftung
 #/config/switches/ECS_NAS & Switch.yaml.inactiv
   mystrom_nas_switch_power:
     friendly_name: "NAS & Switch MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_nas_switch_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_nas_switch
+    unique_id: template.sensor_mystrom_power_nas_switch
 #/config/switches/ECS_Presence.yaml
   mystrom_presence_power:
     friendly_name: "Presence MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_presence_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_presence
-#/config/switches/ECS_Reolink.yaml
-  mystrom_reolink_power:
-    friendly_name: "Reolink MyStrom W"
-    value_template: "{{ state_attr('sensor.mystrom_reolink_report', 'power')|float|round(1) }}"
+    unique_id: template.sensor_mystrom_power_presence
+#/config/switches/ECS_Beamer.yaml
+  mystrom_beamer_power:
+    friendly_name: "Beamer MyStrom W"
+    value_template: "{{ state_attr('sensor.mystrom_beamer_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_reolink
+    unique_id: template.sensor_mystrom_power_beamer
 #/config/switches/ECS_Schrank Lüfter.yaml
   mystrom_schrank_lufter_power:
     friendly_name: "Schrank Lüfter MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_schrank_lufter_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_schrank_lufter
+    unique_id: template.sensor_power_mystrom_schrank_lufter
 #/config/switches/ECS_Sideboard.yaml.inactiv
   mystrom_sideboard_power:
     friendly_name: "Sideboard MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_sideboard_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_sideboard
+    unique_id: template.sensor_mystrom_power_sideboard
 #/config/switches/ECS_Terrasse.yaml.inactiv
   mystrom_terrasse_power:
     friendly_name: "Terrasse MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_terrasse_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_terrasse
+    unique_id: template.sensor_mystrom_power_terrasse
 #/config/switches/ECS_Tumbler.yaml.inactiv
   mystrom_tumbler_power:
     friendly_name: "Tumbler MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_tumbler_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_tumbler
+    unique_id: template.sensor_mystrom_power_tumbler
 #/config/switches/ECS_Waschmaschine.yaml.inactiv
   mystrom_waschmaschine_power:
     friendly_name: "Waschmaschine MyStrom W"
     value_template: "{{ state_attr('sensor.mystrom_waschmaschine_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_waschmaschine
-#/config/switches/ECS_Welcome.yaml
-  mystrom_welcome_power:
-    friendly_name: "Welcome MyStrom W"
-    value_template: "{{ state_attr('sensor.mystrom_welcome_report', 'power')|float|round(1) }}"
+    unique_id: template.sensor_mystrom_power_waschmaschine
+#/config/switches/ECS_Büro Pia.yaml
+  mystrom_buro_pia_power:
+    friendly_name: "Büro Pia MyStrom W"
+    value_template: "{{ state_attr('sensor.mystrom_buro_pia_report', 'power')|float|round(1) }}"
     device_class: power
+    #state_class: measurement
     unit_of_measurement: "W"
-    unique_id: template.sensor_power_welcome
+    unique_id: template.sensor_mystrom_power_buro_pia
 
 # ####### ########################## #######
 # ####### Wattage Sensoren kumuliert #######
@@ -475,7 +505,6 @@ sensors:
     friendly_name: "Power All W"
     value_template: "{{ 
       (
-      state_attr('sensor.mystrom_beamer_report', 'power') +
       state_attr('sensor.mystrom_buro_stephan_report', 'power') +
       state_attr('sensor.mystrom_entfeuchter_report', 'power') +
       state_attr('sensor.mystrom_geschirrspuler_report', 'power') +
@@ -486,13 +515,13 @@ sensors:
       state_attr('sensor.mystrom_luftung_report', 'power') +
       state_attr('sensor.mystrom_nas_switch_report', 'power') +
       state_attr('sensor.mystrom_presence_report', 'power') +
-      state_attr('sensor.mystrom_reolink_report', 'power') +
+      state_attr('sensor.mystrom_beamer_report', 'power') +
       state_attr('sensor.mystrom_schrank_lufter_report', 'power') +
       state_attr('sensor.mystrom_sideboard_report', 'power') +
       state_attr('sensor.mystrom_terrasse_report', 'power') +
       state_attr('sensor.mystrom_tumbler_report', 'power') +
       state_attr('sensor.mystrom_waschmaschine_report', 'power') +
-      state_attr('sensor.mystrom_welcome_report', 'power') +
+      state_attr('sensor.mystrom_buro_pia_report', 'power') +
       state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][0]['value'] +
       state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][1]['value'] +
       state_attr('sensor.dingz_bad_state', 'sensors')['power_outputs'][2]['value'] +
@@ -573,9 +602,8 @@ sensors:
     friendly_name: "Wohnzimmer Power All W"
     value_template: "{{ 
       (
-      state_attr('sensor.mystrom_beamer_report', 'power') +
       state_attr('sensor.mystrom_hifi_center_report', 'power') +
-      state_attr('sensor.mystrom_reolink_report', 'power') +
+      state_attr('sensor.mystrom_beamer_report', 'power') +
       state_attr('sensor.mystrom_sideboard_report', 'power') +
       state_attr('sensor.dingz_kuche_state', 'sensors')['power_outputs'][2]['value'] +
       state_attr('sensor.dingz_wohnzimmer_state', 'sensors')['power_outputs'][1]['value'] 
@@ -628,3 +656,56 @@ sensors:
     device_class: power
     unit_of_measurement: "W"
     unique_id: template.sensor_power_keller_all
+
+# ####### ################ #######
+# ####### Climate Sensoren #######
+# ####### ################ #######
+
+# Homematic Thermostat Wohnzimmer Temperatur
+  homematic_thermostat_wohnzimmer_temperatur:
+    friendly_name: "Homematic Thermostat Wohnzimmer Temperatur"
+    value_template: "{{ state_attr('climate.000C9D89B1EF94', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_wohnzimmer_temperatur
+
+# Homematic Thermostat Stephan Temperatur
+  homematic_thermostat_stephan_temperatur:
+    friendly_name: "Homematic Thermostat Stephan Temperatur"
+    value_template: "{{ state_attr('climate.000C9D89B1EF7B', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_stephan_temperatur
+
+# Homematic Thermostat Pia Temperatur
+  homematic_thermostat_pia_temperatur:
+    friendly_name: "Homematic Thermostat Pia Temperatur"
+    value_template: "{{ state_attr('climate.000C9D89B1EEBE', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_pia_temperatur
+
+# Homematic Thermostat Bad Temperatur
+  homematic_thermostat_bad_temperatur:
+    friendly_name: "Homematic Thermostat Bad Temperatur"
+    value_template: "{{ state_attr('climate.000C9D89B1F139', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_bad_temperatur
+
+# Homematic Thermostat Schlafzimmer Temperatur
+  homematic_thermostat_schlafzimmer_temperatur:
+    friendly_name: "Homematic Thermostat Schlafzimmer Temperatur"
+    value_template: "{{ state_attr('climate.000C9D89B1F126', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_schlafzimmer_temperatur
+
+# Homematic Thermostat Dusche Temperatur
+  homematic_thermostat_dusche_temperatur:
+    friendly_name: "Homematic Thermostat Dusche Temperatur"
+    value_template: "{{ state_attr('climate.000C9D89B1F147', 'current_temperature') }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_homematic_thermostat_dusche_temperatur
+

@@ -1,8 +1,8 @@
 platform: rest
 method: GET
-resource: !secret url_sensor_mystrom_welcome
+resource: !secret url_sensor_mystrom_beamer_nokwh
 # http://ip/report
-name: MyStrom Welcome Report
+name: MyStrom Beamer NokWh Report
 value_template: "OK"
 json_attributes:
   - "power"

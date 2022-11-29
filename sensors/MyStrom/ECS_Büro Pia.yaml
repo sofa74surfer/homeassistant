@@ -1,8 +1,8 @@
 platform: rest
 method: GET
-resource: !secret url_sensor_mystrom_reolink
+resource: !secret url_sensor_mystrom_buro_pia
 # http://ip/report
-name: MyStrom Reolink Report
+name: MyStrom Büro Pia Report
 value_template: "OK"
 json_attributes:
   - "power"

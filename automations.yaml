@@ -9,7 +9,7 @@
     entity_id: group.awesome_people
     state: not_home
   action:
-  - wait_template: '{{ ''00:%02i:00''%range(01,30) | random }}'
+  - wait_template: '{{ ''22:''''%0.2d'''':00''|format(range(0, 30)|random|int) }}'
   - scene: scene.hue_schlafzimmer_on_ambient
   mode: single
 - id: '1605131875883'
@@ -23,7 +23,7 @@
     entity_id: group.awesome_people
     state: not_home
   action:
-  - wait_template: '{{ ''00:%02i:00''%range(01,20) | random }}'
+  - wait_template: '{{ ''22:''''%0.2d'''':00''|format(range(0, 20)|random|int) }}'
   - type: turn_off
     device_id: 0dd0ce477d4f719fd4fc8341b067bc85
     entity_id: light.schlafzimmer
@@ -48,7 +48,10 @@
     entity_id: group.awesome_people
     state: home
   action:
-  - scene: scene.hue_wohnzimmer_on_ambient
+  - service: scene.turn_on
+    target:
+      entity_id: scene.hue_wohnzimmer_on_ambient_sparmodus
+    metadata: {}
   mode: single
 - id: '1605216797509'
   alias: Wohnzimmer Szene OFF Sunrise plus 1 hour
@@ -69,7 +72,10 @@
     event: sunset
   condition: []
   action:
-  - scene: scene.hue_wohnzimmer_on_ambient
+  - service: scene.turn_on
+    target:
+      entity_id: scene.hue_wohnzimmer_on_ambient_sparmodus
+    metadata: {}
   mode: single
 - id: '1605247871692'
   alias: Wohnung Hue OFF, 01:00, random 1-30, not_home
@@ -82,7 +88,7 @@
     entity_id: group.awesome_people
     state: not_home
   action:
-  - wait_template: '{{ ''00:%02i:00''%range(01,30) | random }}'
+  - wait_template: '{{ ''22:''''%0.2d'''':00''|format(range(0, 30)|random|int) }}'
   - service: light.turn_off
     target:
       device_id:
@@ -112,7 +118,10 @@
     entity_id: group.awesome_people
     state: home
   action:
-  - scene: scene.hue_buro_on_ambient
+  - service: scene.turn_on
+    target:
+      entity_id: scene.hue_buro_on_ambient_sparmodus
+    metadata: {}
   mode: single
 - id: '1605249667376'
   alias: Büro Szene ON Sunset, not_home (Simulation)
@@ -135,11 +144,14 @@
           before: 01:00:00
       sequence:
       - wait_template: 'false'
-        timeout: '{{ ''00:%02i:00''%range(01,20) | random }}'
+        timeout: '{{ ''22:''''%0.2d'''':00''|format(range(0, 20)|random|int) }}'
         continue_on_timeout: true
-      - scene: scene.hue_buro_on_ambient
+      - service: scene.turn_on
+        target:
+          entity_id: scene.hue_buro_on_ambient_sparmodus
+        metadata: {}
       - wait_template: 'false'
-        timeout: '{{ ''00:%02i:00''%range(01,20) | random }}'
+        timeout: '{{ ''22:''''%0.2d'''':00''|format(range(0, 20)|random|int) }}'
         continue_on_timeout: true
       - scene: scene.hue_buro_off
   mode: single
@@ -261,14 +273,35 @@
     default: []
   mode: restart
 - id: '1616071228508'
-  alias: Dusche Licht OFF (no motion)
+  alias: Dusche Licht OFF (not_home OR no motion für 30 Minuten)
   description: ''
   trigger:
-  - platform: state
-    entity_id: binary_sensor.motion_dusche_motion
-    to: 'off'
-    for: 00:10:00
-  condition: []
+  - platform: time_pattern
+    minutes: /15
+  condition:
+  - condition: or
+    conditions:
+    - condition: and
+      conditions:
+      - type: is_no_motion
+        condition: device
+        device_id: a151a8942f34d0b72bf83ecf7b1ed1a8
+        entity_id: binary_sensor.motion_dusche_motion
+        domain: binary_sensor
+        for:
+          hours: 0
+          minutes: 30
+          seconds: 0
+      - condition: state
+        entity_id: binary_sensor.dingz_dusche_state_person_present
+        state: 'off'
+        for:
+          hours: 0
+          minutes: 30
+          seconds: 0
+    - condition: state
+      entity_id: group.awesome_people
+      state: not_home
   action:
   - service: light.turn_off
     target:
@@ -276,6 +309,7 @@
       - light.dingz_dusche_decke_light
       - light.dingz_dusche_spiegel_light
       device_id: 3c66872e742475b7c48d7220520e9aed
+    data: {}
   mode: single
 - id: '1616393998146'
   alias: Gang Hue Stufe 001 bis 006, abhängig Temperatur, @home
@@ -285,10 +319,7 @@
     hours: '*'
     minutes: /5
     seconds: '0'
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
+  condition: []
   action:
   - choose:
     - conditions:
@@ -424,14 +455,35 @@
     default: []
   mode: single
 - id: '1616871141759'
-  alias: Bad Licht OFF (no motion)
+  alias: Bad Licht OFF (not_home OR no motion für 1 Stunde)
   description: ''
   trigger:
-  - platform: state
-    entity_id: binary_sensor.motion_bad_motion
-    to: 'off'
-    for: 00:10:00
-  condition: []
+  - platform: time_pattern
+    minutes: /15
+  condition:
+  - condition: or
+    conditions:
+    - condition: and
+      conditions:
+      - type: is_no_motion
+        condition: device
+        device_id: b1bef2906fa987ce9aa4e1fd996068bf
+        entity_id: binary_sensor.motion_bad_motion
+        domain: binary_sensor
+        for:
+          hours: 1
+          minutes: 0
+          seconds: 0
+      - condition: state
+        entity_id: binary_sensor.dingz_bad_state_person_present
+        state: 'off'
+        for:
+          hours: 1
+          minutes: 0
+          seconds: 0
+    - condition: state
+      entity_id: group.awesome_people
+      state: not_home
   action:
   - service: light.turn_off
     target:
@@ -440,6 +492,7 @@
       - light.dingz_bad_decke_wc_light
       - light.dingz_bad_decke_watu_light
       device_id: 827d7f7f64773f425de48f835e5687c6
+    data: {}
   mode: single
 - id: '1617084313798'
   alias: Wohnung Kamera ON-OFF (home, not_home, co2, sun, power)
@@ -461,8 +514,6 @@
         target:
           entity_id:
           - switch.presence
-          - switch.welcome
-          - switch.reolink
       - service: script.turn_on
         target:
           entity_id: script.dingz_led_markise1_und_schlafzimmer_red
@@ -478,14 +529,12 @@
           above: '700'
         - condition: numeric_state
           entity_id: sensor.mystrom_hifi_center_power
-          below: '50'
+          below: '55'
       sequence:
       - service: switch.turn_on
         target:
           entity_id:
           - switch.presence
-          - switch.welcome
-          - switch.reolink
       - service: script.turn_on
         target:
           entity_id: script.dingz_led_markise1_und_schlafzimmer_red
@@ -499,10 +548,6 @@
         target:
           entity_id:
           - switch.presence
-          - switch.welcome
-      - service: switch.turn_off
-        target:
-          entity_id: switch.reolink
       - service: script.turn_on
         target:
           entity_id: script.dingz_led_markise1_und_schlafzimmer_violett
@@ -511,8 +556,6 @@
       target:
         entity_id:
         - switch.presence
-        - switch.reolink
-        - switch.welcome
     - service: script.turn_on
       target:
         entity_id: script.dingz_led_markise1_und_schlafzimmer_grun
@@ -563,7 +606,6 @@
       - light.dingz_kuche_decke_aussen_light
       - light.dingz_kuche_decke_innen_light
       - light.dingz_kuche_schrank_light
-      - light.dingz_terrasse_light
       - light.dingz_bad_spiegel_light
       - light.dingz_dusche_decke_light
       - light.dingz_dusche_spiegel_light
@@ -592,6 +634,7 @@
       - 0dd0ce477d4f719fd4fc8341b067bc85
       - 44c495113e18e26db13a2f4bdc5442a4
       - bcf481a9e79122849c323a61b91105d9
+      - 2486525226c6c5658d1f31bb57e45688
   mode: single
 - id: '1617132794904'
   alias: Wohnung Light PANIK Webhook
@@ -611,7 +654,6 @@
       - light.dingz_kuche_decke_aussen_light
       - light.dingz_kuche_decke_innen_light
       - light.dingz_kuche_schrank_light
-      - light.dingz_terrasse_light
       - light.dingz_bad_spiegel_light
       - light.dingz_dusche_decke_light
       - light.dingz_dusche_spiegel_light
@@ -645,6 +687,7 @@
       - 0dd0ce477d4f719fd4fc8341b067bc85
       - 44c495113e18e26db13a2f4bdc5442a4
       - bcf481a9e79122849c323a61b91105d9
+      - 2486525226c6c5658d1f31bb57e45688
   mode: single
 - id: '1617386935918'
   alias: Büro Stephan Light Toggle Webhook
@@ -678,11 +721,11 @@
       - 0585e667614c337721ad24abad0f2d30
   mode: restart
 - id: '1617387827027'
-  alias: Büro Pia Light Toggle Full Webhook
+  alias: Büro Pia Light On Full Webhook
   description: ''
   trigger:
   - platform: webhook
-    webhook_id: buro_pia_light_toggle_full
+    webhook_id: buro_pia_light_on_full
   condition: []
   action:
   - service: light.turn_on
@@ -694,11 +737,11 @@
       - 0585e667614c337721ad24abad0f2d30
   mode: restart
 - id: '1617387856078'
-  alias: Büro Stephan Light Toggle Full Webhook
+  alias: Büro Stephan Light On Full Webhook
   description: ''
   trigger:
   - platform: webhook
-    webhook_id: buro_stephan_light_toggle_full
+    webhook_id: buro_stephan_light_on_full
   condition: []
   action:
   - service: light.turn_on
@@ -708,34 +751,131 @@
     target:
       device_id: 5db4bf233bea079061c66ad5776109a5
   mode: restart
-- id: '1617388190803'
-  alias: Büro Stephan Licht OFF (no motion)
+- id: '1619850749480'
+  alias: Terrasse Light Toggle Webhook
   description: ''
   trigger:
-  - platform: state
-    entity_id: binary_sensor.motion_deko_usm_motion
-    to: 'off'
-    for: 00:10:00
+  - platform: webhook
+    webhook_id: terrasse_light_toggle
   condition: []
   action:
-  - service: light.turn_off
-    target:
-      device_id: 5db4bf233bea079061c66ad5776109a5
-      entity_id: light.dingz_buro_stephan_boden_light
-  mode: single
-- id: '1617388247400'
-  alias: Büro Pia Licht OFF (no motion)
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.motion_pia_buro_motion
-    to: 'off'
-    for: 00:10:00
-  condition: []
-  action:
-  - service: light.turn_off
+  - service: light.toggle
+    data:
+      color_temp: 313
+      brightness_pct: 50
     target:
       device_id:
-      - 0585e667614c337721ad24abad0f2d30
-      entity_id: light.dingz_buro_pia_boden_light
+      - 2486525226c6c5658d1f31bb57e45688
+  mode: restart
+- id: '1619850794337'
+  alias: Terrasse Light On Full Webhook
+  description: ''
+  trigger:
+  - platform: webhook
+    webhook_id: terrasse_light_on_full
+  condition: []
+  action:
+  - service: light.turn_on
+    data:
+      color_temp: 313
+      brightness_pct: 100
+    target:
+      device_id:
+      - 2486525226c6c5658d1f31bb57e45688
+  mode: restart
+- id: '1662220393210'
+  alias: Wohnzimmer MyStrom Hifi läuft - LUPUS einschalten
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.mystrom_hifi_center_report
+    attribute: power
+    above: '40'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.wake_on_lan
+  mode: single
+- id: '1662220852075'
+  alias: Wohnzimmer MyStrom Hifi läuft NICHT - LUPUS ausschalten
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.mystrom_hifi_center_report
+    attribute: power
+    below: '1'
+  condition:
+  - condition: or
+    conditions:
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: time
+      weekday:
+      - sat
+      before: '17:45:00'
+      after: 00:00:00
+    - condition: time
+      weekday:
+      - sun
+      after: 08:15:00
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.wake_on_lan
+  mode: single
+- id: '1662281777689'
+  alias: Büro Licht und Strom OFF (not_home OR no motion für 2 Stunden)
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /15
+  condition:
+  - condition: or
+    conditions:
+    - condition: and
+      conditions:
+      - type: is_no_motion
+        condition: device
+        device_id: 50bda0ec03677e0b3910812c50c43be8
+        entity_id: binary_sensor.motion_deko_usm_motion
+        domain: binary_sensor
+        for:
+          hours: 2
+          minutes: 0
+          seconds: 0
+      - type: is_no_motion
+        condition: device
+        device_id: cc620df6a27a857c4a74437448a251ef
+        entity_id: binary_sensor.motion_pia_buro_motion
+        domain: binary_sensor
+        for:
+          hours: 2
+          minutes: 0
+          seconds: 0
+    - condition: state
+      entity_id: group.awesome_people
+      state: not_home
+  action:
+  - service: switch.turn_off
+    data: {}
+    target:
+      device_id:
+      - b19f8c0c4db7ed72b59867da72608302
+      - ad4776a357f5824f61837244c39a59ca
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id:
+      - light.buro_decke_pia
+      - light.buro_decke_stephan
+      - light.dingz_buro_stephan_boden_light
+      - light.dingz_buro_pia_boden_light
   mode: single

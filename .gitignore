@@ -5,10 +5,11 @@ image/
 ssl/
 tts/
 secrets.yaml
-home-assistant.log
+home-assistant.log*
 node-red/
 groups.yaml
 .storage/
 .HA_VERSION
 home-assistant_v2*
 www/
+.cloud/

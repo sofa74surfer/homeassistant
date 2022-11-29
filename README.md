@@ -1,5 +1,5 @@
 # Home Assistant Projekt
-Home Assistant Installtion verschiedenen Integrationen und Automationen. 
+Home Assistant Installation mit verschiedenen Integrationen und Automationen. 
 
 Ziel war es, die bisherigen Automationen in IFTTT aus der Cloud zu holen und auf einem eigenen Server laufen zu haben. Weiter war ein Ziel die Präsenz lokal auf dem Server zu lösen, ohne Geräten mit Mobiltelefonen Zugriff auf die Ortungsdaten geben zu müssen. Dieses Projekt wird eine ewige Baustelle bleiben, die sich kontinuierlich weiter entwickelt, einfach weil ich Spass daran habe. 
 

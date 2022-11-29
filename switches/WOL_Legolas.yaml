@@ -1,0 +1,5 @@
+platform: wake_on_lan
+name: WoL Legolas
+mac: !secret qnap_legolas_macc
+turn_off: 
+  service: shell_command.shutdown_legolas

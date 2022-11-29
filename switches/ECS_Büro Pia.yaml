@@ -1,0 +1,3 @@
+platform: mystrom
+name: Büro Pia
+host: !secret ip_mystrom_buro_pia

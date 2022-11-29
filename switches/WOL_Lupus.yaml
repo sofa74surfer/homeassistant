@@ -1,0 +1,5 @@
+platform: wake_on_lan
+name: WoL Lupus
+mac: !secret qnap_lupus_macc
+turn_off: 
+  service: shell_command.shutdown_lupus

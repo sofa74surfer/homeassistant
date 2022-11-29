@@ -2,6 +2,24 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+# This integration handles redirects from the My Home Assistant service.
+my:
+
+# The wake_on_lan integration enables the ability to send magic packets to Wake on LAN capable devices to turn them on.
+wake_on_lan:
+
+shell_command:
+  shutdown_lupus: !secret qnap_lupus_poweroff
+  shutdown_thor: !secret qnap_thor_poweroff
+  shutdown_legolas: !secret qnap_legolas_poweroff
+
+# Logger Config for Log Viewer Add-On
+#logger:
+#  default: info
+#  logs:
+#    pyatv: debug
+#    homeassistant.components.apple_tv: debug
+
 ########### INCLUDES #####
 group: !include groups.yaml
 automation: !include automations.yaml
@@ -15,16 +33,12 @@ sensor: !include_dir_list sensors/
 switch: !include_dir_list switches/
 rest_command: !include_dir_merge_named rest_commands/
 
-########### INCLUDES ##### Additional Explizit YAML
-#sensor: !include include/sensor_hue_battery.yaml
-#sensor: !include_dir_named include/sensor/
-
-remote:
-  - platform: harmony
-    name: Harmony Hub
-    host: !secret ip_harmony
-    activity: Film wiedergeben
-    delay_secs: 0.6
+#remote:
+#  - platform: harmony
+#    name: Harmony Hub
+#    host: !secret ip_harmony
+#    activity: Film wiedergeben
+#    delay_secs: 0.6
 
 media_player:
   - platform: nad
@@ -45,25 +59,16 @@ media_player:
     hosts:
       - host: !secret ip_nad
         name: NAD Bluesound
-        port: 11000
+        port: !secret port_nad
 
-surepetcare:
-  username: !secret surepetcare_login
-  password: !secret surepetcare_password
-  feeders: !secret surepetcare_feeders
-  flaps: !secret surepetcare_flaps
-  pets: !secret surepetcare_pets
-
-#qnap:
-#  host: !secret ip_lupus
-#  username: !secret qnap_lupus_user
-#  password: !secret qnap_lupus_password
-#  port: !secret qnap_lupus_port
-#  ssl: true
-#  verify_ssl: false
-#  monitored_conditions:
-#    - status
-#    - cpu_usage
-#    - memory_percent_used
-#    - network_tx
-#    - volume_percentage_used
+# HomeMatic IP CCU3
+homematic:
+  interfaces:
+    ip:
+      host: !secret ip_homematic
+      port: !secret port_homematic
+      resolvenames: "json"
+      username: "Admin"
+      password: !secret homematic_ccu_login
+      ssl: true
+      verify_ssl: false

@@ -385,3 +385,113 @@
       supported_features: 63
       state: 'on'
   icon: hass:lightbulb-group
+- id: '1662229301881'
+  name: Hue Büro On Ambient (Sparmodus)
+  entities:
+    light.buro_deko_usm:
+      supported_color_modes:
+      - xy
+      color_mode: xy
+      brightness: 26
+      hs_color:
+      - 44.805
+      - 60.392
+      rgb_color:
+      - 255
+      - 216
+      - 101
+      xy_color:
+      - 0.46
+      - 0.437
+      mode: normal
+      dynamics: none
+      friendly_name: Büro Deko USM
+      supported_features: 40
+      state: 'on'
+  icon: hass:lightbulb-group
+  metadata: {}
+- id: '1662229482933'
+  name: Hue Wohnzimmer On Ambient (Sparmodus)
+  entities:
+    light.fernseher_links:
+      supported_color_modes:
+      - xy
+      color_mode: xy
+      brightness: 26
+      hs_color:
+      - 66.294
+      - 56.078
+      rgb_color:
+      - 240
+      - 255
+      - 112
+      xy_color:
+      - 0.3971
+      - 0.4812
+      mode: normal
+      dynamics: none
+      friendly_name: Fernseher links
+      supported_features: 40
+      state: 'on'
+    light.fernseher_rechts:
+      supported_color_modes:
+      - xy
+      color_mode: xy
+      brightness: 26
+      hs_color:
+      - 153.6
+      - 49.02
+      rgb_color:
+      - 130
+      - 255
+      - 200
+      xy_color:
+      - 0.22
+      - 0.423
+      mode: normal
+      dynamics: none
+      friendly_name: Fernseher rechts
+      supported_features: 40
+      state: 'on'
+    light.sideboard:
+      supported_color_modes:
+      - xy
+      color_mode: xy
+      brightness: 26
+      hs_color:
+      - 27.273
+      - 73.333
+      rgb_color:
+      - 255
+      - 153
+      - 68
+      xy_color:
+      - 0.5579
+      - 0.3834
+      mode: normal
+      dynamics: none
+      friendly_name: Sideboard
+      supported_features: 40
+      state: 'on'
+    light.katzenbaum:
+      supported_color_modes:
+      - xy
+      color_mode: xy
+      brightness: 26
+      hs_color:
+      - 24.918
+      - 71.765
+      rgb_color:
+      - 255
+      - 148
+      - 72
+      xy_color:
+      - 0.561
+      - 0.376
+      mode: normal
+      dynamics: none
+      friendly_name: Katzenbaum
+      supported_features: 40
+      state: 'on'
+  icon: hass:lightbulb-group
+  metadata: {}

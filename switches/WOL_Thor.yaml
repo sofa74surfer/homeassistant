@@ -1,0 +1,5 @@
+platform: wake_on_lan
+name: WoL Thor
+mac: !secret qnap_thor_macc
+turn_off: 
+  service: shell_command.shutdown_thor

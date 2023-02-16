@@ -1,5 +1,5 @@
 - id: '1605130829896'
-  alias: Schlafzimmer Szene  ON 22:00, random 1-30, not_home
+  alias: Schlafzimmer Licht Simulation und Cover CLOSE (NOT_HOME)
   description: ''
   trigger:
   - platform: time
@@ -9,8 +9,22 @@
     entity_id: group.awesome_people
     state: not_home
   action:
-  - wait_template: '{{ ''22:''''%0.2d'''':00''|format(range(0, 30)|random|int) }}'
-  - scene: scene.hue_schlafzimmer_on_ambient
+  - delay:
+      minutes: '{{ ''%0.2d''|format(range(0, 30)|random|int) }}'
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.dingz_schlafzimmer_boden_light
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_cover
+  - delay:
+      minutes: '{{ ''%0.2d''|format(range(20, 40)|random|int) }}'
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id: light.dingz_schlafzimmer_boden_light
   mode: single
 - id: '1605131875883'
   alias: Schlafzimmer Szene OFF 23:30, random 1-20, not_home
@@ -38,7 +52,7 @@
     domain: light
   mode: single
 - id: '1605216723225'
-  alias: Wohnen Ambient Hue Licht ON - Morgen
+  alias: Wohnen Ambient Hue Licht ON Cover OPEN - Morgen Home
   description: Schaltet das Licht ein, sobald die Kaffeemaschine läuft oder das Licht
     Küchenschrank eingeschaltet wird unter der Bedingung, dass jemand zu Hause ist,
     der Zeitplan Morgenstunden erfüllt und der Licht Schwellwert Garten stimmt
@@ -76,13 +90,13 @@
     target:
       entity_id: scene.hue_wohnzimmer_on_ambient
     metadata: {}
-  - service: automation.trigger
+  - service: input_boolean.turn_off
     data: {}
     target:
-      entity_id: automation.wohnung_gruppe_cover_up_zu_viel_wind
+      entity_id: input_boolean.umschalter_cover
   mode: single
 - id: '1605216797509'
-  alias: Wohnen Ambient Hue Licht OFF - Morgen
+  alias: Wohnen Ambient Hue Licht OFF Cover OPEN - Morgen
   description: ''
   trigger:
   - platform: state
@@ -94,17 +108,17 @@
       hours: 0
       minutes: 2
       seconds: 0
-  condition:
-  - condition: state
-    entity_id: group.awesome_people
-    state: home
+  condition: []
   action:
   - scene: scene.hue_wohnzimmer_off
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_cover
   mode: single
 - id: '1605247431207'
-  alias: Wohnen Ambient Hue Licht ON - Abend
-  description: Schaltet das Licht ein, sobald draussen im Garten das Licht schwindet
-    unter der Bedingung, dass jemand zu Hause ist
+  alias: Wohnen Ambient Hue Licht ON - Abend (HOME, NOT_HOME)
+  description: 'Schaltet das Licht ein, sobald draussen im Garten das Licht schwindet '
   trigger:
   - platform: state
     entity_id:
@@ -126,53 +140,65 @@
       seconds: 0
   condition:
   - condition: state
-    entity_id: group.awesome_people
-    state: home
-  - condition: state
     entity_id: binary_sensor.schwellwertsensor_illumination_dark_low
     state: 'on'
   action:
-  - service: scene.turn_on
-    target:
-      entity_id: scene.hue_wohnzimmer_on_ambient
-    metadata: {}
+  - if:
+    - condition: state
+      entity_id: group.awesome_people
+      state: home
+    then:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.hue_wohnzimmer_on_ambient
+      metadata: {}
+    else:
+    - delay:
+        hours: '{{ ''%0.1d''|format(range(0, 1)|random|int) }}'
+        minutes: '{{ ''%0.1d''|format(range(0, 30)|random|int) }}'
+        seconds: 0
+        milliseconds: 0
+    - service: scene.turn_on
+      target:
+        entity_id: scene.hue_wohnzimmer_on_ambient
+      metadata: {}
   mode: single
 - id: '1605247871692'
-  alias: Wohnung Hue OFF, 01:00, random 1-30, not_home
+  alias: Wohnung Licht OFF (NOT_HOME)
   description: ''
   trigger:
   - platform: time
-    at: 01:00:00
+    at: '23:00:00'
   condition:
   - condition: state
     entity_id: group.awesome_people
     state: not_home
   action:
-  - wait_template: '{{ ''22:''''%0.2d'''':00''|format(range(0, 30)|random|int) }}'
+  - delay:
+      hours: 0
+      minutes: '{{ ''%0.2d''|format(range(0, 30)|random|int) }}'
+      seconds: 0
+      milliseconds: 0
   - service: light.turn_off
     target:
-      device_id:
-      - b28c9fc2638dabe557d668f8fe5d850a
-      - acfefc1c100e78d453c1bac39dd70aef
-      - 7311881c0a7f8b0afbd6f6a5a528ef24
-      - ac6ce71602cab6a778b11311e8bf2289
-      - 006b2b6fefaded7a9935cfda6a293fd0
-      - 3fcd9c52772d29258c057a92f6ad93f4
-      - 69b65c02742784b54e7e79090a687c57
-      - 11ef0a038d5d9f41ef9a9bf59ae407f7
-      - 726d481100938c5e071ba497abc81934
-      - 86da64d15c9f0bff9032382310cc74a6
-      - 0dd0ce477d4f719fd4fc8341b067bc85
-      - 44c495113e18e26db13a2f4bdc5442a4
-      - bcf481a9e79122849c323a61b91105d9
-      - dc41bd82f147d78bd4d07285cf947d9d
+      entity_id:
+      - light.gruppe_licht_dingz
+      - light.gruppe_licht_hue
+    data: {}
   mode: single
 - id: '1605249083791'
   alias: Büro Szene ON Sunset, home
   description: ''
   trigger:
-  - platform: sun
-    event: sunset
+  - platform: state
+    entity_id:
+    - binary_sensor.schwellwertsensor_illumination_dark_low
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
   condition:
   - condition: state
     entity_id: group.awesome_people
@@ -184,11 +210,18 @@
     metadata: {}
   mode: single
 - id: '1605249667376'
-  alias: Büro Szene ON Sunset, not_home (Simulation)
+  alias: Büro Licht Simulation (NOT_HOME)
   description: ''
   trigger:
-  - platform: sun
-    event: sunset
+  - platform: state
+    entity_id:
+    - binary_sensor.schwellwertsensor_illumination_dark_low
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
   condition:
   - condition: state
     entity_id: group.awesome_people
@@ -196,24 +229,54 @@
   action:
   - repeat:
       while:
-      - condition: or
+      - condition: and
         conditions:
-        - condition: sun
-          after: sunset
         - condition: time
-          before: 01:00:00
+          before: '23:00:00'
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
       sequence:
-      - wait_template: 'false'
-        timeout: '{{ ''22:''''%0.2d'''':00''|format(range(0, 20)|random|int) }}'
-        continue_on_timeout: true
+      - delay:
+          hours: 0
+          minutes: '{{ ''%0.2d''|format(range(5, 40)|random|int) }}'
+          seconds: 0
+          milliseconds: 0
       - service: scene.turn_on
         target:
-          entity_id: scene.hue_buro_on_ambient_sparmodus
+          entity_id: scene.hue_buro_on_ambient
         metadata: {}
-      - wait_template: 'false'
-        timeout: '{{ ''22:''''%0.2d'''':00''|format(range(0, 20)|random|int) }}'
-        continue_on_timeout: true
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: light.gruppe_licht_dingz_bad
+            state: 'on'
+          sequence:
+          - service: light.turn_on
+            data: {}
+            target:
+              entity_id: light.buro_decke_stephan
+        - conditions:
+          - condition: state
+            entity_id: light.gruppe_licht_dingz_dusche
+            state: 'on'
+          sequence:
+          - service: light.turn_on
+            data: {}
+            target:
+              entity_id: light.buro_decke_pia
+      - delay:
+          hours: 0
+          minutes: '{{ ''%0.2d''|format(range(5, 20)|random|int) }}'
+          seconds: 0
+          milliseconds: 0
       - scene: scene.hue_buro_off
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id:
+          - light.buro_decke_pia
+          - light.buro_decke_stephan
   mode: single
 - id: '1616048845700'
   alias: Bad Licht ON (Motion)
@@ -2169,7 +2232,7 @@
         entity_id: input_text.text_status_szene_essen_versus_kochen
   mode: single
 - id: '1668674120543'
-  alias: Wohnung Gruppe Cover DOWN - Bettgehen
+  alias: Wohnung Gruppe Cover CLOSE - Bettgehen
   description: ''
   trigger:
   - platform: state
@@ -2178,7 +2241,7 @@
     to: 'off'
     for:
       hours: 0
-      minutes: 10
+      minutes: 15
       seconds: 0
     from: 'on'
   - platform: state
@@ -2187,7 +2250,7 @@
     to: 'off'
     for:
       hours: 0
-      minutes: 10
+      minutes: 15
       seconds: 0
     from: 'on'
   - platform: state
@@ -2195,7 +2258,7 @@
     - input_boolean.umschalter_motion
     for:
       hours: 0
-      minutes: 10
+      minutes: 15
       seconds: 0
     from: 'on'
     to: 'off'
@@ -2220,13 +2283,13 @@
     entity_id: binary_sensor.schwellwertsensor_wind_speed
     state: 'off'
   action:
-  - service: cover.close_cover
+  - service: input_boolean.turn_on
     data: {}
     target:
-      entity_id: cover.gruppe_markise_wohnen
+      entity_id: input_boolean.umschalter_cover
   mode: single
 - id: '1668751025410'
-  alias: Wohnung Gruppe Cover UP - Morgen, Wind, etc.
+  alias: Wohnung Gruppe Cover OPEN - Morgen, Wind, etc.
   description: ''
   trigger:
   - platform: state
@@ -2249,13 +2312,10 @@
       seconds: 0
   condition: []
   action:
-  - service: cover.open_cover
+  - service: input_boolean.turn_off
     data: {}
     target:
-      entity_id: cover.gruppe_markise_wohnen
-  - service: notify.mobile_app_stephs_iphone
-    data:
-      message: Wohnung Gruppe Cover UP
+      entity_id: input_boolean.umschalter_cover
   mode: single
 - id: '1668768195001'
   alias: Wohnen Licht Katzenbaum Modifikation (Webhook)
@@ -2718,7 +2778,7 @@
         sequence:
         - service: light.turn_on
           data:
-            brightness_pct: 1
+            brightness_pct: 60
           target:
             entity_id: light.dingz_dusche_decke_light
       - conditions:
@@ -2728,7 +2788,7 @@
         sequence:
         - service: light.turn_on
           data:
-            brightness_pct: 40
+            brightness_pct: 60
           target:
             entity_id: light.dingz_dusche_decke_light
       - conditions:
@@ -2778,7 +2838,7 @@
         sequence:
         - service: light.turn_on
           data:
-            brightness_pct: 1
+            brightness_pct: 60
           target:
             entity_id: light.dingz_ankleide_light
       - conditions:
@@ -2788,7 +2848,7 @@
         sequence:
         - service: light.turn_on
           data:
-            brightness_pct: 40
+            brightness_pct: 60
           target:
             entity_id: light.dingz_ankleide_light
       - conditions:
@@ -2838,7 +2898,7 @@
         sequence:
         - service: light.turn_on
           data:
-            brightness_pct: 30
+            brightness_pct: 40
           target:
             entity_id: light.dingz_dusche_spiegel_light
       - conditions:
@@ -2973,7 +3033,7 @@
         sequence:
         - service: light.turn_on
           data:
-            brightness_pct: 40
+            brightness_pct: 60
           target:
             entity_id: light.dingz_bad_decke_watu_light
       - conditions:
@@ -3200,4 +3260,150 @@
           brightness_pct: 10
         target:
           entity_id: light.dingz_bad_led
+  mode: single
+- id: '1670261576094'
+  alias: Wohnung Gruppe Cover OPEN or CLOSE
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.umschalter_cover
+    from:
+    - 'on'
+    - 'off'
+    to:
+    - 'off'
+    - 'on'
+    for:
+      minutes: 1
+  condition:
+  - condition: state
+    entity_id: input_boolean.umschalter_cover
+    state:
+    - 'on'
+    - 'off'
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.umschalter_cover
+        state: 'on'
+      sequence:
+      - service: cover.close_cover
+        data: {}
+        target:
+          entity_id: cover.gruppe_markise_wohnen
+      - service: notify.mobile_app_stephs_iphone
+        data:
+          message: Wohnung Gruppe Cover Close
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.umschalter_cover
+        state: 'off'
+      sequence:
+      - service: cover.open_cover
+        data: {}
+        target:
+          entity_id: cover.gruppe_markise_wohnen
+      - service: notify.mobile_app_stephs_iphone
+        data:
+          message: Wohnung Gruppe Cover Open
+  mode: single
+- id: '1670354806823'
+  alias: Dusche Licht Simulation (NOT_HOME)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.schwellwertsensor_illumination_dark_low
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: not_home
+  action:
+  - repeat:
+      while:
+      - condition: and
+        conditions:
+        - condition: time
+          before: '23:00:00'
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+      sequence:
+      - delay:
+          hours: 0
+          minutes: '{{ ''%0.2d''|format(range(20, 50)|random|int) }}'
+          seconds: 0
+          milliseconds: 0
+      - service: light.turn_on
+        data:
+          brightness_pct: 40
+        target:
+          entity_id: light.dingz_dusche_decke_light
+      - delay:
+          hours: 0
+          minutes: '{{ ''%0.2d''|format(range(3, 10)|random|int) }}'
+          seconds: 0
+          milliseconds: 0
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id: light.dingz_dusche_decke_light
+  mode: single
+- id: '1670354975352'
+  alias: Bad Licht Simulation (NOT_HOME)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.schwellwertsensor_illumination_dark_low
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  condition:
+  - condition: state
+    entity_id: group.awesome_people
+    state: not_home
+  action:
+  - repeat:
+      while:
+      - condition: and
+        conditions:
+        - condition: time
+          before: '23:00:00'
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+      sequence:
+      - delay:
+          hours: 0
+          minutes: '{{ ''%0.2d''|format(range(20, 50)|random|int) }}'
+          seconds: 0
+          milliseconds: 0
+      - service: light.turn_on
+        data:
+          brightness_pct: 80
+        target:
+          entity_id:
+          - light.dingz_bad_decke_wc_light
+      - delay:
+          hours: 0
+          minutes: '{{ ''%0.2d''|format(range(3, 5)|random|int) }}'
+          seconds: 0
+          milliseconds: 0
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id:
+          - light.dingz_bad_decke_wc_light
   mode: single

@@ -15,5 +15,7 @@ sensors:
 {%- endif %}"
     device_class: humidity
     unit_of_measurement: "%"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
     unique_id: template.sensor_netatmo_keller_feuchtigkeit
 

@@ -1,0 +1,199 @@
+# ####### ######################### #######
+# ####### Absolute Feuchte Netatmo  #######
+# ####### ######################### #######
+
+# Luzern
+# sensor.netatmo_luzern_humidity
+- sensor:
+    - name: "Netatmo Luzern Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.netatmo_luzern_humidity')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.netatmo_luzern_temperature')|float) / 
+                                (237.3 + 
+                                states('sensor.netatmo_luzern_temperature')|float
+                                )
+                              ) / 
+                              (states('sensor.netatmo_luzern_temperature')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.netatmo_luzern_absolute_feuchte
+
+# Keller
+# sensor.netatmo_steffs_home_keller_humidity
+- sensor:
+    - name: "Netatmo Keller Stephan Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.netatmo_steffs_home_keller_humidity')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.netatmo_steffs_home_keller_temperature')|float) / 
+                                (237.3 + 
+                                states('sensor.netatmo_steffs_home_keller_temperature')|float
+                                )
+                              ) / 
+                              (states('sensor.netatmo_steffs_home_keller_temperature')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.netatmo_keller_stephan_absolute_feuchte
+
+# Keller Gang
+# sensor.netatmo_steffs_home_keller_keller_keel_humidity
+- sensor:
+    - name: "Netatmo Keller Gang Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.netatmo_steffs_home_keller_keller_keel_humidity')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.netatmo_steffs_home_keller_keller_keel_temperature')|float) / 
+                                (237.3 + 
+                                states('sensor.netatmo_steffs_home_keller_keller_keel_temperature')|float
+                                )
+                              ) / 
+                              (states('sensor.netatmo_steffs_home_keller_keller_keel_temperature')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.netatmo_keller_gang_absolute_feuchte
+
+# Büro
+# sensor.netatmo_steffs_home_living_buro_humidity
+- sensor:
+    - name: "Netatmo Büro Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.netatmo_steffs_home_living_buro_humidity')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.netatmo_steffs_home_living_buro_temperature')|float) / 
+                                (237.3 + 
+                                states('sensor.netatmo_steffs_home_living_buro_temperature')|float
+                                )
+                              ) / 
+                              (states('sensor.netatmo_steffs_home_living_buro_temperature')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.netatmo_buro_absolute_feuchte
+
+# Wohnzimmer
+# sensor.netatmo_steffs_home_living_humidity
+- sensor:
+    - name: "Netatmo Wohnzimmer Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.netatmo_steffs_home_living_humidity')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.netatmo_steffs_home_living_temperature')|float) / 
+                                (237.3 + 
+                                states('sensor.netatmo_steffs_home_living_temperature')|float
+                                )
+                              ) / 
+                              (states('sensor.netatmo_steffs_home_living_temperature')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.netatmo_wohnzimmer_absolute_feuchte
+
+# Outdoor
+# sensor.netatmo_steffs_home_living_outdoor_humidity
+- sensor:
+    - name: "Netatmo Outdoor Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.netatmo_steffs_home_living_outdoor_humidity')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.netatmo_steffs_home_living_outdoor_temperature')|float) / 
+                                (237.3 + 
+                                states('sensor.netatmo_steffs_home_living_outdoor_temperature')|float
+                                )
+                              ) / 
+                              (states('sensor.netatmo_steffs_home_living_outdoor_temperature')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.netatmo_outdoor_absolute_feuchte
+
+# Schlafzimmer
+# sensor.netatmo_steffs_home_living_sleep_humidity
+- sensor:
+    - name: "Netatmo Schlafzimmer Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.netatmo_steffs_home_living_sleep_humidity')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.netatmo_steffs_home_living_sleep_temperature')|float) / 
+                                (237.3 + 
+                                states('sensor.netatmo_steffs_home_living_sleep_temperature')|float
+                                )
+                              ) / 
+                              (states('sensor.netatmo_steffs_home_living_sleep_temperature')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.netatmo_schlafzimmer_absolute_feuchte

@@ -450,3 +450,13 @@
       state: 'on'
   icon: hass:lightbulb-group
   metadata: {}
+- id: '1687618429701'
+  name: TV On
+  entities:
+    switch.hifi_center:
+      friendly_name: Hifi Center
+      state: 'on'
+  icon: mdi:television
+  metadata:
+    switch.hifi_center:
+      entity_only: true

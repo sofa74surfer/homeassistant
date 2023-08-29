@@ -1,0 +1,3 @@
+10^5 * 18.016/8314.3 * I2/100 * 6.1078 * 10^((7.5*I1)/(237.3+I1))/(I1 + 273.15)
+
+https://loxwiki.atlassian.net/wiki/spaces/LOX/pages/1518403635/Absolute+Luftfeuchtigkeit+berechnen

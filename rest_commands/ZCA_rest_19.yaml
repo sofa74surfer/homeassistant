@@ -1,0 +1,3 @@
+zehnder_comfoair_19:
+    url: !secret url_sensor_zehnder_comfoair_19
+    method: GET

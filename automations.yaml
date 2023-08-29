@@ -9,22 +9,52 @@
     entity_id: group.awesome_people
     state: not_home
   action:
-  - delay:
-      minutes: '{{ ''%0.2d''|format(range(0, 30)|random|int) }}'
-  - service: light.turn_on
-    data: {}
-    target:
-      entity_id: light.dingz_schlafzimmer_boden_light
-  - service: input_boolean.turn_on
-    data: {}
-    target:
-      entity_id: input_boolean.umschalter_cover
-  - delay:
-      minutes: '{{ ''%0.2d''|format(range(20, 40)|random|int) }}'
-  - service: light.turn_off
-    data: {}
-    target:
-      entity_id: light.dingz_schlafzimmer_boden_light
+  - if:
+    - condition: state
+      entity_id: group.awesome_people
+      state: not_home
+    then:
+    - delay:
+        minutes: '{{ ''%0.2d''|format(range(0, 30)|random|int) }}'
+    alias: Delay 0 to 30 Minutes, when Awesome People not_home
+  - if:
+    - condition: state
+      entity_id: group.awesome_people
+      state: not_home
+    then:
+    - service: light.turn_on
+      data: {}
+      target:
+        entity_id: light.dingz_schlafzimmer_boden_light
+    alias: Light Schlafzimmer On, when Awesome People not_home
+  - if:
+    - condition: state
+      entity_id: group.awesome_people
+      state: not_home
+    then:
+    - service: input_boolean.turn_on
+      data: {}
+      target:
+        entity_id: input_boolean.umschalter_cover
+    alias: Umschalter Cover On, when Awesome People not_home
+  - if:
+    - condition: state
+      entity_id: group.awesome_people
+      state: not_home
+    then:
+    - delay:
+        minutes: '{{ ''%0.2d''|format(range(20, 40)|random|int) }}'
+    alias: Delay 20 to 40 Minutes, when Awesome People not_home
+  - if:
+    - condition: state
+      entity_id: group.awesome_people
+      state: not_home
+    then:
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id: light.dingz_schlafzimmer_boden_light
+    alias: Light Schlafzimmer Off, when Awesome People not_home
   mode: single
 - id: '1605131875883'
   alias: Schlafzimmer Szene OFF 23:30, random 1-20, not_home
@@ -236,47 +266,85 @@
         - condition: state
           entity_id: group.awesome_people
           state: not_home
+        alias: Bis 23:00 und not_home
       sequence:
-      - delay:
-          hours: 0
-          minutes: '{{ ''%0.2d''|format(range(5, 40)|random|int) }}'
-          seconds: 0
-          milliseconds: 0
-      - service: scene.turn_on
-        target:
-          entity_id: scene.hue_buro_on_ambient
-        metadata: {}
-      - choose:
-        - conditions:
-          - condition: state
-            entity_id: light.gruppe_licht_dingz_bad
-            state: 'on'
-          sequence:
-          - service: light.turn_on
-            data: {}
-            target:
-              entity_id: light.buro_decke_stephan
-        - conditions:
-          - condition: state
-            entity_id: light.gruppe_licht_dingz_dusche
-            state: 'on'
-          sequence:
-          - service: light.turn_on
-            data: {}
-            target:
-              entity_id: light.buro_decke_pia
-      - delay:
-          hours: 0
-          minutes: '{{ ''%0.2d''|format(range(5, 20)|random|int) }}'
-          seconds: 0
-          milliseconds: 0
-      - scene: scene.hue_buro_off
-      - service: light.turn_off
-        data: {}
-        target:
-          entity_id:
-          - light.buro_decke_pia
-          - light.buro_decke_stephan
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - delay:
+            hours: 0
+            minutes: '{{ ''%0.2d''|format(range(5, 40)|random|int) }}'
+            seconds: 0
+            milliseconds: 0
+        alias: Random Delay, wenn nicht zu Hause
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.hue_buro_on_ambient
+          metadata: {}
+        alias: Licht an, wenn nicht zu Hause (Hue)
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - choose:
+          - conditions:
+            - condition: state
+              entity_id: light.gruppe_licht_dingz_bad
+              state: 'on'
+            sequence:
+            - service: light.turn_on
+              data: {}
+              target:
+                entity_id: light.buro_decke_stephan
+          - conditions:
+            - condition: state
+              entity_id: light.gruppe_licht_dingz_dusche
+              state: 'on'
+            sequence:
+            - service: light.turn_on
+              data: {}
+              target:
+                entity_id: light.buro_decke_pia
+        alias: Licht an, wenn nicht zu Hause (Dingz)
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - delay:
+            hours: 0
+            minutes: '{{ ''%0.2d''|format(range(5, 20)|random|int) }}'
+            seconds: 0
+            milliseconds: 0
+        alias: Random Delay, wenn nicht zu Hause
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - scene: scene.hue_buro_off
+        alias: Licht aus, wenn nicht zu Hause (Hue)
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - service: light.turn_off
+          data: {}
+          target:
+            entity_id:
+            - light.buro_decke_pia
+            - light.buro_decke_stephan
+        alias: Licht aus, wenn nicht zu Hause (Dingz)
+    alias: Bis 23:00 Uhr, solange not_home
   mode: single
 - id: '1616048845700'
   alias: Bad Licht ON (Motion)
@@ -808,6 +876,10 @@
   trigger:
   - platform: webhook
     webhook_id: schlafzimmer_light_on_bright
+    allowed_methods:
+    - POST
+    - PUT
+    local_only: true
   condition: []
   action:
   - scene: scene.hue_schlafzimmer_on_bright
@@ -982,7 +1054,9 @@
       - service: switch.turn_on
         data: {}
         target:
-          entity_id: switch.unifi_dream_machine_udm_p1_flex_1_schrank_oben_poe
+          entity_id:
+          - switch.unifi_dream_machine_udm_p1_flex_1_schrank_oben_poe
+          - switch.plex_state
     - conditions:
       - condition: state
         entity_id: binary_sensor.schwellwertsensor_watt_hifi
@@ -993,11 +1067,15 @@
         data: {}
         target:
           entity_id:
-          - switch.hifi_center
+          - switch.plex_state
+          - switch.hifi_center_rest
       - if:
         - condition: state
           entity_id: schedule.zeitplan_nas_backup
           state: 'off'
+        - condition: state
+          entity_id: device_tracker.lupus
+          state: not_home
         then:
         - service: switch.turn_off
           data: {}
@@ -1732,6 +1810,7 @@
   - service: notify.mobile_app_stephs_iphone
     data:
       message: Wohnung OFF - HOME > NOT_HOME - verlassen (PoE, Hue, Dingz)
+    enabled: false
   - service: input_boolean.turn_off
     data: {}
     target:
@@ -2282,6 +2361,10 @@
   - condition: state
     entity_id: binary_sensor.schwellwertsensor_wind_speed
     state: 'off'
+  - condition: time
+    after: '22:00:00'
+    before: 04:00:00
+    alias: Time condition between 22:00:00 and 04:00:00
   action:
   - service: input_boolean.turn_on
     data: {}
@@ -3262,7 +3345,7 @@
           entity_id: light.dingz_bad_led
   mode: single
 - id: '1670261576094'
-  alias: Wohnung Gruppe Cover OPEN or CLOSE
+  alias: Wohnung Gruppe Cover OPEN or CLOSE (notification)
   description: ''
   trigger:
   - platform: state
@@ -3296,6 +3379,7 @@
       - service: notify.mobile_app_stephs_iphone
         data:
           message: Wohnung Gruppe Cover Close
+        enabled: false
     - conditions:
       - condition: state
         entity_id: input_boolean.umschalter_cover
@@ -3308,6 +3392,7 @@
       - service: notify.mobile_app_stephs_iphone
         data:
           message: Wohnung Gruppe Cover Open
+        enabled: false
   mode: single
 - id: '1670354806823'
   alias: Dusche Licht Simulation (NOT_HOME)
@@ -3336,26 +3421,52 @@
         - condition: state
           entity_id: group.awesome_people
           state: not_home
+        alias: Bis 23:00 und not_home
       sequence:
-      - delay:
-          hours: 0
-          minutes: '{{ ''%0.2d''|format(range(20, 50)|random|int) }}'
-          seconds: 0
-          milliseconds: 0
-      - service: light.turn_on
-        data:
-          brightness_pct: 40
-        target:
-          entity_id: light.dingz_dusche_decke_light
-      - delay:
-          hours: 0
-          minutes: '{{ ''%0.2d''|format(range(3, 10)|random|int) }}'
-          seconds: 0
-          milliseconds: 0
-      - service: light.turn_off
-        data: {}
-        target:
-          entity_id: light.dingz_dusche_decke_light
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        alias: Random Delay, wenn nicht zu Hause
+        then:
+        - delay:
+            hours: 0
+            minutes: '{{ ''%0.2d''|format(range(20, 50)|random|int) }}'
+            seconds: 0
+            milliseconds: 0
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        alias: Licht an, wenn nicht zu Hause
+        then:
+        - service: light.turn_on
+          data:
+            brightness_pct: 40
+          target:
+            entity_id: light.dingz_dusche_decke_light
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        alias: Random Delay, wenn nicht zu Hause
+        then:
+        - delay:
+            hours: 0
+            minutes: '{{ ''%0.2d''|format(range(3, 10)|random|int) }}'
+            seconds: 0
+            milliseconds: 0
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        alias: Licht aus, wenn nicht zu Hause
+        then:
+        - service: light.turn_off
+          data: {}
+          target:
+            entity_id: light.dingz_dusche_decke_light
+    alias: Bis 23:00 Uhr, solange not_home
   mode: single
 - id: '1670354975352'
   alias: Bad Licht Simulation (NOT_HOME)
@@ -3384,26 +3495,716 @@
         - condition: state
           entity_id: group.awesome_people
           state: not_home
+        alias: Bis 23:00 und not_home
       sequence:
-      - delay:
-          hours: 0
-          minutes: '{{ ''%0.2d''|format(range(20, 50)|random|int) }}'
-          seconds: 0
-          milliseconds: 0
-      - service: light.turn_on
-        data:
-          brightness_pct: 80
-        target:
-          entity_id:
-          - light.dingz_bad_decke_wc_light
-      - delay:
-          hours: 0
-          minutes: '{{ ''%0.2d''|format(range(3, 5)|random|int) }}'
-          seconds: 0
-          milliseconds: 0
-      - service: light.turn_off
-        data: {}
-        target:
-          entity_id:
-          - light.dingz_bad_decke_wc_light
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - delay:
+            hours: 0
+            minutes: '{{ ''%0.2d''|format(range(20, 50)|random|int) }}'
+            seconds: 0
+            milliseconds: 0
+        alias: Random Delay, wenn nicht zu Hause
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - service: light.turn_on
+          data:
+            brightness_pct: 80
+          target:
+            entity_id:
+            - light.dingz_bad_decke_wc_light
+        alias: Licht an, wenn nicht zu Hause
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - delay:
+            hours: 0
+            minutes: '{{ ''%0.2d''|format(range(3, 5)|random|int) }}'
+            seconds: 0
+            milliseconds: 0
+        alias: Random Delay, wenn nicht zu Hause
+      - if:
+        - condition: state
+          entity_id: group.awesome_people
+          state: not_home
+        then:
+        - service: light.turn_off
+          data: {}
+          target:
+            entity_id:
+            - light.dingz_bad_decke_wc_light
+        alias: Licht aus, wenn nicht zu Hause
+    alias: Bis 23:00 Uhr, solange not_home
   mode: single
+- id: '1677307543734'
+  alias: Ewl Tarifanpassung Tag-Nacht
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.ewl_zeitplan_nachttarif
+  condition: []
+  action:
+  - if:
+    - condition: state
+      entity_id: schedule.ewl_zeitplan_nachttarif
+      state: 'on'
+    then:
+    - service: input_number.set_value
+      data:
+        value: '{{ states(''input_number.ewl_wasserstrom_tagestarif'') }}'
+      target:
+        entity_id: input_number.ewl_wasserstrom_aktueller_tarif
+    else:
+    - service: input_number.set_value
+      data:
+        value: '{{ states(''input_number.ewl_wasserstrom_nachttarif'') }}'
+      target:
+        entity_id: input_number.ewl_wasserstrom_aktueller_tarif
+  mode: single
+- id: '1684519193372'
+  alias: Bad Monitoring Zehnder ComfoAir Lüftung
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.comfoair_error_luftung_filter
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    from: 'False'
+    to: 'True'
+  - platform: state
+    entity_id:
+    - sensor.comfoair_error_luftung_kategorie_a
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    from: A0
+  - platform: state
+    entity_id:
+    - sensor.comfoair_error_luftung_kategorie_e
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    from: '0'
+  condition: []
+  action:
+  - service: notify.stephan_buhler
+    data:
+      title: Zehnder ComfoAir Störung - bitte kontrollieren
+      message: 'Filter : {{ states(''sensor.comfoair_error_luftung_filter'') }} Error
+        A: {{ states(''sensor.comfoair_error_luftung_kategorie_a'') }} Error E: {{
+        states(''sensor.comfoair_error_luftung_kategorie_e'') }}'
+  mode: single
+- id: '1684526040499'
+  alias: Küche Umschalter Kochen Strom P0 (Zehnder ComfoAir Lüftung)
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.energy_statistic_qb_phase_w
+    above: 3600
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_p0
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_p0
+  mode: restart
+- id: '1684527783529'
+  alias: Küche Umschalter Kochen Strom P1 (Zehnder ComfoAir Lüftung)
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.energy_statistic_qb_phase_w2
+    above: 500
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_p1
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_p1
+  mode: restart
+- id: '1684527811411'
+  alias: Küche Umschalter Kochen Strom P2 (Zehnder ComfoAir Lüftung)
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.energy_statistic_qb_phase_w3
+    above: 1800
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_p2
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_p2
+  mode: restart
+- id: '1684527837370'
+  alias: Küche Umschalter Kochen Strom P3 (Zehnder ComfoAir Lüftung)
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.energy_statistic_qb_phase_w4
+    above: 1000
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_p3
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_p3
+  mode: restart
+- id: '1684528062858'
+  alias: Küche Umschalter Kochen Bewegung (Zehnder ComfoAir Lüftung)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.multisensor_7_kuchenture_motion_detection
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_bewegung
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_bewegung
+  mode: restart
+- id: '1684528177388'
+  alias: Küche Umschalter Kochen Strom Licht (Zehnder ComfoAir Lüftung)
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.dingz_wohnzimmer_power
+    above: 6
+  - platform: numeric_state
+    entity_id: sensor.dingz_kuche_power
+    above: 6
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_licht
+  - delay:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_strom_licht
+  mode: restart
+- id: '1684528637743'
+  alias: Umschalter Küche Kochen (Zehnder ComfoAir Lüftung)
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.umschalter_kuche_bewegung
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.umschalter_kuche_strom_licht
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.umschalter_kuche_strom_p0
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.umschalter_kuche_strom_p1
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.umschalter_kuche_strom_p2
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id:
+    - input_boolean.umschalter_kuche_strom_p3
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.umschalter_kuche_bewegung
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.umschalter_kuche_strom_licht
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.umschalter_kuche_strom_p0
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.umschalter_kuche_strom_p1
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.umschalter_kuche_strom_p2
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.umschalter_kuche_strom_p3
+    state: 'on'
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Feuchtigkeit
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Co2
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Normal
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Kochen
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Abwesend
+  action:
+  - service: notify.mobile_app_stephs_iphone
+    data:
+      message: Kochen ON ({{ states('input_select.status_luftung') }})
+  - service: input_select.select_option
+    data:
+      option: Kochen
+    target:
+      entity_id: input_select.status_luftung
+    alias: Select Status Lüftung Kochen
+  - service: input_boolean.turn_on
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_kochen
+  - service: rest_command.zehnder_comfoair_high
+    data: {}
+    alias: Zehnder ComfoAir Lüftung High
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  - service: rest_command.zehnder_comfoair_middle
+    data: {}
+    alias: Zehnder ComfoAir Lüftung Middle
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.umschalter_kuche_kochen
+  - service: rest_command.zehnder_comfoair_low
+    data: {}
+    alias: Zehnder ComfoAir Lüftung Low
+  - service: input_select.select_option
+    data:
+      option: Normal
+    target:
+      entity_id: input_select.status_luftung
+    alias: Select Status Lüftung Normal
+  - service: notify.mobile_app_stephs_iphone
+    data:
+      message: Kochen OFF ({{ states('input_select.status_luftung') }})
+  mode: restart
+- id: '1684530513889'
+  alias: Wohnen Zehnder ComfoAir Lüftung bei Luftfeuchtigkeit
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
+    above: 70
+  - platform: numeric_state
+    entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
+    above: 70
+    enabled: true
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Normal
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Abwesend
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Feuchtigkeit
+  action:
+  - service: notify.mobile_app_stephs_iphone
+    data:
+      message: Feuchtigkeit ON ({{ states('input_select.status_luftung') }})
+  - service: input_select.select_option
+    data:
+      option: Feuchtigkeit
+    target:
+      entity_id: input_select.status_luftung
+    alias: Select Status Feuchtigkeit
+  - service: rest_command.zehnder_comfoair_middle
+    data: {}
+  - choose:
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
+        above: 70
+      sequence:
+      - wait_for_trigger:
+        - platform: numeric_state
+          entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
+          below: 67
+        timeout:
+          hours: 1
+          minutes: 0
+          seconds: 0
+          milliseconds: 0
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
+        above: 70
+      sequence:
+      - wait_for_trigger:
+        - platform: numeric_state
+          entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
+          below: 67
+        timeout:
+          hours: 1
+          minutes: 0
+          seconds: 0
+          milliseconds: 0
+  - if:
+    - condition: or
+      conditions:
+      - condition: numeric_state
+        entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
+        above: 66
+      - condition: numeric_state
+        entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
+        above: 66
+    then:
+    - service: rest_command.zehnder_comfoair_high
+      data: {}
+  - choose:
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
+        above: 66
+      sequence:
+      - wait_for_trigger:
+        - platform: numeric_state
+          entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
+          below: 66
+        timeout:
+          hours: 1
+          minutes: 0
+          seconds: 0
+          milliseconds: 0
+    - conditions:
+      - condition: numeric_state
+        entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
+        above: 66
+      sequence:
+      - wait_for_trigger:
+        - platform: numeric_state
+          entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
+          below: 66
+        timeout:
+          hours: 1
+          minutes: 0
+          seconds: 0
+          milliseconds: 0
+  - if:
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Feuchtigkeit
+    then:
+    - service: rest_command.zehnder_comfoair_low
+      data: {}
+    - service: input_select.select_option
+      data:
+        option: Normal
+      target:
+        entity_id: input_select.status_luftung
+      alias: Select Status Normal
+    - service: notify.mobile_app_stephs_iphone
+      data:
+        message: Feuchtigkeit OFF ({{ states('input_select.status_luftung') }})
+    else:
+    - service: notify.mobile_app_stephs_iphone
+      data:
+        message: Feuchtigkeit OFF ({{ states('input_select.status_luftung') }})
+  mode: restart
+- id: '1684561061880'
+  alias: Wohnen Zehnder ComfoAir Lüftung bei Abwesenheit
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - group.awesome_people
+    from: home
+    to: not_home
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Normal
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Normal-Kühlen
+  action:
+  - service: notify.mobile_app_stephs_iphone
+    data:
+      message: Abwesend ON ({{ states('input_select.status_luftung') }})
+  - if:
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Normal
+    then:
+    - service: input_select.select_option
+      data:
+        option: Abwesend
+      target:
+        entity_id: input_select.status_luftung
+      alias: Select Status Abwesend
+    - service: rest_command.zehnder_comfoair_away
+      data: {}
+    else:
+    - service: input_select.select_option
+      data:
+        option: Abwesend-Kühlen
+      target:
+        entity_id: input_select.status_luftung
+      alias: Select Status Abwesend-Kühlen
+  - wait_for_trigger:
+    - platform: state
+      entity_id:
+      - group.awesome_people
+      from: not_home
+      to: home
+      for:
+        hours: 0
+        minutes: 5
+        seconds: 0
+  - if:
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Abwesend
+    then:
+    - service: rest_command.zehnder_comfoair_low
+      data: {}
+    - service: input_select.select_option
+      data:
+        option: Normal
+      target:
+        entity_id: input_select.status_luftung
+      alias: Select Status Normal
+    else:
+    - service: input_select.select_option
+      data:
+        option: Normal-Kühlen
+      target:
+        entity_id: input_select.status_luftung
+      alias: Select Status Normal-Kühlen
+  - service: notify.mobile_app_stephs_iphone
+    data:
+      message: Abwesend OFF ({{ states('input_select.status_luftung') }})
+  mode: restart
+- id: '1685383610003'
+  alias: iOS Action - Power TV
+  description: ''
+  trigger:
+  - event_data:
+      actionID: B1B6ECEF-B46F-4EA7-8E59-6C642EEF9F69
+    event_type: ios.action_fired
+    platform: event
+  condition: []
+  action:
+  - service: switch.toggle
+    data: {}
+    target:
+      entity_id: switch.hifi_center
+  mode: single
+- id: '1686978355361'
+  alias: Wohnen Zehnder ComfoAir Lüftung Kühlung bei Zuluft tiefer Abluft
+  description: ''
+  trigger:
+  - platform: template
+    value_template: "{{ true if ( ( states('sensor.comfoair_temperatur_luftung_zuluft')|int
+      < \n              (states('sensor.comfoair_temperatur_luftung_abluft')|int -
+      1) ) \n        and  ( states('sensor.comfoair_temperatur_luftung_abluft')|int
+      > \n              (states('sensor.comfoair_temperatur_luftung_comfort')|int)
+      ) ) \nelse false }}\n"
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    alias: Temperatur Zuluft ist tiefer als Abluft für 5 Minuten und Abluft höher
+      als Comfort
+  - platform: template
+    value_template: "{{ true if ( ( states('sensor.comfoair_temperatur_luftung_zuluft')|int
+      >= \n              (states('sensor.comfoair_temperatur_luftung_abluft')|int)
+      )\n        and  ( states('sensor.comfoair_temperatur_luftung_abluft')|int >
+      \n              (states('sensor.comfoair_temperatur_luftung_comfort')|int) )
+      ) \nelse false }}\n"
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    alias: Temperatur Zuluft ist höher-gleich als Abluft für 5 Minuten und Abluft
+      höher als Comfort
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Normal
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Abwesend
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Normal-Kühlen
+    - condition: state
+      entity_id: input_select.status_luftung
+      state: Abwesend-Kühlen
+  action:
+  - if:
+    - condition: template
+      value_template: "{{ true if ( ( states('sensor.comfoair_temperatur_luftung_zuluft')|int
+        < \n              (states('sensor.comfoair_temperatur_luftung_abluft')|int
+        - 1) ) \n        and  ( states('sensor.comfoair_temperatur_luftung_abluft')|int
+        > \n              (states('sensor.comfoair_temperatur_luftung_comfort')|int)
+        ) ) \nelse false }}\n"
+      alias: Temperatur Zuluft ist tiefer als Abluft
+    then:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.status_luftung
+          state: Normal
+        sequence:
+        - service: input_select.select_option
+          data:
+            option: Normal-Kühlen
+          target:
+            entity_id: input_select.status_luftung
+        - service: rest_command.zehnder_comfoair_middle
+          data: {}
+        - service: notify.mobile_app_stephs_iphone
+          data:
+            message: Normal kühlen ON ({{ states('input_select.status_luftung') }})
+      - conditions:
+        - condition: state
+          entity_id: input_select.status_luftung
+          state: Abwesend
+        sequence:
+        - service: input_select.select_option
+          data:
+            option: Abwesend-Kühlen
+          target:
+            entity_id: input_select.status_luftung
+        - service: rest_command.zehnder_comfoair_middle
+          data: {}
+        - service: notify.mobile_app_stephs_iphone
+          data:
+            message: Abwesend kühlen ON ({{ states('input_select.status_luftung')
+              }})
+    else:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: input_select.status_luftung
+          state: Normal-Kühlen
+        sequence:
+        - service: input_select.select_option
+          data:
+            option: Normal
+          target:
+            entity_id: input_select.status_luftung
+        - service: rest_command.zehnder_comfoair_low
+          data: {}
+        - service: notify.mobile_app_stephs_iphone
+          data:
+            message: Normal kühlen OFF ({{ states('input_select.status_luftung') }})
+      - conditions:
+        - condition: state
+          entity_id: input_select.status_luftung
+          state: Abwesend-Kühlen
+        sequence:
+        - service: input_select.select_option
+          data:
+            option: Abwesend
+          target:
+            entity_id: input_select.status_luftung
+        - service: rest_command.zehnder_comfoair_away
+          data: {}
+        - service: notify.mobile_app_stephs_iphone
+          data:
+            message: Abwesend kühlen OFF ({{ states('input_select.status_luftung')
+              }})
+  mode: restart

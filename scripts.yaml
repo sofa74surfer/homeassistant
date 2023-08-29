@@ -15,7 +15,7 @@ dingz_cover_move_generic:
   mode: parallel
   icon: hass:blinds
   max: 10
-dingz_cover_move_to_generic:
+dingz_cover_moveto_generic:
   alias: Dingz Cover Move To Generic
   sequence:
   - service: rest_command.dingz_generic_cover_moveto

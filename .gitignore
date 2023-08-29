@@ -17,3 +17,6 @@ www/
 custom_components/
 homematicip_local/
 *inactiv*
+history.txt
+test*
+switches/state

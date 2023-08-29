@@ -27,6 +27,8 @@ shell_command:
   shutdown_lupus: !secret qnap_lupus_poweroff
   shutdown_thor: !secret qnap_thor_poweroff
   shutdown_legolas: !secret qnap_legolas_poweroff
+  trigger_plexon: !secret ha_zardoz_plexon
+  trigger_plexoff: !secret ha_zardoz_plexoff
 
 # Logger Config for Log Viewer Add-On
 #logger:
@@ -43,11 +45,20 @@ scene: !include scenes.yaml
 binary_sensor: !include binary_sensors.yaml
 light: !include lights.yaml
 cover: !include covers.yaml
+command_line: !include command_line.yaml
+
+#command_line:
+#  - sensor:
+#      name: proc_state
+#      command: "ls /config/switches/state/proc* | awk -F '/' '{print $5}'"
+#      scan_interval: 60
+#      unique_id: command_line.sensor_proc_state
 
 ########### INCLUDES ##### Additional Dir List
 sensor: !include_dir_list sensors/
 switch: !include_dir_list switches/
 rest_command: !include_dir_merge_named rest_commands/
+template: !include_dir_merge_list template/
 
 #remote:
 #  - platform: harmony
@@ -57,20 +68,20 @@ rest_command: !include_dir_merge_named rest_commands/
 #    delay_secs: 0.6
 
 media_player:
-#  - platform: nad
-#    type: Telnet
-#    port: 23
-#    host: !secret ip_nad
-#    name: NAD Receiver
-#    min_volume: -60
-#    max_volume: -20
-#    volume_step: 3
-#    sources:
-#      1: 'Mac'
-#      2: 'Apple TV'
-#      3: 'Swisscom TV'
+  - platform: nad
+    type: Telnet
+    port: 23
+    host: !secret ip_nad
+    name: NAD Receiver
+    min_volume: -60
+    max_volume: -20
+    volume_step: 3
+    sources:
+##      1: 'Mac'
+      2: 'Apple TV'
+##      3: 'Swisscom TV'
 ##      4: 'Epson HDMI'
-##      5: 'BluOS'
+      5: 'BluOS'
   - platform: bluesound
     hosts:
       - host: !secret ip_nad
@@ -104,3 +115,42 @@ influxdb:
       - person
     entity_globs:
       - sensor.qubino_3_phase_smart_meter_electric_consumption_w*
+
+mqtt:
+  sensor:
+    - name: Shelly Wasserverteiler Devicepower
+      state_topic: "felismqtt/shellyplusht/wasserverteiler/status/devicepower:0"
+      unit_of_measurement: "%"
+      value_template: "{{ value_json.battery.percent }}"
+      device_class: battery
+      unique_id: mqtt_shelly_wasserverteiler_devicepower
+    - name: Shelly Wasserverteiler Feuchtigkeit
+      state_topic: "felismqtt/shellyplusht/wasserverteiler/status/humidity:0"
+      unit_of_measurement: "%"
+      value_template: "{{ value_json.rh }}"
+      device_class: humidity
+      unique_id: mqtt_shelly_wasserverteiler_feuchtigkeit
+    - name: Shelly Wasserverteiler Temperatur
+      state_topic: "felismqtt/shellyplusht/wasserverteiler/status/temperature:0"
+      unit_of_measurement: "°C"
+      value_template: "{{ value_json.tC }}"
+      device_class: temperature
+      unique_id: mqtt_shelly_wasserverteiler_temperatur
+    - name: Shelly Heizverteiler Devicepower
+      state_topic: "felismqtt/shellyplusht/heizverteiler/status/devicepower:0"
+      unit_of_measurement: "%"
+      value_template: "{{ value_json.battery.percent }}"
+      device_class: battery
+      unique_id: mqtt_shelly_heizverteiler_devicepower
+    - name: Shelly Heizverteiler Feuchtigkeit
+      state_topic: "felismqtt/shellyplusht/heizverteiler/status/humidity:0"
+      unit_of_measurement: "%"
+      value_template: "{{ value_json.rh }}"
+      device_class: humidity
+      unique_id: mqtt_shelly_heizverteiler_feuchtigkeit
+    - name: Shelly Heizverteiler Temperatur
+      state_topic: "felismqtt/shellyplusht/heizverteiler/status/temperature:0"
+      unit_of_measurement: "°C"
+      value_template: "{{ value_json.tC }}"
+      device_class: temperature
+      unique_id: mqtt_shelly_heizverteiler_temperatur

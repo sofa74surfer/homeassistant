@@ -1,0 +1,3 @@
+  ecs_generic_relay:
+    url: http://{{ ip }}/relay?state={{ state }}
+    method: GET

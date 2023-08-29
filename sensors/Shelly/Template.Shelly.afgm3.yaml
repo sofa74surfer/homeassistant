@@ -1,0 +1,58 @@
+platform: template
+sensors:
+
+# ####### ########################### #######
+# ####### Absolute Feuchte Shelly     #######
+# ####### ########################### #######
+
+# Keller
+  shelly_keller_absolute_feuchte:
+    friendly_name: "Shelly Keller Absolute Feuchte g/m³"
+    value_template: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.shelly_ht_keller_humidity')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.shelly_ht_keller_temperature')|float) / 
+                                (237.3 + 
+                                states('sensor.shelly_ht_keller_temperature')|float
+                                )
+                              ) / 
+                              (states('sensor.shelly_ht_keller_temperature')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+    device_class: weight
+    unit_of_measurement: "g/m³"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.shelly_keller_absolute_feuchte
+# Wasserverteiler
+  shelly_wasserverteiler_absolute_feuchte:
+    friendly_name: "Shelly Wasserverteiler Absolute Feuchte g/m³"
+    value_template: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.shelly_wasserverteiler_feuchtigkeit')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.shelly_wasserverteiler_temperatur')|float) / 
+                                (237.3 + 
+                                states('sensor.shelly_wasserverteiler_temperatur')|float
+                                )
+                              ) / 
+                              (states('sensor.shelly_wasserverteiler_temperatur')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+    device_class: weight
+    unit_of_measurement: "g/m³"
+    attribute_templates:
+      last_updated:  "{{ now() }}"
+    unique_id: template.shelly_wasserverteiler_absolute_feuchte
+# Heizverteiler

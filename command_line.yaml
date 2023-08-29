@@ -1,0 +1,5 @@
+  - sensor:
+      name: plex_state
+      command: "ls /config/switches/state/plex* | awk -F '/' '{print $5}'"
+      scan_interval: 60
+      unique_id: command_line.sensor_plex_state

@@ -1,0 +1,202 @@
+platform: template
+sensors:
+
+# ####### ######################### #######
+# ####### Zehnder ComfoAir Sendoren #######
+# ####### ######################### #######
+
+# {{ state_attr('sensor.zehnder_comfoair_info', 'getFaults')['currentErrorA']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_info', 'getFaults')['currentErrorE']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_info', 'getFaults')['replaceFilter']['value'] }}
+
+# A0
+# 0
+# False
+
+# ComfoAir Error Lüftung Kategorie A
+  comfoair_error_luftung_kategorie_a:
+    friendly_name: "ComfoAir Error Lüftung Kategorie A"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_info', 'getFaults')['currentErrorA']['value'] }}"
+    unique_id: template.sensor_comfoair_error_luftung_kategorie_a
+
+# ComfoAir Error Lüftung Kategorie E
+  comfoair_error_luftung_kategorie_e:
+    friendly_name: "ComfoAir Error Lüftung Kategorie E"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_info', 'getFaults')['currentErrorE']['value'] }}"
+    unique_id: template.sensor_comfoair_error_luftung_kategorie_e
+
+# ComfoAir Error Lüftung Filter
+  comfoair_error_luftung_filter:
+    friendly_name: "ComfoAir Error Lüftung Filter"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_info', 'getFaults')['replaceFilter']['value'] }}"
+    unique_id: template.sensor_comfoair_error_luftung_filter
+
+# {{ state_attr('sensor.zehnder_comfoair_info', 'getOperatingHours')['away']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_info', 'getOperatingHours')['low']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_info', 'getOperatingHours')['middle']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_info', 'getOperatingHours')['high']['value'] }}
+
+# 1161
+# 116932
+# 12936
+# 750
+
+# ComfoAir Laufzeit Lüftung Away
+  comfoair_laufzeit_luftung_away:
+    friendly_name: "ComfoAir Laufzeit Lüftung Away"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_info', 'getOperatingHours')['away']['value'] }}"
+    device_class: duration
+    unit_of_measurement: "h"
+    unique_id: template.sensor_comfoair_laufzeit_luftung_away
+
+# ComfoAir Laufzeit Lüftung Low
+  comfoair_laufzeit_luftung_low:
+    friendly_name: "ComfoAir Laufzeit Lüftung Low"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_info', 'getOperatingHours')['low']['value'] }}"
+    device_class: duration
+    unit_of_measurement: "h"
+    unique_id: template.sensor_comfoair_laufzeit_luftung_low
+
+# ComfoAir Laufzeit Lüftung Middle
+  comfoair_laufzeit_luftung_middle:
+    friendly_name: "ComfoAir Laufzeit Lüftung Middle"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_info', 'getOperatingHours')['middle']['value'] }}"
+    device_class: duration
+    unit_of_measurement: "h"
+    unique_id: template.sensor_comfoair_laufzeit_luftung_middle
+
+# ComfoAir Laufzeit Lüftung High
+  comfoair_laufzeit_luftung_high:
+    friendly_name: "ComfoAir Laufzeit Lüftung High"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_info', 'getOperatingHours')['high']['value'] }}"
+    device_class: duration
+    unit_of_measurement: "h"
+    unique_id: template.sensor_comfoair_laufzeit_luftung_high
+
+# {{ state_attr('sensor.zehnder_comfoair_info', 'getTemperatures')['comfort']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_state', 'getTemperatureStates')['outsideAir']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_state', 'getTemperatureStates')['supplyAir']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_state', 'getTemperatureStates')['outgoingAir']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_state', 'getTemperatureStates')['exhaustAir']['value'] }}
+
+# 20
+# 16.5
+# 21.5
+# 21
+# 17.5
+
+# ComfoAir Temperatur Comfort
+  comfoair_temperatur_luftung_comfort:
+    friendly_name: "ComfoAir Temperatur Lüftung Comfort"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_info', 'getTemperatures')['comfort']['value'] }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_comfoair_temperatur_luftung_comfort
+
+# ComfoAir Temperatur Aussenluft
+  comfoair_temperatur_luftung_aussenluft:
+    friendly_name: "ComfoAir Temperatur Lüftung Aussenluft"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_state', 'getTemperatureStates')['outsideAir']['value'] }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_comfoair_temperatur_luftung_aussenluft
+
+# ComfoAir Temperatur Zuluft
+  comfoair_temperatur_luftung_zuluft:
+    friendly_name: "ComfoAir Temperatur Lüftung Zuluft"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_state', 'getTemperatureStates')['supplyAir']['value'] }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_comfoair_temperatur_luftung_zuluft
+
+# ComfoAir Temperatur Abluft
+  comfoair_temperatur_luftung_abluft:
+    friendly_name: "ComfoAir Temperatur Lüftung Abluft"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_state', 'getTemperatureStates')['outgoingAir']['value'] }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_comfoair_temperatur_luftung_abluft
+
+# ComfoAir Temperatur Fortluft
+  comfoair_temperatur_luftung_fortluft:
+    friendly_name: "ComfoAir Temperatur Lüftung Fortluft"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_state', 'getTemperatureStates')['exhaustAir']['value'] }}"
+    device_class: temperature
+    unit_of_measurement: "°C"
+    unique_id: template.sensor_comfoair_temperatur_luftung_fortluft
+
+# {{ state_attr('sensor.zehnder_comfoair_state', 'getFanState')['supplyAir']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_state', 'getFanState')['outgoingAir']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_state', 'getFanState')['rotationsSupply']['value'] }}
+# {{ state_attr('sensor.zehnder_comfoair_state', 'getFanState')['rotationsOutgoing']['value'] }}
+
+# 25
+# 28
+# 851
+# 960
+
+# ComfoAir Power Stufe
+  comfoair_power_stufe:
+    friendly_name: "ComfoAir Power Stufe"
+    value_template: "
+{% if state_attr('sensor.zehnder_comfoair_state', 'getFanState')['outgoingAir']['value'] <= state_attr('sensor.zehnder_comfoair_info', 'getVentilationLevel')['exhaustAway']['value'] -%}
+away
+{%- else -%}
+  {% if state_attr('sensor.zehnder_comfoair_state', 'getFanState')['outgoingAir']['value'] <= state_attr('sensor.zehnder_comfoair_info', 'getVentilationLevel')['exhaustLow']['value'] -%}
+  low
+  {%- else -%}
+    {% if state_attr('sensor.zehnder_comfoair_state', 'getFanState')['outgoingAir']['value'] <= state_attr('sensor.zehnder_comfoair_info', 'getVentilationLevel')['exhaustMiddle']['value'] -%}
+    mid
+    {%- else -%}
+      {% if state_attr('sensor.zehnder_comfoair_state', 'getFanState')['outgoingAir']['value'] <= state_attr('sensor.zehnder_comfoair_info', 'getVentilationLevel')['exhaustHigh']['value'] -%}
+      high
+      {%- else -%}
+      NA
+      {%- endif %}
+    {%- endif %}
+  {%- endif %}
+{%- endif %}"
+    unique_id: template.sensor_comfoair_power_stufe
+
+# ComfoAir Power Zuluft
+  comfoair_power_zuluft:
+    friendly_name: "ComfoAir Power Zuluft"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_state', 'getFanState')['supplyAir']['value'] }}"
+    device_class: power_factor
+    unit_of_measurement: "%"
+    unique_id: template.sensor_comfoair_power_zuluft
+
+# ComfoAir Power Abluft
+  comfoair_power_abluft:
+    friendly_name: "ComfoAir Power Abluft"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_state', 'getFanState')['outgoingAir']['value'] }}"
+    device_class: power_factor
+    unit_of_measurement: "%"
+    unique_id: template.sensor_comfoair_power_abluft
+
+# ComfoAir Rotation Zuluft
+  comfoair_rotation_zuluft:
+    friendly_name: "ComfoAir Rotation Zuluft"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_state', 'getFanState')['rotationsSupply']['value'] }}"
+    unit_of_measurement: "rpm"
+    unique_id: template.sensor_comfoair_rotation_zuluft
+
+# ComfoAir Rotation Abluft
+  comfoair_rotation_abluft:
+    friendly_name: "ComfoAir Rotation Abluft"
+    value_template: "{{ state_attr('sensor.zehnder_comfoair_state', 'getFanState')['rotationsOutgoing']['value'] }}"
+    unit_of_measurement: "rpm"
+    unique_id: template.sensor_comfoair_rotation_abluft
+
+# {{ state_attr('sensor.zehnder_comfoair_state', 'getFlapState')['bypass']['value'] }}
+
+# 0 oder 100
+# Binary Sensor: /config/binary_sensors/Zehnder/ZCA_templates.yaml
+
+# ComfoAir Bypass
+#  comfoair_bypass:
+#    friendly_name: "ComfoAir Bypass"
+#    value_template: "{{ state_attr('sensor.zehnder_comfoair_state', 'getFlapState')['bypass']['value'] }}"
+#    device_class: power_factor
+#    unit_of_measurement: "%"
+#    unique_id: template.sensor_comfoair_bybass

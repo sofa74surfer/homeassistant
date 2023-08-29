@@ -1,0 +1,187 @@
+# ####### ########################### #######
+# ####### Absolute Feuchte Homematic  #######
+# ####### ########################### #######
+
+# Wetterstation
+- sensor:
+    - name: "Homematic Wetterstation Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.hmip_swo_pr_00185d89a9f0bf_humidity')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature')|float) / 
+                                (237.3 + 
+                                states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature')|float
+                                )
+                              ) / 
+                              (states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.homematic_wetterstation_absolute_feuchte
+
+# Wohnzimmer
+    - name: "Homematic Thermostat Wohnzimmer Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                (237.3 + 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                )
+                              ) / 
+                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.homematic_thermostat_wohnzimmer_absolute_feuchte
+
+# Büro Stephan
+    - name: "Homematic Thermostat Stephan Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                (237.3 + 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                )
+                              ) / 
+                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.homematic_thermostat_stephan_absolute_feuchte
+
+# Büro Pia
+    - name: "Homematic Thermostat Pia Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                (237.3 + 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                )
+                              ) / 
+                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.homematic_thermostat_pia_absolute_feuchte
+
+# Bad
+    - name: "Homematic Thermostat Bad Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                (237.3 + 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                )
+                              ) / 
+                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.homematic_thermostat_bad_absolute_feuchte
+
+# Schlafzimmer
+    - name: "Homematic Thermostat Schlafzimmer Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                (237.3 + 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                )
+                              ) / 
+                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.homematic_thermostat_schlafzimmer_absolute_feuchte
+
+# Dusche
+    - name: "Homematic Thermostat Dusche Absolute Feuchte"
+      state: "{{(10**5 * 
+                        18.016 / 
+                        8314.3 * 
+                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        100 * 
+                        6.1078 * 
+                        10** (
+                              (7.5 * 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                (237.3 + 
+                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                )
+                              ) / 
+                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              273.15
+                              ) 
+                      )|round(1)}}"
+#      attributes:
+#        last_updated:  "{{ now() }}"
+      device_class: weight
+      state_class: measurement
+      unit_of_measurement: "g"
+      unique_id: template.homematic_thermostat_dusche_absolute_feuchte
+

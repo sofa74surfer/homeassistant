@@ -1,0 +1,15 @@
+platform: rest
+method: GET
+resource: !secret url_sensor_zehnder_comfoair_info
+# http://ip:1880/info
+name: Zehnder ComfoAir Info
+value_template: "OK"
+scan_interval: 600
+force_update: true
+json_attributes:
+  - "getFaults"
+  - "getBootloaderVersion"
+  - "getFirmwareVersion"
+  - "getOperatingHours"
+  - "getVentilationLevel"
+  - "getTemperatures"

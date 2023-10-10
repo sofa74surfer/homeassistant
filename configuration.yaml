@@ -46,6 +46,7 @@ binary_sensor: !include binary_sensors.yaml
 light: !include lights.yaml
 cover: !include covers.yaml
 command_line: !include command_line.yaml
+sql: !include sql.yaml
 
 #command_line:
 #  - sensor:

@@ -865,6 +865,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: schlafzimmer_light_on_ambient
   condition: []
   action:
@@ -875,10 +877,9 @@
   description: ''
   trigger:
   - platform: webhook
-    webhook_id: schlafzimmer_light_on_bright
     allowed_methods:
-    - POST
     - PUT
+    webhook_id: schlafzimmer_light_on_bright
     local_only: true
   condition: []
   action:
@@ -889,6 +890,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: schlafzimmer_light_off
   condition: []
   action:
@@ -899,6 +902,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: wohnung_light_off
   condition: []
   action:
@@ -914,6 +919,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: wohnung_light_panik
   condition: []
   action:
@@ -930,6 +937,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: buro_stephan_light_toggle
   condition: []
   action:
@@ -945,6 +954,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: buro_pia_light_toggle
   condition: []
   action:
@@ -961,6 +972,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: buro_pia_light_on_full
   condition: []
   action:
@@ -977,6 +990,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: buro_stephan_light_on_full
   condition: []
   action:
@@ -992,6 +1007,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: terrasse_light_toggle
   condition: []
   action:
@@ -1008,6 +1025,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: terrasse_light_on_full
   condition: []
   action:
@@ -2020,6 +2039,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: kuche-licht-dingz-schrank-modifikation
   condition: []
   action:
@@ -2060,6 +2081,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: wohnen-licht-dingz-esstisch-modifikation
   condition: []
   action:
@@ -2100,6 +2123,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: kuche-licht-dingz-modifikation-szene-kochen
   condition: []
   action:
@@ -2208,6 +2233,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: kuche-licht-dingz-modifikation-szene-essen
   condition: []
   action:
@@ -2405,6 +2432,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: wohnen-licht-dingz-katzenbaum-modifikation
   condition: []
   action:
@@ -2464,6 +2493,8 @@
   description: Handling manuel press
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: dusche_light_generic_webhook
   condition: []
   action:
@@ -2518,6 +2549,8 @@
   description: Handling manuel press
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: bad_light_generic_webhook
   condition: []
   action:
@@ -2836,6 +2869,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: dusche_light_decke_single_webhook
   condition: []
   action:
@@ -2896,6 +2931,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: dusche_light_ankleide_single_webhook
   condition: []
   action:
@@ -2956,6 +2993,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: dusche_light_spiegel_single_webhook
   condition: []
   action:
@@ -3016,6 +3055,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: bad_light_decke_wc_single_webhook
   condition: []
   action:
@@ -3081,6 +3122,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: bad_light_decke_watu_single_webhook
   condition: []
   action:
@@ -3146,6 +3189,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: bad_light_spiegel_single_webhook
   condition: []
   action:
@@ -3206,6 +3251,8 @@
   description: ''
   trigger:
   - platform: webhook
+    allowed_methods:
+    - PUT
     webhook_id: gang_light_single_webhook
   condition: []
   action:
@@ -4208,3 +4255,70 @@
             message: Abwesend kühlen OFF ({{ states('input_select.status_luftung')
               }})
   mode: restart
+- id: '1695718783663'
+  alias: Wohnung Kühlen ON-OFF anhand mittlerer Aussentemperatur
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.sql_homematic_outside_24h_average_temperature
+    for:
+      hours: 12
+      minutes: 0
+      seconds: 0
+    above: 20
+  - platform: numeric_state
+    entity_id: sensor.sql_homematic_outside_24h_average_temperature
+    for:
+      hours: 12
+      minutes: 0
+      seconds: 0
+    below: 20
+  condition:
+  - condition: state
+    entity_id: climate.thermostat_bad
+    state: cool
+  - condition: state
+    entity_id: climate.thermostat_dusche
+    state: cool
+  - condition: state
+    entity_id: climate.thermostat_pia
+    state: cool
+  - condition: state
+    entity_id: climate.thermostat_schlafzimmer
+    state: cool
+  - condition: state
+    entity_id: climate.thermostat_stephan
+    state: cool
+  - condition: state
+    entity_id: climate.thermostat_wohnzimmer
+    state: cool
+  action:
+  - if:
+    - condition: numeric_state
+      entity_id: sensor.sql_homematic_outside_24h_average_temperature
+      above: 20
+    then:
+    - service: climate.set_temperature
+      data:
+        temperature: 20
+      target:
+        entity_id:
+        - climate.thermostat_bad
+        - climate.thermostat_dusche
+        - climate.thermostat_pia
+        - climate.thermostat_schlafzimmer
+        - climate.thermostat_stephan
+        - climate.thermostat_wohnzimmer
+    else:
+    - service: climate.set_temperature
+      data:
+        temperature: 28
+      target:
+        entity_id:
+        - climate.thermostat_bad
+        - climate.thermostat_dusche
+        - climate.thermostat_pia
+        - climate.thermostat_schlafzimmer
+        - climate.thermostat_stephan
+        - climate.thermostat_wohnzimmer
+  mode: single

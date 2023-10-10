@@ -1,0 +1,10 @@
+# 24h Mittelwert der Aussentemperatur
+- name: SQL HomeMatic Outside 24h Average Temperature
+  query: >
+    select round(avg(s.mean),1) as state
+    FROM statistics_meta sm
+    inner join statistics s on s.metadata_id = sm.id
+    where sm.statistic_id = 'sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature' and s.created_ts > (strftime('%s', 'now') - (1*60*60*24));
+  column: 'state'
+  unit_of_measurement: "°C"
+  unique_id: template.sensor_sql_homematic_outside_24h_average_temperature

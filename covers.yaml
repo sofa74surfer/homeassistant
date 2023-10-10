@@ -11,11 +11,11 @@
         friendly_name: "Dingz Markise1 Wohnzimmer Links"
         device_class: blind
         value_template: "
-{% if state_attr('sensor.dingz_markise1_state', 'blinds')[0]['moving'] == 'up' %}
+{% if state_attr('sensor.dingz_markise1_state', 'blinds')[1]['moving'] == 'up' %}
 opening   
-{% elif state_attr('sensor.dingz_markise1_state', 'blinds')[0]['moving'] == 'down' %}
+{% elif state_attr('sensor.dingz_markise1_state', 'blinds')[1]['moving'] == 'down' %}
 closing
-{% elif state_attr('sensor.dingz_markise1_state', 'blinds')[0]['moving'] == 'stop' and state_attr('sensor.dingz_markise1_wohnzimmer_links_state', 'current')['blind']|float > 0 %}
+{% elif state_attr('sensor.dingz_markise1_state', 'blinds')[1]['moving'] == 'stop' and state_attr('sensor.dingz_markise1_wohnzimmer_links_state', 'current')['blind']|float > 0 %}
 open
 {% else %}
 closed
@@ -27,7 +27,7 @@ closed
           entity_id: cover.dingz_markise1_cover
           data:
             action: "up"
-            idx: 0
+            idx: 1
             ip: !secret ip_dingz_markise1
             force_entity1: sensor.dingz_markise1_state
             force_entity2: sensor.dingz_markise1_wohnzimmer_links_state
@@ -36,7 +36,7 @@ closed
           entity_id: cover.dingz_markise1_cover
           data:
             action: "down"
-            idx: 0
+            idx: 1
             ip: !secret ip_dingz_markise1
             force_entity1: sensor.dingz_markise1_state
             force_entity2: sensor.dingz_markise1_wohnzimmer_links_state
@@ -45,7 +45,7 @@ closed
           entity_id: cover.dingz_markise1_cover
           data:
             action: "stop"
-            idx: 0
+            idx: 1
             ip: !secret ip_dingz_markise1
             force_entity1: sensor.dingz_markise1_state
             force_entity2: sensor.dingz_markise1_wohnzimmer_links_state
@@ -55,7 +55,7 @@ closed
           data:
             position: "{{position}}"
             lamella: 0
-            idx: 0
+            idx: 1
             ip: !secret ip_dingz_markise1
             force_entity1: sensor.dingz_markise1_state
             force_entity2: sensor.dingz_markise1_wohnzimmer_links_state

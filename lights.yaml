@@ -576,7 +576,7 @@
             enum: "on"
             dimmer: 2
             ip: !secret ip_dingz_schlafzimmer
-            force_entity: sensor.dingz_dingz_schlafzimmer_state
+            force_entity: sensor.dingz_schlafzimmer_state
         turn_off:
           service: script.dingz_light_level_generic_onoff
           entity_id: light.dingz_schlafzimmer_boden_light
@@ -584,7 +584,7 @@
             enum: "off"
             dimmer: 2
             ip: !secret ip_dingz_schlafzimmer
-            force_entity: sensor.dingz_dingz_schlafzimmer_state
+            force_entity: sensor.dingz_schlafzimmer_state
 
     # # ####### ############################## #######
     # # ####### Dingz Light Template Dingz LED #######

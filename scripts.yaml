@@ -1,177 +1,177 @@
 dingz_cover_move_generic:
   alias: Dingz Cover Move Generic
   sequence:
-  - service: rest_command.dingz_generic_cover_move
-    data:
+  - data:
       action: '{{ action }}'
       idx: '{{ idx }}'
       ip: '{{ ip }}'
-  - service: homeassistant.update_entity
-    target:
+    action: rest_command.dingz_generic_cover_move
+  - target:
       entity_id: '{{ force_entity1 }}'
-  - service: homeassistant.update_entity
-    target:
+    action: homeassistant.update_entity
+  - target:
       entity_id: '{{ force_entity2 }}'
+    action: homeassistant.update_entity
   mode: parallel
   icon: hass:blinds
   max: 10
 dingz_cover_moveto_generic:
   alias: Dingz Cover Move To Generic
   sequence:
-  - service: rest_command.dingz_generic_cover_moveto
-    data:
+  - data:
       blind: '{{ position }}'
       lamella: '{{ lamella }}'
       idx: '{{ idx }}'
       ip: '{{ ip }}'
-  - service: homeassistant.update_entity
-    target:
+    action: rest_command.dingz_generic_cover_moveto
+  - target:
       entity_id: '{{ force_entity1 }}'
-  - service: homeassistant.update_entity
-    target:
+    action: homeassistant.update_entity
+  - target:
       entity_id: '{{ force_entity2 }}'
+    action: homeassistant.update_entity
   mode: parallel
   icon: hass:blinds
   max: 10
 dingz_led_level_generic:
   alias: Dingz LED Level Generic
   sequence:
-  - service: rest_command.dingz_generic_led
-    data:
+  - data:
       action: '{{ action }}'
       colh: '{{ colh }}'
       cols: '{{ cols }}'
       colv: '{{ colv }}'
       ip: '{{ ip }}'
-  - service: homeassistant.update_entity
-    target:
+    action: rest_command.dingz_generic_led
+  - target:
       entity_id: '{{ force_entity }}'
+    action: homeassistant.update_entity
   mode: parallel
   icon: hass:lightbulb
   max: 10
 dingz_led_level_generic_onoff:
   alias: Dingz LED Level Generic onoff
   sequence:
-  - service: rest_command.dingz_generic_led_onoff
-    data:
+  - data:
       action: '{{ action }}'
       ip: '{{ ip }}'
-  - service: homeassistant.update_entity
-    target:
+    action: rest_command.dingz_generic_led_onoff
+  - target:
       entity_id: '{{ force_entity }}'
+    action: homeassistant.update_entity
   mode: parallel
   icon: hass:lightbulb
   max: 10
 dingz_led_markise1_und_schlafzimmer_grun:
   alias: Dingz LED Markise1 und Schlafzimmer Grün
   sequence:
-  - service: script.dingz_led_level_generic
-    data:
+  - data:
       action: 'on'
       colh: '120'
       cols: '100'
       colv: '20'
       ip: 192.168.1.191
       force_entity: sensor.dingz_markise1_state
-  - service: script.dingz_led_level_generic
-    data:
+    action: script.dingz_led_level_generic
+  - data:
       action: 'on'
       colh: '120'
       cols: '100'
       colv: '3'
       ip: 192.168.1.197
       force_entity: sensor.dingz_schlafzimmer_state
+    action: script.dingz_led_level_generic
   mode: single
   icon: hass:lightbulb
 dingz_led_markise1_und_schlafzimmer_original:
   alias: Dingz LED Markise1 und Schlafzimmer Original
   sequence:
-  - service: script.dingz_led_level_generic
-    data:
+  - data:
       action: 'on'
       colh: '180'
       cols: '100'
       colv: '3'
       ip: 192.168.1.191
       force_entity: sensor.dingz_markise1_state
-  - service: script.dingz_led_level_generic
-    data:
+    action: script.dingz_led_level_generic
+  - data:
       action: 'on'
       colh: '241'
       cols: '100'
       colv: '6'
       ip: 192.168.1.197
       force_entity: sensor.dingz_schlafzimmer_state
+    action: script.dingz_led_level_generic
   mode: single
   icon: hass:lightbulb
 dingz_led_markise1_und_schlafzimmer_rot:
   alias: Dingz LED Markise1 und Schlafzimmer Rot
   sequence:
-  - service: script.dingz_led_level_generic
-    data:
+  - data:
       action: 'on'
       colh: '0'
       cols: '100'
       colv: '20'
       ip: 192.168.1.191
       force_entity: sensor.dingz_markise1_state
-  - service: script.dingz_led_level_generic
-    data:
+    action: script.dingz_led_level_generic
+  - data:
       action: 'on'
       colh: '0'
       cols: '100'
       colv: '3'
       ip: 192.168.1.197
       force_entity: sensor.dingz_schlafzimmer_state
+    action: script.dingz_led_level_generic
   mode: single
   icon: hass:lightbulb
 dingz_led_markise1_und_schlafzimmer_violett:
   alias: Dingz LED Markise1 und Schlafzimmer Violett
   sequence:
-  - service: script.dingz_led_level_generic
-    data:
+  - data:
       action: 'on'
       colh: '300'
       cols: '100'
       colv: '20'
       ip: 192.168.1.191
       force_entity: sensor.dingz_markise1_state
-  - service: script.dingz_led_level_generic
-    data:
+    action: script.dingz_led_level_generic
+  - data:
       action: 'on'
       colh: '300'
       cols: '100'
       colv: '3'
       ip: 192.168.1.197
       force_entity: sensor.dingz_schlafzimmer_state
+    action: script.dingz_led_level_generic
   mode: single
   icon: hass:lightbulb
 dingz_light_level_generic:
   alias: Dingz Light Level Generic
   sequence:
-  - service: rest_command.dingz_generic_dimmer
-    data:
+  - data:
       dimmer: '{{ dimmer }}'
       enum: '{{ enum }}'
       value: '{{ brightness }}'
       ip: '{{ ip }}'
-  - service: homeassistant.update_entity
-    target:
+    action: rest_command.dingz_generic_dimmer
+  - target:
       entity_id: '{{ force_entity }}'
+    action: homeassistant.update_entity
   mode: parallel
   icon: hass:lightbulb
   max: 10
 dingz_light_level_generic_onoff:
   alias: Dingz Light Level Generic onoff
   sequence:
-  - service: rest_command.dingz_generic_dimmer_onoff
-    data:
+  - data:
       dimmer: '{{ dimmer }}'
       enum: '{{ enum }}'
       ip: '{{ ip }}'
-  - service: homeassistant.update_entity
-    target:
+    action: rest_command.dingz_generic_dimmer_onoff
+  - target:
       entity_id: '{{ force_entity }}'
+    action: homeassistant.update_entity
   mode: parallel
   icon: hass:lightbulb
   max: 20
@@ -200,3 +200,331 @@ test_script_lichtstufe:
         state: '3.0'
       sequence: []
   mode: single
+thermostate_auf_heizen_stellen:
+  alias: Thermostate auf Heizen stellen
+  sequence:
+  - data:
+      entry_id: 4c7d3ecec2033ebcea403c61249eee5b
+      name: Felis_Heizstatus
+      value: '0'
+    action: homematicip_local.set_variable_value
+  mode: single
+  icon: mdi:heat-wave
+thermostate_auf_kuhlern_stellen:
+  alias: Thermostate auf Kühlen stellen
+  sequence:
+  - data:
+      entry_id: 4c7d3ecec2033ebcea403c61249eee5b
+      name: Felis_Heizstatus
+      value: '1'
+    action: homematicip_local.set_variable_value
+  mode: single
+  icon: mdi:snowflake
+thermostate_auf_aus_stellen:
+  alias: Thermostate auf AUS stellen
+  sequence:
+  - data:
+      entry_id: 4c7d3ecec2033ebcea403c61249eee5b
+      name: Felis_Heizstatus
+      value: '2'
+    action: homematicip_local.set_variable_value
+  mode: single
+  icon: mdi:thermometer-off
+tv_on:
+  alias: TV On
+  sequence:
+  - alias: Wenn bereits eine parallele zweites Script läuft, dann stoppen wir hier
+    condition: numeric_state
+    entity_id: script.tv_on
+    attribute: current
+    below: 2
+  - if:
+    - condition: device
+      type: is_off
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+    then:
+    - type: turn_on
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+    alias: Wenn Hifi Center ausgeschaltet, dann einschalten
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: rest_command.sofabaton_tv_on
+    data: {}
+  description: MyStrom Adapter einschalten, 5 Sekunden warten, Sofabaton TV einschalten
+  icon: mdi:television
+  mode: parallel
+  max: 10
+tv_off:
+  alias: TV Off
+  sequence:
+  - alias: Wenn bereits eine parallele zweites Script läuft, dann stoppen wir hier
+    condition: numeric_state
+    entity_id: script.tv_off
+    attribute: current
+    below: 2
+  - action: rest_command.sofabaton_tv_off
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - alias: Wenn Hifi Center ausgeschaltet, dann einschalten
+    if:
+    - condition: device
+      type: is_on
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+    then:
+    - type: turn_off
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+  description: 'Sofabaton TV ausschalten, 1 Minute warten, MyStrom Adapter ausschalten '
+  icon: mdi:television-off
+  mode: parallel
+  max: 10
+shade_close:
+  alias: All Close
+  sequence:
+  - action: cover.close_cover
+    target:
+      entity_id:
+      - cover.dingz_markise1_cover
+      - cover.dingz_markise2_cover
+      - cover.dingz_markise3_cover
+      - cover.dingz_markise4_cover
+      - cover.dingz_markise5_cover
+    data: {}
+  description: ''
+  icon: mdi:roller-shade-closed
+shade_open:
+  alias: All Open
+  sequence:
+  - action: cover.open_cover
+    target:
+      entity_id:
+      - cover.dingz_markise1_cover
+      - cover.dingz_markise2_cover
+      - cover.dingz_markise3_cover
+      - cover.dingz_markise4_cover
+      - cover.dingz_markise5_cover
+    data: {}
+  description: ''
+  icon: mdi:roller-shade
+shade_close_wald:
+  alias: Wald Close
+  sequence:
+  - action: cover.close_cover
+    target:
+      entity_id:
+      - cover.dingz_markise3_cover
+      - cover.dingz_markise4_cover
+      - cover.dingz_markise5_cover
+    data: {}
+  description: ''
+  icon: mdi:roller-shade-closed
+shade_open_wald:
+  alias: Wald Open
+  sequence:
+  - action: cover.open_cover
+    target:
+      entity_id:
+      - cover.dingz_markise3_cover
+      - cover.dingz_markise4_cover
+      - cover.dingz_markise5_cover
+    data: {}
+  description: ''
+  icon: mdi:roller-shade
+beamer_off:
+  alias: Beamer Off
+  sequence:
+  - action: rest_command.sofabaton_beamer_off
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - alias: Wenn Hifi Center ausgeschaltet, dann einschalten
+    if:
+    - condition: device
+      type: is_on
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+    then:
+    - type: turn_off
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+  description: 'Sofabaton Beamer ausschalten, 1 Minute warten, MyStrom Adapter ausschalten '
+  icon: mdi:television-off
+beamer_on:
+  alias: Beamer On
+  sequence:
+  - if:
+    - condition: device
+      type: is_off
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+    then:
+    - type: turn_on
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+    alias: Wenn Hifi Center ausgeschaltet, dann einschalten
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: rest_command.sofabaton_beamer_on
+    data: {}
+  description: MyStrom Adapter einschalten, 5 Sekunden warten, Sofabaton Beamer einschalten
+  icon: mdi:television
+blueos_off:
+  alias: BlueOS Off
+  sequence:
+  - action: rest_command.sofabaton_blueos_off
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - alias: Wenn Hifi Center ausgeschaltet, dann einschalten
+    if:
+    - condition: device
+      type: is_on
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+    then:
+    - type: turn_off
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+  description: 'Sofabaton BlueOS ausschalten, 1 Minute warten, MyStrom Adapter ausschalten '
+  icon: mdi:television-off
+blueos_on:
+  alias: BlueOS On
+  sequence:
+  - if:
+    - condition: device
+      type: is_off
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+    then:
+    - type: turn_on
+      device_id: bfe1578dd2e17bf595161037f253decf
+      entity_id: 845397a9cef3b46c1eb90981619f1a45
+      domain: switch
+    alias: Wenn Hifi Center ausgeschaltet, dann einschalten
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: rest_command.sofabaton_blueos_on
+    data: {}
+  description: MyStrom Adapter einschalten, 5 Sekunden warten, Sofabaton BlueOS einschalten
+  icon: mdi:television
+kuchenschrank_on:
+  alias: Küchenschrank On
+  sequence:
+  - action: light.turn_on
+    target:
+      entity_id:
+      - light.dingz_kuche_schrank_light
+    data: {}
+  description: ''
+  icon: mdi:lightbulb
+kuchenschrank_off:
+  alias: Küchenschrank Off
+  sequence:
+  - action: light.turn_off
+    target:
+      entity_id:
+      - light.dingz_kuche_schrank_light
+    data: {}
+  description: ''
+  icon: mdi:lightbulb-off
+esstisch_off:
+  alias: Esstisch Off
+  sequence:
+  - action: light.turn_off
+    target:
+      entity_id:
+      - light.dingz_esstisch_light
+    data: {}
+  description: ''
+  icon: mdi:lightbulb-off
+esstisch_on:
+  alias: Esstisch On
+  sequence:
+  - action: light.turn_on
+    target:
+      entity_id:
+      - light.dingz_esstisch_light
+    data: {}
+  description: ''
+  icon: mdi:lightbulb
+wohnzimmer_off:
+  alias: Wohnzimmer Off
+  sequence:
+  - action: light.turn_off
+    target:
+      entity_id:
+      - light.dingz_kuche_schrank_light
+      - light.dingz_kuche_decke_innen_light
+      - light.dingz_kuche_decke_aussen_light
+      - light.dingz_esstisch_light
+      - light.dingz_katzenbaum_light
+    data: {}
+  description: ''
+  icon: mdi:lightbulb-off
+wohnzimmer_on:
+  alias: Wohnzimmer On
+  sequence:
+  - action: light.turn_on
+    target:
+      entity_id:
+      - light.dingz_kuche_schrank_light
+      - light.dingz_kuche_decke_innen_light
+      - light.dingz_kuche_decke_aussen_light
+      - light.dingz_esstisch_light
+      - light.dingz_katzenbaum_light
+    data: {}
+  description: ''
+  icon: mdi:lightbulb
+katzenbaum_off:
+  alias: Katzenbaum Off
+  sequence:
+  - action: light.turn_off
+    target:
+      entity_id:
+      - light.dingz_katzenbaum_light
+    data: {}
+  description: ''
+  icon: mdi:lightbulb-off
+katzenbaum_on:
+  alias: Katzenbaum On
+  sequence:
+  - action: light.turn_on
+    target:
+      entity_id:
+      - light.dingz_katzenbaum_light
+    data: {}
+  description: ''
+  icon: mdi:lightbulb

@@ -8,8 +8,8 @@ sensors:
 # Netatmo Keller Feuchtigkeit
   netatmo_keller_feuchtigkeit:
     friendly_name: "Netatmo Keller Feuchtigkeit"
-    value_template: "{% if states('sensor.netatmo_steffs_home_keller_humidity')|is_number -%}
-  {{ states('sensor.netatmo_steffs_home_keller_humidity') }}
+    value_template: "{% if states('sensor.keller_luftfeuchtigkeit') != 'unavailable' and states('sensor.keller_luftfeuchtigkeit') != 'unknown' -%}
+  {{ states('sensor.keller_luftfeuchtigkeit') }}
 {%- else -%}
   {{ states('sensor.netatmo_keller_feuchtigkeit') }}
 {%- endif %}"

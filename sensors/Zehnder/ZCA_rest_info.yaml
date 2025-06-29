@@ -4,7 +4,7 @@ resource: !secret url_sensor_zehnder_comfoair_info
 # http://ip:1880/info
 name: Zehnder ComfoAir Info
 value_template: "OK"
-scan_interval: 600
+scan_interval: 121
 force_update: true
 json_attributes:
   - "getFaults"

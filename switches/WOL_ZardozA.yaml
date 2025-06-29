@@ -1,0 +1,5 @@
+platform: wake_on_lan
+name: WoL ZardozA
+mac: !secret zardoza_macc
+turn_off: 
+  service: shell_command.shutdown_zardoza

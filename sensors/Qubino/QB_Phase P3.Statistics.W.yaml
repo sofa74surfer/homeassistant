@@ -1,6 +1,6 @@
 platform: statistics
 unique_id: energy_statistic_qb_phase_w3
-entity_id: sensor.qubino_3_phase_smart_meter_electric_consumption_w_3
+entity_id: sensor.qubino_smart_meter_electric_consumption_w_3
 name: "Energy Statistic QB Phase w3"
 state_characteristic: average_linear
 sampling_size: 20

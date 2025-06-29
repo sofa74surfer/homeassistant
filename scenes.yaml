@@ -75,7 +75,7 @@
       min_mireds: 153
       max_mireds: 454
       brightness: 26
-      color_temp: 451
+      color_temp_kelvin: 2217
       friendly_name: Globus
       supported_features: 43
       state: 'on'
@@ -310,7 +310,7 @@
       - colorloop
       - random
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2702
       effect: none
       friendly_name: Schlafzimmer
       supported_features: 63
@@ -322,7 +322,7 @@
       - colorloop
       - random
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2702
       effect: none
       friendly_name: Schlafzimmer Pia
       supported_features: 63
@@ -334,7 +334,7 @@
       - colorloop
       - random
       brightness: 255
-      color_temp: 370
+      color_temp_kelvin: 2702
       effect: none
       friendly_name: Schlafzimmer Stephan
       supported_features: 63
@@ -450,13 +450,3 @@
       state: 'on'
   icon: hass:lightbulb-group
   metadata: {}
-- id: '1687618429701'
-  name: TV On
-  entities:
-    switch.hifi_center:
-      friendly_name: Hifi Center
-      state: 'on'
-  icon: mdi:television
-  metadata:
-    switch.hifi_center:
-      entity_only: true

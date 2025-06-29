@@ -1,7 +1,0 @@
-platform: statistics
-unique_id: energy_statistic_qb_phase_w2_standard_deviation
-entity_id: sensor.qubino_3_phase_smart_meter_electric_consumption_w_2
-name: "Energy Statistic QB Phase w2 standard_deviation"
-state_characteristic: standard_deviation
-sampling_size: 20
-precision: 0

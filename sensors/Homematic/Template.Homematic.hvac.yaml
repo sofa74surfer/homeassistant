@@ -8,35 +8,59 @@ sensors:
 # Homematic Thermostat Wohnzimmer HVAC
   homematic_thermostat_wohnzimmer_hvac:
     friendly_name: "Homematic Thermostat Wohnzimmer HVAC"
-    value_template: "{{ state_attr('climate.thermostat_wohnzimmer', 'hvac_action') }}"
+    value_template: "{% if states('climate.thermostat_wohnzimmer') != 'unavailable' and states('climate.thermostat_wohnzimmer') != 'unknown' -%}
+  {{ state_attr('climate.thermostat_wohnzimmer', 'hvac_action') }}
+{%- else -%}
+  {{ states('sensor.homematic_thermostat_wohnzimmer_hvac') }}
+{%- endif %}"
     unique_id: template.sensor_homematic_thermostat_wohnzimmer_hvac
 
 # Homematic Thermostat Stephan HVAC
   homematic_thermostat_stephan_hvac:
     friendly_name: "Homematic Thermostat Stephan HVAC"
-    value_template: "{{ state_attr('climate.thermostat_stephan', 'hvac_action') }}"
+    value_template: "{% if states('climate.thermostat_stephan') != 'unavailable' and states('climate.thermostat_stephan') != 'unknown' -%}
+  {{ state_attr('climate.thermostat_stephan', 'hvac_action') }}
+{%- else -%}
+  {{ states('sensor.homematic_thermostat_stephan_hvac') }}
+{%- endif %}"
     unique_id: template.sensor_homematic_thermostat_stephan_hvac
 
 # Homematic Thermostat Pia HVAC
   homematic_thermostat_pia_hvac:
     friendly_name: "Homematic Thermostat Pia HVAC"
-    value_template: "{{ state_attr('climate.thermostat_pia', 'hvac_action') }}"
+    value_template: "{% if states('climate.thermostat_pia') != 'unavailable' and states('climate.thermostat_pia') != 'unknown' -%}
+  {{ state_attr('climate.thermostat_pia', 'hvac_action') }}
+{%- else -%}
+  {{ states('sensor.homematic_thermostat_pia_hvac') }}
+{%- endif %}"
     unique_id: template.sensor_homematic_thermostat_pia_hvac
 
 # Homematic Thermostat Bad HVAC
   homematic_thermostat_bad_hvac:
     friendly_name: "Homematic Thermostat Bad HVAC"
-    value_template: "{{ state_attr('climate.thermostat_bad', 'hvac_action') }}"
+    value_template: "{% if states('climate.thermostat_bad') != 'unavailable' and states('climate.thermostat_bad') != 'unknown' -%}
+  {{ state_attr('climate.thermostat_bad', 'hvac_action') }}
+{%- else -%}
+  {{ states('sensor.homematic_thermostat_bad_hvac') }}
+{%- endif %}"
     unique_id: template.sensor_homematic_thermostat_bad_hvac
 
 # Homematic Thermostat Schlafzimmer HVAC
   homematic_thermostat_schlafzimmer_hvac:
     friendly_name: "Homematic Thermostat Schlafzimmer HVAC"
-    value_template: "{{ state_attr('climate.thermostat_schlafzimmer', 'hvac_action') }}"
+    value_template: "{% if states('climate.thermostat_schlafzimmer') != 'unavailable' and states('climate.thermostat_schlafzimmer') != 'unknown' -%}
+  {{ state_attr('climate.thermostat_schlafzimmer', 'hvac_action') }}
+{%- else -%}
+  {{ states('sensor.homematic_thermostat_schlafzimmer_hvac') }}
+{%- endif %}"
     unique_id: template.sensor_homematic_thermostat_schlafzimmer_hvac
 
 # Homematic Thermostat Dusche HVAC
   homematic_thermostat_dusche_hvac:
     friendly_name: "Homematic Thermostat Dusche HVAC"
-    value_template: "{{ state_attr('climate.thermostat_dusche', 'hvac_action') }}"
+    value_template: "{% if states('climate.thermostat_dusche') != 'unavailable' and states('climate.thermostat_dusche') != 'unknown' -%}
+  {{ state_attr('climate.thermostat_dusche', 'hvac_action') }}
+{%- else -%}
+  {{ states('sensor.homematic_thermostat_dusche_hvac') }}
+{%- endif %}"
     unique_id: template.sensor_homematic_thermostat_dusche_hvac

@@ -22,10 +22,13 @@
 # ####### ComfoAir Bypass
       comfoair_bypass:
         friendly_name: "ComfoAir Bypass"
-        value_template: "
-          {% if ((state_attr('sensor.zehnder_comfoair_state', 'getFlapState')['bypass']['value'])|float == 0) -%}
-            off
-          {%- else -%}
-            on
-          {%- endif %}"
+        value_template: " {% if states('sensor.zehnder_comfoair_state') == 'OK' -%}
+                            {% if ((state_attr('sensor.zehnder_comfoair_state', 'getFlapState')['bypass']['value'])|float == 0) -%}
+                              off
+                            {%- else -%}
+                              on
+                            {%- endif %}
+                          {%- else -%}
+                            {{ states('sensor.comfoair_bypass') }}
+                          {%- endif %}"
         unique_id: template.sensor_comfoair_bypass

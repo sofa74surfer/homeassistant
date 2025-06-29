@@ -1,14 +1,14 @@
 - id: '1605130829896'
   alias: Schlafzimmer Licht Simulation und Cover CLOSE (NOT_HOME)
   description: ''
-  trigger:
-  - platform: time
-    at: '22:00:00'
-  condition:
+  triggers:
+  - at: '22:00:00'
+    trigger: time
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: not_home
-  action:
+  actions:
   - if:
     - condition: state
       entity_id: group.awesome_people
@@ -22,20 +22,20 @@
       entity_id: group.awesome_people
       state: not_home
     then:
-    - service: light.turn_on
-      data: {}
+    - data: {}
       target:
         entity_id: light.dingz_schlafzimmer_boden_light
+      action: light.turn_on
     alias: Light Schlafzimmer On, when Awesome People not_home
   - if:
     - condition: state
       entity_id: group.awesome_people
       state: not_home
     then:
-    - service: input_boolean.turn_on
-      data: {}
+    - data: {}
       target:
         entity_id: input_boolean.umschalter_cover
+      action: input_boolean.turn_on
     alias: Umschalter Cover On, when Awesome People not_home
   - if:
     - condition: state
@@ -50,23 +50,23 @@
       entity_id: group.awesome_people
       state: not_home
     then:
-    - service: light.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id: light.dingz_schlafzimmer_boden_light
+      action: light.turn_off
     alias: Light Schlafzimmer Off, when Awesome People not_home
   mode: single
 - id: '1605131875883'
   alias: Schlafzimmer Szene OFF 23:30, random 1-20, not_home
   description: ''
-  trigger:
-  - platform: time
-    at: '23:30:00'
-  condition:
+  triggers:
+  - at: '23:30:00'
+    trigger: time
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: not_home
-  action:
+  actions:
   - wait_template: '{{ ''22:''''%0.2d'''':00''|format(range(0, 20)|random|int) }}'
   - type: turn_off
     device_id: 0dd0ce477d4f719fd4fc8341b067bc85
@@ -86,18 +86,17 @@
   description: Schaltet das Licht ein, sobald die Kaffeemaschine läuft oder das Licht
     Küchenschrank eingeschaltet wird unter der Bedingung, dass jemand zu Hause ist,
     der Zeitplan Morgenstunden erfüllt und der Licht Schwellwert Garten stimmt
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.schwellwertsensor_watt_wohnung_p3_grau
+  triggers:
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4
     to: 'on'
     from: 'off'
     for:
       hours: 0
       minutes: 0
       seconds: 5
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - light.dingz_kuche_schrank_light
     to: 'on'
     from: 'off'
@@ -105,7 +104,8 @@
       hours: 0
       minutes: 0
       seconds: 5
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: home
@@ -115,22 +115,22 @@
   - condition: state
     entity_id: binary_sensor.schwellwertsensor_illumination_dark_low
     state: 'on'
-  action:
-  - service: scene.turn_on
-    target:
+  actions:
+  - target:
       entity_id: scene.hue_wohnzimmer_on_ambient
     metadata: {}
-  - service: input_boolean.turn_off
+    action: scene.turn_on
     data: {}
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_cover
+    action: input_boolean.turn_off
   mode: single
 - id: '1605216797509'
   alias: Wohnen Ambient Hue Licht OFF Cover OPEN - Morgen
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_illumination_dark_low
     to: 'off'
     from: 'on'
@@ -138,20 +138,23 @@
       hours: 0
       minutes: 2
       seconds: 0
-  condition: []
-  action:
-  - scene: scene.hue_wohnzimmer_off
-  - service: input_boolean.turn_off
+    trigger: state
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    target:
+      entity_id: scene.hue_wohnzimmer_off
     data: {}
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_cover
+    action: input_boolean.turn_off
   mode: single
 - id: '1605247431207'
   alias: Wohnen Ambient Hue Licht ON - Abend (HOME, NOT_HOME)
   description: 'Schaltet das Licht ein, sobald draussen im Garten das Licht schwindet '
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_illumination_dark_low
     to: 'on'
     from: 'off'
@@ -159,8 +162,8 @@
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - group.awesome_people
     to: home
     from: not_home
@@ -168,60 +171,62 @@
       hours: 0
       minutes: 2
       seconds: 0
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: binary_sensor.schwellwertsensor_illumination_dark_low
     state: 'on'
-  action:
+  actions:
   - if:
     - condition: state
       entity_id: group.awesome_people
       state: home
     then:
-    - service: scene.turn_on
-      target:
+    - target:
         entity_id: scene.hue_wohnzimmer_on_ambient
       metadata: {}
+      action: scene.turn_on
+      data: {}
     else:
     - delay:
         hours: '{{ ''%0.1d''|format(range(0, 1)|random|int) }}'
         minutes: '{{ ''%0.1d''|format(range(0, 30)|random|int) }}'
         seconds: 0
         milliseconds: 0
-    - service: scene.turn_on
-      target:
+    - target:
         entity_id: scene.hue_wohnzimmer_on_ambient
       metadata: {}
+      action: scene.turn_on
+      data: {}
   mode: single
 - id: '1605247871692'
   alias: Wohnung Licht OFF (NOT_HOME)
   description: ''
-  trigger:
-  - platform: time
-    at: '23:00:00'
-  condition:
+  triggers:
+  - at: '23:00:00'
+    trigger: time
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: not_home
-  action:
+  actions:
   - delay:
       hours: 0
       minutes: '{{ ''%0.2d''|format(range(0, 30)|random|int) }}'
       seconds: 0
       milliseconds: 0
-  - service: light.turn_off
-    target:
+  - target:
       entity_id:
       - light.gruppe_licht_dingz
       - light.gruppe_licht_hue
     data: {}
+    action: light.turn_off
   mode: single
 - id: '1605249083791'
   alias: Büro Szene ON Sunset, home
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_illumination_dark_low
     from: 'off'
     to: 'on'
@@ -229,22 +234,23 @@
       hours: 0
       minutes: 2
       seconds: 0
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: home
-  action:
-  - service: scene.turn_on
-    target:
+  actions:
+  - target:
       entity_id: scene.hue_buro_on_ambient_sparmodus
     metadata: {}
+    action: scene.turn_on
+    data: {}
   mode: single
 - id: '1605249667376'
   alias: Büro Licht Simulation (NOT_HOME)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_illumination_dark_low
     from: 'off'
     to: 'on'
@@ -252,11 +258,12 @@
       hours: 0
       minutes: 2
       seconds: 0
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: not_home
-  action:
+  actions:
   - repeat:
       while:
       - condition: and
@@ -284,10 +291,11 @@
           entity_id: group.awesome_people
           state: not_home
         then:
-        - service: scene.turn_on
-          target:
+        - target:
             entity_id: scene.hue_buro_on_ambient
           metadata: {}
+          action: scene.turn_on
+          data: {}
         alias: Licht an, wenn nicht zu Hause (Hue)
       - if:
         - condition: state
@@ -300,19 +308,19 @@
               entity_id: light.gruppe_licht_dingz_bad
               state: 'on'
             sequence:
-            - service: light.turn_on
-              data: {}
+            - data: {}
               target:
                 entity_id: light.buro_decke_stephan
+              action: light.turn_on
           - conditions:
             - condition: state
               entity_id: light.gruppe_licht_dingz_dusche
               state: 'on'
             sequence:
-            - service: light.turn_on
-              data: {}
+            - data: {}
               target:
                 entity_id: light.buro_decke_pia
+              action: light.turn_on
         alias: Licht an, wenn nicht zu Hause (Dingz)
       - if:
         - condition: state
@@ -330,210 +338,181 @@
           entity_id: group.awesome_people
           state: not_home
         then:
-        - scene: scene.hue_buro_off
+        - action: scene.turn_on
+          target:
+            entity_id: scene.hue_buro_off
+          data: {}
         alias: Licht aus, wenn nicht zu Hause (Hue)
       - if:
         - condition: state
           entity_id: group.awesome_people
           state: not_home
         then:
-        - service: light.turn_off
-          data: {}
+        - data: {}
           target:
             entity_id:
             - light.buro_decke_pia
             - light.buro_decke_stephan
+          action: light.turn_off
         alias: Licht aus, wenn nicht zu Hause (Dingz)
     alias: Bis 23:00 Uhr, solange not_home
   mode: single
 - id: '1616048845700'
   alias: Bad Licht ON (Motion)
   description: ''
-  trigger:
+  triggers:
   - type: motion
-    platform: device
     device_id: b1bef2906fa987ce9aa4e1fd996068bf
     entity_id: binary_sensor.motion_bad_motion
     domain: binary_sensor
-  condition:
-  - condition: state
-    entity_id: input_text.text_status_bad_licht
-    state: reset
-  action:
-  - choose:
-    - conditions:
+    trigger: device
+  conditions:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_text.text_status_bad_licht
+      state: reset
+    - condition: and
+      conditions:
       - condition: state
-        entity_id: input_number.nummer_status_licht_level
-        state: '0.0'
-      sequence:
-      - service: light.turn_on
-        data:
-          brightness_pct: 1
-        target:
-          entity_id: light.dingz_bad_decke_wc_light
-      - delay:
-          hours: 0
-          minutes: 2
-          seconds: 0
-          milliseconds: 0
+        entity_id: light.dingz_bad_decke_wc_light
+        state: 'off'
+      - condition: state
+        entity_id: light.dingz_bad_decke_watu_light
+        state: 'off'
+      - condition: state
+        entity_id: light.dingz_bad_spiegel_light
+        state: 'off'
+      - condition: state
+        entity_id: input_text.text_status_bad_licht
+        state: manuell
+  actions:
+  - choose:
     - conditions:
       - condition: state
         entity_id: input_number.nummer_status_licht_level
         state: '1.0'
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 40
         target:
           entity_id: light.dingz_bad_decke_wc_light
-      - delay:
-          hours: 0
-          minutes: 5
-          seconds: 0
-          milliseconds: 0
+        action: light.turn_on
     - conditions:
       - condition: state
         entity_id: input_number.nummer_status_licht_level
         state: '2.0'
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 60
         target:
           entity_id: light.dingz_bad_decke_wc_light
-      - delay:
-          hours: 0
-          minutes: 5
-          seconds: 0
-          milliseconds: 0
+        action: light.turn_on
     - conditions:
       - condition: state
         entity_id: input_number.nummer_status_licht_level
         state: '3.0'
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 80
         target:
           entity_id: light.dingz_bad_decke_wc_light
-      - delay:
-          hours: 0
-          minutes: 5
-          seconds: 0
-          milliseconds: 0
-    default: []
-  - if:
-    - condition: state
-      entity_id: input_text.text_status_bad_licht
-      state: reset
-    then:
-    - service: light.turn_off
-      data: {}
+        action: light.turn_on
+    default:
+    - data:
+        brightness_pct: 1
       target:
         entity_id: light.dingz_bad_decke_wc_light
+      action: light.turn_on
   mode: restart
 - id: '1616050267437'
   alias: Dusche Licht ON (Motion)
   description: ''
-  trigger:
+  triggers:
   - type: motion
-    platform: device
     device_id: a151a8942f34d0b72bf83ecf7b1ed1a8
     entity_id: binary_sensor.motion_dusche_motion
     domain: binary_sensor
-  condition:
+    trigger: device
+  conditions:
   - condition: state
     entity_id: input_text.text_status_dusche_licht
     state: reset
-  action:
+  actions:
   - choose:
-    - conditions:
-      - condition: state
-        entity_id: input_number.nummer_status_licht_level
-        state: '0.0'
-      sequence:
-      - service: light.turn_on
-        data:
-          brightness_pct: 1
-        target:
-          entity_id: light.dingz_dusche_decke_light
-      - delay:
-          hours: 0
-          minutes: 2
-          seconds: 0
-          milliseconds: 0
     - conditions:
       - condition: state
         entity_id: input_number.nummer_status_licht_level
         state: '1.0'
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 40
         target:
           entity_id: light.dingz_dusche_decke_light
-      - delay:
-          hours: 0
-          minutes: 5
-          seconds: 0
-          milliseconds: 0
+        action: light.turn_on
     - conditions:
       - condition: state
         entity_id: input_number.nummer_status_licht_level
         state: '2.0'
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 80
         target:
           entity_id: light.dingz_dusche_decke_light
-      - delay:
-          hours: 0
-          minutes: 5
-          seconds: 0
-          milliseconds: 0
-    default: []
+        action: light.turn_on
+    - conditions:
+      - condition: state
+        entity_id: input_number.nummer_status_licht_level
+        state: '3.0'
+      sequence: []
+    default:
+    - data:
+        brightness_pct: 1
+      target:
+        entity_id: light.dingz_dusche_decke_light
+      action: light.turn_on
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
   - if:
     - condition: state
       entity_id: input_text.text_status_dusche_licht
       state: reset
     then:
-    - service: light.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id: light.dingz_dusche_decke_light
+      action: light.turn_off
   mode: restart
 - id: '1616071228508'
   alias: Dusche Licht OFF (keine Motion)
   description: ''
-  trigger:
+  triggers:
   - type: no_motion
-    platform: device
     device_id: a151a8942f34d0b72bf83ecf7b1ed1a8
     entity_id: binary_sensor.motion_dusche_motion
     domain: binary_sensor
     for:
-      hours: 1
-      minutes: 0
+      hours: 0
+      minutes: 30
       seconds: 0
-  condition:
+    trigger: device
+  conditions:
   - condition: state
     entity_id: light.gruppe_licht_dingz_dusche
     state: 'on'
-    for:
-      hours: 0
-      minutes: 45
-      seconds: 0
-  action:
-  - service: light.turn_off
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: light.gruppe_licht_dingz_dusche
-  - service: input_text.set_value
-    data:
+    action: light.turn_off
+  - data:
       value: reset
     target:
       entity_id: input_text.text_status_dusche_licht
+    action: input_text.set_value
   mode: single
 - id: '1616393998146'
   alias: Gang Licht Hue Farbe (Temperatur, @Home, Aktivität)
@@ -548,16 +527,15 @@
     unter 31°: orange
 
     über 30°: rot'
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.mediansensor_aussentemperatur
     for:
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - group.awesome_people
     from:
     - not_home
@@ -569,8 +547,8 @@
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_aktivitat
     from:
     - 'on'
@@ -578,8 +556,9 @@
     to:
     - 'on'
     - 'off'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: and
@@ -597,72 +576,72 @@
             entity_id: sensor.mediansensor_aussentemperatur
             below: '-5'
           sequence:
-          - service: light.turn_on
-            data:
+          - data:
               color_name: violet
               brightness_pct: 15
             target:
               device_id: dc41bd82f147d78bd4d07285cf947d9d
+            action: light.turn_on
         - conditions:
           - condition: numeric_state
             entity_id: sensor.mediansensor_aussentemperatur
             below: '3'
           sequence:
-          - service: light.turn_on
-            data:
+          - data:
               color_name: skyblue
               brightness_pct: 15
             target:
               device_id: dc41bd82f147d78bd4d07285cf947d9d
+            action: light.turn_on
         - conditions:
           - condition: numeric_state
             entity_id: sensor.mediansensor_aussentemperatur
             below: '11'
           sequence:
-          - service: light.turn_on
-            data:
+          - data:
               color_name: green
               brightness_pct: 15
             target:
               device_id: dc41bd82f147d78bd4d07285cf947d9d
+            action: light.turn_on
         - conditions:
           - condition: numeric_state
             entity_id: sensor.mediansensor_aussentemperatur
             below: '21'
           sequence:
-          - service: light.turn_on
-            data:
+          - data:
               color_name: yellow
               brightness_pct: 15
             target:
               device_id: dc41bd82f147d78bd4d07285cf947d9d
+            action: light.turn_on
         - conditions:
           - condition: numeric_state
             entity_id: sensor.mediansensor_aussentemperatur
             below: '31'
           sequence:
-          - service: light.turn_on
-            data:
+          - data:
               color_name: orange
               brightness_pct: 15
             target:
               device_id: dc41bd82f147d78bd4d07285cf947d9d
+            action: light.turn_on
         - conditions:
           - condition: numeric_state
             entity_id: sensor.mediansensor_aussentemperatur
             above: 30
           sequence:
-          - service: light.turn_on
-            data:
+          - data:
               color_name: red
               brightness_pct: 15
             target:
               device_id: dc41bd82f147d78bd4d07285cf947d9d
+            action: light.turn_on
         default:
-        - service: notify.mobile_app_stephs_iphone
-          data:
+        - data:
             message: 'Invalid Mediansensor Aussentemperatur: {{ states(''sensor.mediansensor_aussentemperatur'')
               }}'
+          action: notify.mobile_app_stephs_iphone
     default:
     - type: turn_off
       device_id: dc41bd82f147d78bd4d07285cf947d9d
@@ -672,151 +651,184 @@
 - id: '1616394722797'
   alias: Gang Schrank Lüfter ON-OFF, abhängig Temperatur
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_degc_lufter_schrank
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 2
       seconds: 0
-  condition: []
-  action:
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_degc_lufter_schrank
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: state
         entity_id: binary_sensor.schwellwertsensor_degc_lufter_schrank
         state: 'on'
       sequence:
-      - service: switch.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: switch.schrank_lufter
+        action: switch.turn_on
     - conditions:
       - condition: state
         entity_id: binary_sensor.schwellwertsensor_degc_lufter_schrank
         state: 'off'
       sequence:
-      - service: switch.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: switch.schrank_lufter
+        action: switch.turn_off
     default:
-    - service: notify.mobile_app_stephs_iphone
-      data:
+    - data:
         message: Strom Lüfter Schalter - No Condition Error
+      action: notify.mobile_app_stephs_iphone
   mode: restart
 - id: '1616394930906'
   alias: Keller Entfeuchter ON, Entfeuchter OFF (Schwellwert Luftfeuchtigkeit)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_rfh_keller
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 2
       seconds: 0
-  condition: []
-  action:
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_rfh_keller
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: state
         entity_id: binary_sensor.schwellwertsensor_rfh_keller
         state: 'on'
       sequence:
-      - service: switch.turn_on
-        target:
+      - target:
           entity_id: switch.entfeuchter
         data: {}
-      - service: notify.mobile_app_stephs_iphone
-        data:
+        action: switch.turn_on
+      - data:
           message: Keller Entfeuchter ON
+        action: notify.mobile_app_stephs_iphone
     - conditions:
       - condition: state
         entity_id: binary_sensor.schwellwertsensor_rfh_keller
         state: 'off'
       sequence:
-      - service: switch.turn_off
-        target:
+      - target:
           entity_id: switch.entfeuchter
         data: {}
-      - service: notify.mobile_app_stephs_iphone
-        data:
+        action: switch.turn_off
+      - data:
           message: Keller Entfeuchter OFF
+        action: notify.mobile_app_stephs_iphone
     default:
-    - service: notify.mobile_app_stephs_iphone
-      data:
+    - data:
         message: Entfeuchter Schalter - No Condition Error
+      action: notify.mobile_app_stephs_iphone
   mode: single
 - id: '1616871141759'
   alias: Bad Licht OFF (keine Motion)
   description: ''
-  trigger:
+  triggers:
   - type: no_motion
-    platform: device
     device_id: b1bef2906fa987ce9aa4e1fd996068bf
     entity_id: binary_sensor.motion_bad_motion
     domain: binary_sensor
     for:
-      hours: 2
+      hours: 0
+      minutes: 5
+      seconds: 0
+    trigger: device
+  - type: no_motion
+    device_id: b1bef2906fa987ce9aa4e1fd996068bf
+    entity_id: binary_sensor.motion_bad_motion
+    domain: binary_sensor
+    for:
+      hours: 3
       minutes: 0
       seconds: 0
-  condition:
-  - condition: state
-    entity_id: light.gruppe_licht_dingz_bad
-    state: 'on'
-    for:
-      hours: 1
-      minutes: 30
-      seconds: 0
-  action:
-  - service: light.turn_off
-    target:
+    trigger: device
+  conditions:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_text.text_status_bad_licht
+      state: reset
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: input_text.text_status_bad_licht
+        state: manuell
+      - type: is_no_motion
+        condition: device
+        device_id: b1bef2906fa987ce9aa4e1fd996068bf
+        entity_id: f53a2be9af57e0f24cdf5305bf72b0a7
+        domain: binary_sensor
+        for:
+          hours: 3
+          minutes: 0
+          seconds: 0
+  actions:
+  - target:
       entity_id:
       - light.gruppe_licht_dingz_bad
     data: {}
-  - service: input_text.set_value
-    data:
+    action: light.turn_off
+  - data:
       value: reset
     target:
       entity_id: input_text.text_status_bad_licht
+    action: input_text.set_value
   mode: single
 - id: '1617084313798'
   alias: Wohnung Kamera ON-OFF (home, not_home, co2, sun, power)
   description: ''
-  trigger:
-  - platform: time_pattern
-    hours: '*'
+  triggers:
+  - hours: '*'
     minutes: /5
     seconds: '1'
-  condition: []
-  action:
+    trigger: time_pattern
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: state
         entity_id: group.awesome_people
         state: not_home
       sequence:
-      - service: switch.turn_on
-        target:
+      - target:
           entity_id:
           - switch.presence
-      - service: script.turn_on
-        target:
+        action: switch.turn_on
+        data: {}
+      - target:
           entity_id: script.dingz_led_markise1_und_schlafzimmer_red
+        action: script.turn_on
+        data: {}
     - conditions:
       - condition: and
         conditions:
@@ -825,233 +837,263 @@
           attribute: elevation
           below: '0'
         - condition: numeric_state
-          entity_id: sensor.netatmo_steffs_home_living_sleep_co2
+          entity_id: sensor.living_sleep_kohlendioxid
           above: '700'
         - condition: numeric_state
           entity_id: sensor.mystrom_hifi_center_power
           below: '55'
       sequence:
-      - service: switch.turn_on
-        target:
+      - target:
           entity_id:
           - switch.presence
-      - service: script.turn_on
-        target:
+        action: switch.turn_on
+        data: {}
+      - target:
           entity_id: script.dingz_led_markise1_und_schlafzimmer_red
+        action: script.turn_on
+        data: {}
     - conditions:
       - condition: numeric_state
         entity_id: sun.sun
         attribute: elevation
         below: '0'
       sequence:
-      - service: switch.turn_on
-        target:
+      - target:
           entity_id:
           - switch.presence
-      - service: script.turn_on
-        target:
+        action: switch.turn_on
+        data: {}
+      - target:
           entity_id: script.dingz_led_markise1_und_schlafzimmer_violett
+        action: script.turn_on
+        data: {}
     default:
-    - service: switch.turn_off
-      target:
+    - target:
         entity_id:
         - switch.presence
-    - service: script.turn_on
-      target:
+      action: switch.turn_off
+      data: {}
+    - target:
         entity_id: script.dingz_led_markise1_und_schlafzimmer_grun
+      action: script.turn_on
+      data: {}
   mode: single
 - id: '1617126118364'
   alias: Schlafzimmer Hue Light Ambient Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: schlafzimmer_light_on_ambient
-  condition: []
-  action:
-  - scene: scene.hue_schlafzimmer_on_ambient
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    target:
+      entity_id: scene.hue_schlafzimmer_on_ambient
+    data: {}
   mode: single
 - id: '1617126303592'
   alias: Schlafzimmer Hue Light Bright Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: schlafzimmer_light_on_bright
     local_only: true
-  condition: []
-  action:
-  - scene: scene.hue_schlafzimmer_on_bright
+    trigger: webhook
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    target:
+      entity_id: scene.hue_schlafzimmer_on_bright
+    data: {}
   mode: single
 - id: '1617126330007'
   alias: Schlafzimmer Hue Light OFF Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: schlafzimmer_light_off
-  condition: []
-  action:
-  - scene: scene.hue_schlafzimmer_off
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    target:
+      entity_id: scene.hue_schlafzimmer_off
+    data: {}
   mode: single
 - id: '1617131412607'
   alias: Wohnung Light OFF Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: wohnung_light_off
-  condition: []
-  action:
-  - service: light.turn_off
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id:
       - light.gruppe_licht_dingz
       - light.gruppe_licht_hue
+    action: light.turn_off
   mode: single
 - id: '1617132794904'
   alias: Wohnung Light PANIK Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: wohnung_light_panik
-  condition: []
-  action:
-  - service: light.turn_on
-    data:
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
       brightness_step_pct: 100
     target:
       entity_id:
       - light.gruppe_licht_dingz
       - light.gruppe_licht_hue
+    action: light.turn_on
   mode: single
 - id: '1617386935918'
   alias: Büro Stephan Light Toggle Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: buro_stephan_light_toggle
-  condition: []
-  action:
-  - service: light.toggle
-    data:
-      color_temp: 313
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      color_temp_kelvin: 3194
       brightness_pct: 50
     target:
       device_id: 5db4bf233bea079061c66ad5776109a5
+    action: light.toggle
   mode: restart
 - id: '1617387798636'
   alias: Büro Pia Light Toggle Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: buro_pia_light_toggle
-  condition: []
-  action:
-  - service: light.toggle
-    data:
-      color_temp: 313
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      color_temp_kelvin: 3194
       brightness_pct: 50
     target:
       device_id:
       - 0585e667614c337721ad24abad0f2d30
+    action: light.toggle
   mode: restart
 - id: '1617387827027'
   alias: Büro Pia Light On Full Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: buro_pia_light_on_full
-  condition: []
-  action:
-  - service: light.turn_on
-    data:
-      color_temp: 313
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      color_temp_kelvin: 3194
       brightness_pct: 100
     target:
       device_id:
       - 0585e667614c337721ad24abad0f2d30
+    action: light.turn_on
   mode: restart
 - id: '1617387856078'
   alias: Büro Stephan Light On Full Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: buro_stephan_light_on_full
-  condition: []
-  action:
-  - service: light.turn_on
-    data:
-      color_temp: 313
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      color_temp_kelvin: 3194
       brightness_pct: 100
     target:
       device_id: 5db4bf233bea079061c66ad5776109a5
+    action: light.turn_on
   mode: restart
 - id: '1619850749480'
   alias: Terrasse Light Toggle Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: terrasse_light_toggle
-  condition: []
-  action:
-  - service: light.toggle
-    data:
-      color_temp: 313
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      color_temp_kelvin: 3194
       brightness_pct: 50
     target:
       device_id:
       - 2486525226c6c5658d1f31bb57e45688
+    action: light.toggle
   mode: restart
 - id: '1619850794337'
   alias: Terrasse Light On Full Webhook
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: terrasse_light_on_full
-  condition: []
-  action:
-  - service: light.turn_on
-    data:
-      color_temp: 313
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      color_temp_kelvin: 3194
       brightness_pct: 100
     target:
       device_id:
       - 2486525226c6c5658d1f31bb57e45688
+    action: light.turn_on
   mode: restart
 - id: '1667895581641'
   alias: Wohnen Schwellwert Hifi - PoE P1 Flex 1 Schrank ON or OFF
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_watt_hifi
     from:
     - 'on'
+    to:
+    - 'off'
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_hifi
+    from:
     - 'off'
     to:
     - 'on'
-    - 'off'
-  condition:
+    trigger: state
+  conditions:
   - condition: or
     conditions:
     - condition: state
@@ -1062,7 +1104,11 @@
       entity_id: binary_sensor.schwellwertsensor_watt_hifi
       attribute: position
       state: below
-  action:
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+  actions:
   - choose:
     - conditions:
       - condition: state
@@ -1070,24 +1116,33 @@
         attribute: position
         state: above
       sequence:
-      - service: switch.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id:
           - switch.unifi_dream_machine_udm_p1_flex_1_schrank_oben_poe
           - switch.plex_state
+        action: switch.turn_on
     - conditions:
       - condition: state
         entity_id: binary_sensor.schwellwertsensor_watt_hifi
         attribute: position
         state: below
       sequence:
-      - service: switch.turn_off
-        data: {}
+      - delay:
+          hours: 0
+          minutes: 5
+          seconds: 0
+          milliseconds: 0
+      - condition: state
+        entity_id: binary_sensor.schwellwertsensor_watt_hifi
+        attribute: position
+        state: below
+      - data: {}
         target:
           entity_id:
           - switch.plex_state
           - switch.hifi_center_rest
+        action: switch.turn_off
       - if:
         - condition: state
           entity_id: schedule.zeitplan_nas_backup
@@ -1096,10 +1151,10 @@
           entity_id: device_tracker.lupus
           state: not_home
         then:
-        - service: switch.turn_off
-          data: {}
+        - data: {}
           target:
             entity_id: switch.unifi_dream_machine_udm_p1_flex_1_schrank_oben_poe
+          action: switch.turn_off
   mode: single
 - id: '1667974461980'
   alias: Umschalter Motion ON (Motion)
@@ -1116,14 +1171,13 @@
 
     Ignoriert wird Motion, wenn geschlafen wird. Nachts auf''s WC schleichen löst
     deshalb keine Statusänderung aus. '
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.gruppe_motion_sensoren
     to: 'on'
     from: 'off'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - light.gruppe_licht_dingz
     for:
       hours: 0
@@ -1131,10 +1185,11 @@
       seconds: 0
     from: 'off'
     to: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - media_player.gruppe_media_player
-  condition:
+    trigger: state
+  conditions:
   - condition: or
     conditions:
     - condition: state
@@ -1143,49 +1198,54 @@
     - condition: state
       entity_id: schedule.zeitplan_schlafen_co2_prufung
       state: 'off'
-  action:
-  - service: input_boolean.turn_on
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id:
       - input_boolean.umschalter_motion
+    action: input_boolean.turn_on
   trace:
     stored_traces: 48
   mode: restart
 - id: '1667979118338'
   alias: Umschalter Schlafen - Set ON or OFF
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellenwertsensor_co2_schlafen
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: time_pattern
-    hours: '22'
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellenwertsensor_co2_schlafen
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    trigger: state
+  - hours: '22'
     minutes: /15
-  - platform: time_pattern
-    hours: '23'
+    trigger: time_pattern
+  - hours: '23'
     minutes: /15
-  - platform: time_pattern
-    hours: '0'
+    trigger: time_pattern
+  - hours: '0'
     minutes: /15
-  - platform: time_pattern
-    hours: '1'
+    trigger: time_pattern
+  - hours: '1'
     minutes: /15
-  - platform: time_pattern
-    hours: '2'
+    trigger: time_pattern
+  - hours: '2'
     minutes: /15
-  condition: []
-  action:
+    trigger: time_pattern
+  conditions: []
+  actions:
   - if:
     - condition: and
       conditions:
@@ -1197,15 +1257,15 @@
         entity_id: schedule.zeitplan_schlafen_co2_prufung
         state: 'on'
     then:
-    - service: input_boolean.turn_on
-      data: {}
+    - data: {}
       target:
         entity_id: input_boolean.umschalter_schlafen
+      action: input_boolean.turn_on
     else:
-    - service: input_boolean.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id: input_boolean.umschalter_schlafen
+      action: input_boolean.turn_off
   trace:
     stored_traces: 48
   mode: restart
@@ -1220,101 +1280,145 @@
     Es läuft kein Media Player (NAD oder Apple TV)\nMit dieser Ausschlussbedingung
     werden Stromspitzen durch Geschirrspüler, Waschmaschine oder Tumbler in der Nacht
     ignoriert. "
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_watt_hifi
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 0
       seconds: 5
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_hifi
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    trigger: state
+  - entity_id:
     - binary_sensor.schwellwertsensor_watt_licht
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 0
       seconds: 5
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_licht
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    trigger: state
+  - entity_id:
     - binary_sensor.schwellwertsensor_watt_wohnung
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 0
       seconds: 5
-  - platform: state
-    entity_id:
-    - binary_sensor.schwellwertsensor_watt_wohnung_p1_braun
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung
+    from: 'off'
+    to: 'on'
     for:
       hours: 0
       minutes: 0
       seconds: 5
-  - platform: state
-    entity_id:
-    - binary_sensor.schwellwertsensor_watt_wohnung_p2_schwarz
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung_p1_braun_w2
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 0
       seconds: 5
-  - platform: state
-    entity_id:
-    - binary_sensor.schwellwertsensor_watt_wohnung_p3_grau
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung_p1_braun_w2
+    from: 'off'
+    to: 'on'
     for:
       hours: 0
       minutes: 0
       seconds: 5
-  - platform: state
-    entity_id:
-    - binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_nas_on
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung_p2_schwarz_w3
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 0
       seconds: 5
-  - platform: time_pattern
-    minutes: /30
-  condition:
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung_p2_schwarz_w3
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4_nas_on
+    from: 'on'
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4_nas_on
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_watt_hifi
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    trigger: state
+  - minutes: /30
+    trigger: time_pattern
+  conditions:
   - condition: state
     entity_id: binary_sensor.schwellwertsensor_watt_hifi
     state:
@@ -1331,26 +1435,26 @@
     - 'on'
     - 'off'
   - condition: state
-    entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p1_braun
+    entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p1_braun_w2
     state:
     - 'on'
     - 'off'
   - condition: state
-    entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p2_schwarz
+    entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p2_schwarz_w3
     state:
     - 'on'
     - 'off'
   - condition: state
-    entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau
+    entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4
     state:
     - 'on'
     - 'off'
   - condition: state
-    entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_nas_on
+    entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4_nas_on
     state:
     - 'on'
     - 'off'
-  action:
+  actions:
   - if:
     - condition: and
       conditions:
@@ -1364,26 +1468,26 @@
         entity_id: binary_sensor.schwellwertsensor_watt_wohnung
         state: 'off'
       - condition: state
-        entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p1_braun
+        entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p1_braun_w2
         state: 'off'
       - condition: state
-        entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p2_schwarz
+        entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p2_schwarz_w3
         state: 'off'
       - condition: state
-        entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau
+        entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4
         state: 'off'
       - condition: or
         conditions:
         - condition: state
-          entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau
+          entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4
           state: 'off'
         - condition: and
           conditions:
           - condition: state
-            entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau
+            entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4
             state: 'on'
           - condition: state
-            entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_nas_on
+            entity_id: binary_sensor.schwellwertsensor_watt_wohnung_p3_grau_w4_nas_on
             state: 'off'
           - condition: state
             entity_id: schedule.zeitplan_nas_backup
@@ -1398,10 +1502,10 @@
           minutes: 30
           seconds: 0
       then:
-      - service: input_boolean.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: input_boolean.umschalter_strom
+        action: input_boolean.turn_off
     else:
     - if:
       - condition: and
@@ -1424,28 +1528,28 @@
           state: 'off'
       then: []
       else:
-      - service: input_boolean.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: input_boolean.umschalter_strom
+        action: input_boolean.turn_on
   trace:
     stored_traces: 48
   mode: restart
 - id: '1668017906551'
   alias: Umschalter Aktivität - Set ON or OFF
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_boolean.umschalter_msl
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_schlafen
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - group.awesome_people
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - if:
     - condition: or
       conditions:
@@ -1466,24 +1570,23 @@
           entity_id: input_boolean.umschalter_schlafen
           state: 'off'
     then:
-    - service: input_boolean.turn_on
-      data: {}
+    - data: {}
       target:
         entity_id: input_boolean.umschalter_aktivitat
+      action: input_boolean.turn_on
     else:
-    - service: input_boolean.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id: input_boolean.umschalter_aktivitat
+      action: input_boolean.turn_off
   trace:
     stored_traces: 48
   mode: restart
 - id: '1668031396008'
   alias: Schlafzimmer Dingz OFF, wenn HUE off
   description: ''
-  trigger:
-  - platform: device
-    type: turned_off
+  triggers:
+  - type: turned_off
     device_id: 0dd0ce477d4f719fd4fc8341b067bc85
     entity_id: light.schlafzimmer
     domain: light
@@ -1491,8 +1594,8 @@
       hours: 0
       minutes: 5
       seconds: 0
-  - platform: device
-    type: turned_off
+    trigger: device
+  - type: turned_off
     device_id: 44c495113e18e26db13a2f4bdc5442a4
     entity_id: light.schlafzimmer_pia
     domain: light
@@ -1500,8 +1603,8 @@
       hours: 0
       minutes: 5
       seconds: 0
-  - platform: device
-    type: turned_off
+    trigger: device
+  - type: turned_off
     device_id: bcf481a9e79122849c323a61b91105d9
     entity_id: light.schlafzimmer_stephan
     domain: light
@@ -1509,7 +1612,8 @@
       hours: 0
       minutes: 5
       seconds: 0
-  condition:
+    trigger: device
+  conditions:
   - condition: and
     conditions:
     - condition: device
@@ -1535,27 +1639,27 @@
       device_id: bcf481a9e79122849c323a61b91105d9
       entity_id: light.schlafzimmer_stephan
       domain: light
-  action:
-  - service: light.turn_off
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: light.dingz_schlafzimmer_boden_light
+    action: light.turn_off
   mode: single
 - id: '1668093310881'
   alias: Umschalter MSL - Set ON or OFF
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_boolean.umschalter_motion
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_strom
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_licht
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - if:
     - condition: not
       conditions:
@@ -1569,26 +1673,25 @@
         entity_id: input_boolean.umschalter_licht
         state: 'on'
     then:
-    - service: input_boolean.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id:
         - input_boolean.umschalter_msl
+      action: input_boolean.turn_off
     else:
-    - service: input_boolean.turn_on
-      data: {}
+    - data: {}
       target:
         entity_id:
         - input_boolean.umschalter_msl
+      action: input_boolean.turn_on
   mode: restart
   trace:
     stored_traces: 48
 - id: '1668107036738'
   alias: Büro Pia Decke Dingz OFF, wenn Hue OFF
   description: ''
-  trigger:
-  - platform: device
-    type: turned_off
+  triggers:
+  - type: turned_off
     device_id: 0585e667614c337721ad24abad0f2d30
     entity_id: light.buro_decke_pia
     domain: light
@@ -1596,20 +1699,20 @@
       hours: 0
       minutes: 5
       seconds: 0
-  condition: []
-  action:
-  - service: light.turn_off
-    data: {}
+    trigger: device
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id:
       - light.dingz_buro_pia_decke_light
+    action: light.turn_off
   mode: single
 - id: '1668107117800'
   alias: Büro Stephan Decke Dingz OFF, wenn Hue OFF
   description: ''
-  trigger:
-  - platform: device
-    type: turned_off
+  triggers:
+  - type: turned_off
     device_id: 5db4bf233bea079061c66ad5776109a5
     entity_id: light.buro_decke_stephan
     domain: light
@@ -1617,47 +1720,47 @@
       hours: 0
       minutes: 5
       seconds: 0
-  condition: []
-  action:
-  - service: light.turn_off
-    data: {}
+    trigger: device
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id:
       - light.dingz_buro_stephan_decke_light
+    action: light.turn_off
   mode: single
 - id: '1668162467689'
   alias: Büro Licht OFF (keine Motion)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.gruppe_motion_buro
     from: 'on'
     to: 'off'
     for:
-      hours: 2
+      hours: 3
       minutes: 0
       seconds: 0
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: light.gruppe_licht_dingz_buro
     state: 'on'
     for:
-      hours: 1
+      hours: 2
       minutes: 30
       seconds: 0
-  action:
-  - service: light.turn_off
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: light.gruppe_licht_dingz_buro
+    action: light.turn_off
   mode: single
 - id: '1668162579650'
   alias: Wohnen Licht OFF Dingz Alle (keine Motion)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.gruppe_motion_wohnzimmer
     from: 'on'
     to: 'off'
@@ -1665,10 +1768,10 @@
       hours: 1
       minutes: 0
       seconds: 0
-  condition: []
-  action:
-  - service: light.turn_off
-    data: {}
+    trigger: state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id:
       - light.dingz_kuche_decke_aussen_light
@@ -1677,56 +1780,57 @@
       - light.dingz_esstisch_light
       - light.dingz_katzenbaum_light
       - light.dingz_gang_light
+    action: light.turn_off
   mode: single
 - id: '1668163767074'
   alias: Umschalter Motion OFF (keine Motion)
   description: Wenn keine Motion detektiert wird in Dusche, Bad und Büro
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.gruppe_motion_sensoren
     to: 'off'
     for:
       hours: 0
       minutes: 30
       seconds: 0
-  condition: []
-  action:
-  - service: input_boolean.turn_off
-    data: {}
+    trigger: state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_motion
+    action: input_boolean.turn_off
   mode: restart
   trace:
     stored_traces: 48
 - id: '1668193666580'
   alias: Wohnen Zeitplan NAS LUPUS - ON or OFF (NAS, PoE)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - schedule.zeitplan_nas_backup
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: state
         entity_id: schedule.zeitplan_nas_backup
         state: 'on'
       sequence:
-      - service: switch.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: switch.unifi_dream_machine_udm_p1_flex_1_schrank_oben_poe
+        action: switch.turn_on
       - delay:
           hours: 0
           minutes: 1
           seconds: 0
           milliseconds: 0
-      - service: switch.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id: switch.wake_on_lan
+        action: switch.turn_on
     - conditions:
       - condition: and
         conditions:
@@ -1737,42 +1841,42 @@
           entity_id: binary_sensor.schwellwertsensor_watt_hifi
           state: 'off'
       sequence:
-      - service: switch.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: switch.wake_on_lan
+        action: switch.turn_off
       - wait_for_trigger:
-        - platform: state
-          entity_id:
+        - entity_id:
           - device_tracker.lupus
           to: not_home
+          trigger: state
         timeout:
           hours: 0
           minutes: 5
           seconds: 0
           milliseconds: 0
-      - service: switch.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: switch.unifi_dream_machine_udm_p1_flex_1_schrank_oben_poe
+        action: switch.turn_off
     default:
-    - service: switch.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id: switch.wake_on_lan
+      action: switch.turn_off
   mode: single
 - id: '1668327415474'
   alias: Umschalter Licht - Set ON or OFF
   description: 'Schaltet abhängig der Dingz Lichter den Umschalter Licht EIN oder
     AUS. Der Umschalter EIN bleibt mindestens 30 Minuten aktiv um hin und her zu vermeiden.   '
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - light.gruppe_licht_dingz
-  - platform: time_pattern
-    minutes: /30
-  condition: []
-  action:
+    trigger: state
+  - minutes: /30
+    trigger: time_pattern
+  conditions: []
+  actions:
   - if:
     - condition: not
       conditions:
@@ -1789,158 +1893,153 @@
           minutes: 30
           seconds: 0
       then:
-      - service: input_boolean.turn_off
-        data: {}
+      - data: {}
         target:
           entity_id: input_boolean.umschalter_licht
+        action: input_boolean.turn_off
     else:
-    - service: input_boolean.turn_on
-      data: {}
+    - data: {}
       target:
         entity_id: input_boolean.umschalter_licht
+      action: input_boolean.turn_on
   mode: restart
   trace:
     stored_traces: 48
 - id: '1668340845046'
   alias: Wohnung OFF - HOME > NOT_HOME - verlassen (PoE, Hue, Dingz) (notification)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - group.awesome_people
     to: not_home
     for:
       hours: 0
       minutes: 30
       seconds: 0
-  condition: []
-  action:
-  - service: switch.turn_off
-    data: {}
+    trigger: state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id:
       - switch.unifi_dream_machine_udm_p6_outdoor_poe
-  - service: light.turn_off
-    data: {}
+    action: switch.turn_off
+  - data: {}
     target:
       entity_id:
       - light.gruppe_licht_dingz
       - light.gruppe_licht_hue
-  - service: notify.mobile_app_stephs_iphone
-    data:
+    action: light.turn_off
+  - data:
       message: Wohnung OFF - HOME > NOT_HOME - verlassen (PoE, Hue, Dingz)
     enabled: false
-  - service: input_boolean.turn_off
-    data: {}
+    action: notify.mobile_app_stephs_iphone
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_aktivitat
+    action: input_boolean.turn_off
   mode: single
 - id: '1668341667407'
   alias: Wohnung ON - NOT_HOME > HOME - ankommen (PoE, Gang)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - group.awesome_people
     to: home
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - if:
     - condition: state
       entity_id: binary_sensor.schwellwertsensor_illumination_dark_low
       state: 'on'
     then:
-    - service: light.turn_on
-      data:
+    - data:
         brightness_pct: 30
       target:
         entity_id: light.dingz_gang_light
+      action: light.turn_on
     else: []
   mode: single
 - id: '1668342012356'
   alias: Wohnung OFF - Aktiv > Inaktiv - @HOME (Hue, Dingz)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_boolean.umschalter_aktivitat
     to: 'off'
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: home
-  action:
-  - service: light.turn_off
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id:
       - light.gruppe_licht_dingz
       - light.gruppe_licht_hue
+    action: light.turn_off
   mode: single
 - id: '1668347061540'
   alias: Wohnen Zeitplan NAS LEGOLAS - ON or OFF (NAS)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - schedule.zeitplan_nas_backup_legolas
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: state
         entity_id: schedule.zeitplan_nas_backup_legolas
         state: 'on'
       sequence:
-      - service: switch.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id:
           - switch.wol_legolas
+        action: switch.turn_on
     default:
-    - service: switch.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id:
         - switch.wol_legolas
+      action: switch.turn_off
   mode: single
 - id: '1668347130706'
   alias: Wohnen Zeitplan NAS THOR - ON or OFF (NAS)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - schedule.zeitplan_nas_backup_thor
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: state
         entity_id: schedule.zeitplan_nas_backup_thor
         state: 'on'
       sequence:
-      - service: switch.turn_on
-        data: {}
+      - data: {}
         target:
           entity_id:
           - switch.wol_thor
+        action: switch.turn_on
     default:
-    - service: switch.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id:
         - switch.wol_thor
+      action: switch.turn_off
   mode: single
 - id: '1668492831615'
   alias: Terrasse Dingz OFF, wenn Hue OFF
   description: ''
-  trigger:
-  - platform: device
-    type: turned_off
+  triggers:
+  - type: turned_off
     device_id: 2486525226c6c5658d1f31bb57e45688
     entity_id: light.terrasse_decke
     domain: light
@@ -1948,20 +2047,20 @@
       hours: 0
       minutes: 5
       seconds: 0
-  condition: []
-  action:
-  - service: light.turn_off
-    data: {}
+    trigger: device
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id:
       - light.dingz_terrasse_light
+    action: light.turn_off
   mode: single
 - id: '1668564830587'
   alias: Wohnung Gruppe Hue Licht OFF - Bettgehen
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_boolean.umschalter_licht
     to: 'off'
     for:
@@ -1969,8 +2068,8 @@
       minutes: 10
       seconds: 0
     from: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.schwellwertsensor_watt_hifi
     to: 'off'
     for:
@@ -1978,8 +2077,8 @@
       minutes: 10
       seconds: 0
     from: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_motion
     for:
       hours: 0
@@ -1987,7 +2086,8 @@
       seconds: 0
     from: 'on'
     to: 'off'
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: home
@@ -2003,21 +2103,21 @@
   - condition: state
     entity_id: input_boolean.umschalter_motion
     state: 'off'
-  action:
-  - service: light.turn_off
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: light.gruppe_licht_hue
+    action: light.turn_off
   mode: single
 - id: '1668575661548'
   alias: Küche Dingz Schrank Licht ON - Morgen
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.gruppe_motion_wohnzimmer
     to: 'on'
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: home
@@ -2027,32 +2127,32 @@
   - condition: state
     entity_id: schedule.zeitplan_morgenstunden
     state: 'on'
-  action:
-  - service: light.turn_on
-    data:
+  actions:
+  - data:
       brightness_pct: 1
     target:
       entity_id: light.dingz_kuche_schrank_light
+    action: light.turn_on
   mode: single
 - id: '1668577290837'
   alias: Küche Licht Dingz Schrank Modifikation
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: kuche-licht-dingz-schrank-modifikation
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_wohnzimmer_state
+      - light.dingz_kuche_schrank_light
     target:
       entity_id:
       - sensor.dingz_wohnzimmer_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: light.dingz_kuche_schrank_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_kuche_schrank_light
@@ -2064,37 +2164,37 @@
           entity_id: schedule.zeitplan_morgenstunden
           state: 'on'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 1
           target:
             entity_id: light.dingz_kuche_schrank_light
+          action: light.turn_on
       default:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 40
         target:
           entity_id: light.dingz_kuche_schrank_light
+        action: light.turn_on
   mode: single
 - id: '1668577647023'
   alias: Wohnen Licht Esstisch Modifikation (Webhook)
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: wohnen-licht-dingz-esstisch-modifikation
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_wohnzimmer_state
+      - light.dingz_esstisch_light
     target:
       entity_id:
       - sensor.dingz_wohnzimmer_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: light.dingz_esstisch_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_esstisch_light
@@ -2106,42 +2206,41 @@
           entity_id: schedule.zeitplan_morgenstunden
           state: 'on'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 10
           target:
             entity_id: light.dingz_esstisch_light
+          action: light.turn_on
       default:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 40
         target:
           entity_id: light.dingz_esstisch_light
+        action: light.turn_on
   mode: single
 - id: '1668588186351'
   alias: Küche Licht Dingz Modifikation Szene Kochen
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: kuche-licht-dingz-modifikation-szene-kochen
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
-    target:
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
       entity_id:
-      - sensor.dingz_wohnzimmer_state
       - sensor.dingz_kuche_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id:
       - light.dingz_kuche_schrank_light
       - light.dingz_kuche_decke_innen_light
       - light.dingz_kuche_decke_aussen_light
       - light.dingz_esstisch_light
+    target:
+      entity_id:
+      - sensor.dingz_wohnzimmer_state
+      - sensor.dingz_kuche_state
+    action: homeassistant.update_entity
   - if:
     - condition: or
       conditions:
@@ -2167,91 +2266,90 @@
           entity_id: schedule.zeitplan_morgenstunden
           state: 'on'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 1
           target:
             entity_id: light.dingz_kuche_schrank_light
-        - service: light.turn_on
-          data:
+          action: light.turn_on
+        - data:
             brightness_pct: 30
           target:
             entity_id: light.dingz_kuche_decke_innen_light
-        - service: light.turn_on
-          data:
+          action: light.turn_on
+        - data:
             brightness_pct: 20
           target:
             entity_id: light.dingz_kuche_decke_aussen_light
-        - service: light.turn_on
-          data:
+          action: light.turn_on
+        - data:
             brightness_pct: 10
           target:
             entity_id: light.dingz_esstisch_light
+          action: light.turn_on
       default:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 40
         target:
           entity_id: light.dingz_kuche_schrank_light
-      - service: light.turn_on
-        data:
+        action: light.turn_on
+      - data:
           brightness_pct: 50
         target:
           entity_id: light.dingz_kuche_decke_innen_light
-      - service: light.turn_on
-        data:
+        action: light.turn_on
+      - data:
           brightness_pct: 50
         target:
           entity_id: light.dingz_kuche_decke_aussen_light
-      - service: light.turn_on
-        data:
+        action: light.turn_on
+      - data:
           brightness_pct: 20
         target:
           entity_id: light.dingz_esstisch_light
-    - service: input_text.set_value
-      data:
+        action: light.turn_on
+    - data:
         value: kochen
       target:
         entity_id: input_text.text_status_szene_essen_versus_kochen
+      action: input_text.set_value
     else:
-    - service: light.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id:
         - light.dingz_kuche_schrank_light
         - light.dingz_kuche_decke_innen_light
         - light.dingz_kuche_decke_aussen_light
         - light.dingz_esstisch_light
-    - service: input_text.set_value
-      data:
+      action: light.turn_off
+    - data:
         value: 'off'
       target:
         entity_id: input_text.text_status_szene_essen_versus_kochen
+      action: input_text.set_value
   mode: single
 - id: '1668590340259'
   alias: Küche Licht Dingz Modifikation Szene Essen
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: kuche-licht-dingz-modifikation-szene-essen
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
-    target:
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
       entity_id:
-      - sensor.dingz_wohnzimmer_state
       - sensor.dingz_kuche_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id:
       - light.dingz_kuche_schrank_light
       - light.dingz_kuche_decke_innen_light
       - light.dingz_kuche_decke_aussen_light
       - light.dingz_esstisch_light
+    target:
+      entity_id:
+      - sensor.dingz_wohnzimmer_state
+      - sensor.dingz_kuche_state
+    action: homeassistant.update_entity
   - if:
     - condition: or
       conditions:
@@ -2277,72 +2375,71 @@
           entity_id: schedule.zeitplan_morgenstunden
           state: 'on'
         sequence:
-        - service: light.turn_off
-          data: {}
+        - data: {}
           target:
             entity_id: light.dingz_kuche_schrank_light
-        - service: light.turn_on
-          data:
+          action: light.turn_off
+        - data:
             brightness_pct: 20
           target:
             entity_id: light.dingz_kuche_decke_innen_light
-        - service: light.turn_on
-          data:
+          action: light.turn_on
+        - data:
             brightness_pct: 20
           target:
             entity_id: light.dingz_kuche_decke_aussen_light
-        - service: light.turn_on
-          data:
+          action: light.turn_on
+        - data:
             brightness_pct: 20
           target:
             entity_id: light.dingz_esstisch_light
+          action: light.turn_on
       default:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 1
         target:
           entity_id: light.dingz_kuche_schrank_light
-      - service: light.turn_on
-        data:
+        action: light.turn_on
+      - data:
           brightness_pct: 40
         target:
           entity_id: light.dingz_kuche_decke_innen_light
-      - service: light.turn_on
-        data:
+        action: light.turn_on
+      - data:
           brightness_pct: 40
         target:
           entity_id: light.dingz_kuche_decke_aussen_light
-      - service: light.turn_on
-        data:
+        action: light.turn_on
+      - data:
           brightness_pct: 40
         target:
           entity_id: light.dingz_esstisch_light
-    - service: input_text.set_value
-      data:
+        action: light.turn_on
+    - data:
         value: essen
       target:
         entity_id: input_text.text_status_szene_essen_versus_kochen
+      action: input_text.set_value
     else:
-    - service: light.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id:
         - light.dingz_kuche_schrank_light
         - light.dingz_kuche_decke_innen_light
         - light.dingz_kuche_decke_aussen_light
         - light.dingz_esstisch_light
-    - service: input_text.set_value
-      data:
+      action: light.turn_off
+    - data:
         value: 'off'
       target:
         entity_id: input_text.text_status_szene_essen_versus_kochen
+      action: input_text.set_value
   mode: single
 - id: '1668674120543'
   alias: Wohnung Gruppe Cover CLOSE - Bettgehen
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_boolean.umschalter_licht
     to: 'off'
     for:
@@ -2350,8 +2447,8 @@
       minutes: 15
       seconds: 0
     from: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.schwellwertsensor_watt_hifi
     to: 'off'
     for:
@@ -2359,8 +2456,8 @@
       minutes: 15
       seconds: 0
     from: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_motion
     for:
       hours: 0
@@ -2368,7 +2465,8 @@
       seconds: 0
     from: 'on'
     to: 'off'
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: home
@@ -2392,18 +2490,17 @@
     after: '22:00:00'
     before: 04:00:00
     alias: Time condition between 22:00:00 and 04:00:00
-  action:
-  - service: input_boolean.turn_on
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_cover
+    action: input_boolean.turn_on
   mode: single
 - id: '1668751025410'
   alias: Wohnung Gruppe Cover OPEN - Morgen, Wind, etc.
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_wind_speed
     to: 'on'
     from: 'off'
@@ -2411,8 +2508,8 @@
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - binary_sensor.schwellwertsensor_illumination_dark_low
     to: 'off'
     from: 'on'
@@ -2420,33 +2517,33 @@
       hours: 0
       minutes: 2
       seconds: 0
-  condition: []
-  action:
-  - service: input_boolean.turn_off
-    data: {}
+    trigger: state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_cover
+    action: input_boolean.turn_off
   mode: single
 - id: '1668768195001'
   alias: Wohnen Licht Katzenbaum Modifikation (Webhook)
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: wohnen-licht-dingz-katzenbaum-modifikation
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_wohnzimmer_state
+      - light.dingz_katzenbaum_light
     target:
       entity_id:
       - sensor.dingz_wohnzimmer_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id:
-      - light.dingz_katzenbaum_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_katzenbaum_light
@@ -2458,62 +2555,63 @@
           entity_id: schedule.zeitplan_morgenstunden
           state: 'on'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 40
           target:
             entity_id:
             - light.dingz_katzenbaum_light
+          action: light.turn_on
       default:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 60
         target:
           entity_id:
           - light.dingz_katzenbaum_light
+        action: light.turn_on
   mode: single
 - id: '1668774993130'
   alias: Gang Qubino Update Entity für kontinuierliche Messung
   description: 'Diese Phase1 wird sehr selten aktualisiert, weil nur Geräte daran
     die selten laufen. Der Standby ist konstant. Entität wird künstlich aktualisiert,
     damit Statistiken nicht hängen bleiben mit zu hohen Werten. '
-  trigger:
-  - platform: time_pattern
-    minutes: /1
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+  triggers:
+  - minutes: /1
+    trigger: time_pattern
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.qubino_smart_meter_electric_consumption_w_2
     target:
       entity_id:
-      - sensor.qubino_3_phase_smart_meter_electric_consumption_w_2
+      - sensor.qubino_smart_meter_electric_consumption_w_2
+    action: homeassistant.update_entity
   mode: single
 - id: '1668837261459'
   alias: Dusche Licht (Webhook)
   description: Handling manuel press
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: dusche_light_generic_webhook
-  condition: []
-  action:
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
   - delay:
       hours: 0
       minutes: 0
       seconds: 1
       milliseconds: 0
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: sensor.dingz_dusche_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
+  - data:
       entity_id:
+      - sensor.dingz_dusche_state
       - light.dingz_dusche_decke_light
       - light.dingz_dusche_spiegel_light
       - light.dingz_ankleide_light
+    target:
+      entity_id: sensor.dingz_dusche_state
+    action: homeassistant.update_entity
   - delay:
       hours: 0
       minutes: 0
@@ -2532,44 +2630,43 @@
         entity_id: light.dingz_ankleide_light
         state: 'on'
     then:
-    - service: input_text.set_value
-      data:
+    - data:
         value: manuell
       target:
         entity_id: input_text.text_status_dusche_licht
+      action: input_text.set_value
     else:
-    - service: input_text.set_value
-      data:
+    - data:
         value: reset
       target:
         entity_id: input_text.text_status_dusche_licht
+      action: input_text.set_value
   mode: restart
 - id: '1668837627989'
-  alias: Bad Licht (Webhook)
+  alias: Bad Licht (Webhook bad_light_generic_webhook)
   description: Handling manuel press
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: bad_light_generic_webhook
-  condition: []
-  action:
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
   - delay:
       hours: 0
       minutes: 0
       seconds: 1
       milliseconds: 0
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: sensor.dingz_bad_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
+  - data:
       entity_id:
+      - sensor.dingz_bad_state
       - light.dingz_bad_decke_watu_light
       - light.dingz_bad_decke_wc_light
       - light.dingz_bad_spiegel_light
+    target:
+      entity_id: sensor.dingz_bad_state
+    action: homeassistant.update_entity
   - delay:
       hours: 0
       minutes: 0
@@ -2588,17 +2685,17 @@
         entity_id: light.dingz_bad_spiegel_light
         state: 'on'
     then:
-    - service: input_text.set_value
-      data:
+    - data:
         value: manuell
       target:
         entity_id: input_text.text_status_bad_licht
+      action: input_text.set_value
     else:
-    - service: input_text.set_value
-      data:
+    - data:
         value: reset
       target:
         entity_id: input_text.text_status_bad_licht
+      action: input_text.set_value
   mode: restart
 - id: '1669012738190'
   alias: Wohnen Umschalter Status Licht Illumination Markise LED
@@ -2608,69 +2705,90 @@
     schnelle Hin- und Herwechseln beim einem Reload der Templates oder beim Restart
     von HA zu  kompensieren. Bereits laufende Automationen werden abgebrochen (restart).
     Mit den Bedingungen werden ungültige Stati gefiltert wie z.B. unbekannt. "
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_illumination_dark_low
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_illumination_dark_low
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    trigger: state
+  - entity_id:
     - binary_sensor.schwellwertsensor_illumination_low
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
+    - binary_sensor.schwellwertsensor_illumination_low
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_schlafen
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
+    - input_boolean.umschalter_schlafen
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_aktivitat
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
+    from: 'on'
+    to: 'off'
     for:
       hours: 0
       minutes: 2
       seconds: 0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
+    - input_boolean.umschalter_aktivitat
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    trigger: state
+  - entity_id:
     - schedule.zeitplan_schlafen_co2_prufung
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'on'
-    - 'off'
-  condition:
+    from: 'on'
+    to: 'off'
+    trigger: state
+  - entity_id:
+    - schedule.zeitplan_schlafen_co2_prufung
+    from: 'off'
+    to: 'on'
+    trigger: state
+  conditions:
   - condition: state
     entity_id: binary_sensor.schwellwertsensor_illumination_dark_low
     state:
@@ -2691,7 +2809,7 @@
     state:
     - 'on'
     - 'off'
-  action:
+  actions:
   - choose:
     - conditions:
       - condition: and
@@ -2709,18 +2827,18 @@
           entity_id: schedule.zeitplan_schlafen_co2_prufung
           state: 'on'
       sequence:
-      - service: input_number.set_value
-        data:
+      - data:
           value: 0
         target:
           entity_id: input_number.nummer_status_licht_level
-      - service: light.turn_off
-        data: {}
+        action: input_number.set_value
+      - data: {}
         target:
           entity_id:
           - light.dingz_markise1_led
           - light.dingz_markise23_led
           - light.dingz_markise45_led
+        action: light.turn_off
     - conditions:
       - condition: and
         conditions:
@@ -2739,23 +2857,23 @@
             entity_id: input_boolean.umschalter_aktivitat
             state: 'on'
       sequence:
-      - service: input_number.set_value
-        data:
+      - data:
           value: 1
         target:
           entity_id: input_number.nummer_status_licht_level
-      - service: light.turn_off
-        data: {}
+        action: input_number.set_value
+      - data: {}
         target:
           entity_id:
           - light.dingz_markise23_led
           - light.dingz_markise45_led
-      - service: light.turn_on
-        data:
+        action: light.turn_off
+      - data:
           brightness_pct: 3
         target:
           entity_id:
           - light.dingz_markise1_led
+        action: light.turn_on
     - conditions:
       - condition: and
         conditions:
@@ -2763,23 +2881,23 @@
           entity_id: binary_sensor.schwellwertsensor_illumination_low
           state: 'on'
       sequence:
-      - service: input_number.set_value
-        data:
+      - data:
           value: 2
         target:
           entity_id: input_number.nummer_status_licht_level
-      - service: light.turn_off
-        data: {}
+        action: input_number.set_value
+      - data: {}
         target:
           entity_id:
           - light.dingz_markise45_led
-      - service: light.turn_on
-        data:
+        action: light.turn_off
+      - data:
           brightness_pct: 6
         target:
           entity_id:
           - light.dingz_markise1_led
           - light.dingz_markise23_led
+        action: light.turn_on
     - conditions:
       - condition: and
         conditions:
@@ -2790,37 +2908,37 @@
           entity_id: binary_sensor.schwellwertsensor_illumination_low
           state: 'off'
       sequence:
-      - service: input_number.set_value
-        data:
+      - data:
           value: 3
         target:
           entity_id: input_number.nummer_status_licht_level
-      - service: light.turn_on
-        data:
+        action: input_number.set_value
+      - data:
           brightness_pct: 10
         target:
           entity_id:
           - light.dingz_markise1_led
           - light.dingz_markise23_led
           - light.dingz_markise45_led
+        action: light.turn_on
     default:
-    - service: notify.mobile_app_stephs_iphone
-      data:
+    - data:
         message: Markise LED Umschalter - No Condition Error
+      action: notify.mobile_app_stephs_iphone
   mode: restart
 - id: '1669026548057'
   alias: Keller Strom ON, Strom OFF - Shelly O2 geschaltet (Zeitplan)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - schedule.zeitplan_keller_luftmessung
     enabled: false
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - schedule.zeitplan_nas_backup
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - if:
     - condition: and
       conditions:
@@ -2832,57 +2950,57 @@
         entity_id: schedule.zeitplan_nas_backup
         state: 'off'
     then:
-    - service: switch.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id: switch.o2_keller_geschaltet
+      action: switch.turn_off
     - delay:
         hours: 0
         minutes: 1
         seconds: 0
         milliseconds: 0
       enabled: false
-    - service: switch.turn_off
-      data: {}
+    - data: {}
       target:
         entity_id: switch.unifi_dream_machine_uap_iw_hd_poe
       enabled: false
+      action: switch.turn_off
     else:
-    - service: switch.turn_on
-      data: {}
+    - data: {}
       target:
         entity_id: switch.unifi_dream_machine_uap_iw_hd_poe
       enabled: false
+      action: switch.turn_on
     - delay:
         hours: 0
         minutes: 5
         seconds: 0
         milliseconds: 0
       enabled: false
-    - service: switch.turn_on
-      data: {}
+    - data: {}
       target:
         entity_id: switch.o2_keller_geschaltet
+      action: switch.turn_on
   mode: single
 - id: '1669182603609'
   alias: Dusche Licht Decke Modifikation (Webhook)
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: dusche_light_decke_single_webhook
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_dusche_state
+      - light.dingz_dusche_decke_light
     target:
       entity_id:
       - sensor.dingz_dusche_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: light.dingz_dusche_decke_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_dusche_decke_light
@@ -2894,21 +3012,21 @@
           entity_id: input_number.nummer_status_licht_level
           state: '0.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 60
           target:
             entity_id: light.dingz_dusche_decke_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '1.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 60
           target:
             entity_id: light.dingz_dusche_decke_light
+          action: light.turn_on
       - conditions:
         - condition: or
           conditions:
@@ -2919,32 +3037,32 @@
             entity_id: input_number.nummer_status_licht_level
             state: '3.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 80
           target:
             entity_id: light.dingz_dusche_decke_light
+          action: light.turn_on
       default: []
   mode: single
 - id: '1669182781304'
   alias: Dusche Licht Ankleide Modifikation (Webhook)
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: dusche_light_ankleide_single_webhook
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_dusche_state
+      - light.dingz_ankleide_light
     target:
       entity_id:
       - sensor.dingz_dusche_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: light.dingz_ankleide_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_ankleide_light
@@ -2956,21 +3074,21 @@
           entity_id: input_number.nummer_status_licht_level
           state: '0.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 60
           target:
             entity_id: light.dingz_ankleide_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '1.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 60
           target:
             entity_id: light.dingz_ankleide_light
+          action: light.turn_on
       - conditions:
         - condition: or
           conditions:
@@ -2981,32 +3099,32 @@
             entity_id: input_number.nummer_status_licht_level
             state: '3.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 80
           target:
             entity_id: light.dingz_ankleide_light
+          action: light.turn_on
       default: []
   mode: single
 - id: '1669183364808'
   alias: Dusche Licht Spiegel Modifikation (Webhook)
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: dusche_light_spiegel_single_webhook
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_dusche_state
+      - light.dingz_dusche_spiegel_light
     target:
       entity_id:
       - sensor.dingz_dusche_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: light.dingz_dusche_spiegel_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_dusche_spiegel_light
@@ -3018,21 +3136,21 @@
           entity_id: input_number.nummer_status_licht_level
           state: '0.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 40
           target:
             entity_id: light.dingz_dusche_spiegel_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '1.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 40
           target:
             entity_id: light.dingz_dusche_spiegel_light
+          action: light.turn_on
       - conditions:
         - condition: or
           conditions:
@@ -3043,32 +3161,32 @@
             entity_id: input_number.nummer_status_licht_level
             state: '3.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 50
           target:
             entity_id: light.dingz_dusche_spiegel_light
+          action: light.turn_on
       default: []
   mode: single
 - id: '1669268283714'
-  alias: Bad Licht Decke WC Modifikation (Webhook)
+  alias: Bad Licht Decke WC Modifikation (Webhook bad_light_decke_wc_single_webhook)
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: bad_light_decke_wc_single_webhook
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_bad_state
+      - light.dingz_bad_decke_wc_light
     target:
       entity_id:
       - sensor.dingz_bad_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: light.dingz_bad_decke_wc_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_bad_decke_wc_light
@@ -3080,62 +3198,62 @@
           entity_id: input_number.nummer_status_licht_level
           state: '0.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 1
           target:
             entity_id: light.dingz_bad_decke_wc_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '1.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 40
           target:
             entity_id: light.dingz_bad_decke_wc_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '2.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 60
           target:
             entity_id: light.dingz_bad_decke_wc_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '3.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 80
           target:
             entity_id: light.dingz_bad_decke_wc_light
+          action: light.turn_on
       default: []
   mode: single
 - id: '1669268747578'
-  alias: Bad Licht Decke WaTu Modifikation (Webhook)
+  alias: Bad Licht Decke WaTu Modifikation (Webhook bad_light_decke_watu_single_webhook)
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: bad_light_decke_watu_single_webhook
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_bad_state
+      - light.dingz_bad_decke_watu_light
     target:
       entity_id:
       - sensor.dingz_bad_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: light.dingz_bad_decke_watu_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_bad_decke_watu_light
@@ -3147,62 +3265,62 @@
           entity_id: input_number.nummer_status_licht_level
           state: '0.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 1
           target:
             entity_id: light.dingz_bad_decke_watu_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '1.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 60
           target:
             entity_id: light.dingz_bad_decke_watu_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '2.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 60
           target:
             entity_id: light.dingz_bad_decke_watu_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '3.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 80
           target:
             entity_id: light.dingz_bad_decke_watu_light
+          action: light.turn_on
       default: []
   mode: single
 - id: '1669268828295'
-  alias: Bad Licht Spiegel Modifikation (Webhook)
+  alias: Bad Licht Spiegel Modifikation (Webhook bad_light_spiegel_single_webhook)
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: bad_light_spiegel_single_webhook
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_bad_state
+      - light.dingz_bad_spiegel_light
     target:
       entity_id:
       - sensor.dingz_bad_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: light.dingz_bad_spiegel_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_bad_spiegel_light
@@ -3214,21 +3332,21 @@
           entity_id: input_number.nummer_status_licht_level
           state: '0.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 30
           target:
             entity_id: light.dingz_bad_spiegel_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '1.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 60
           target:
             entity_id: light.dingz_bad_spiegel_light
+          action: light.turn_on
       - conditions:
         - condition: or
           conditions:
@@ -3239,32 +3357,32 @@
             entity_id: input_number.nummer_status_licht_level
             state: '3.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 80
           target:
             entity_id: light.dingz_bad_spiegel_light
+          action: light.turn_on
       default: []
   mode: single
 - id: '1669272839629'
   alias: Gang Licht Modifikation (Webhook)
   description: ''
-  trigger:
-  - platform: webhook
-    allowed_methods:
+  triggers:
+  - allowed_methods:
     - PUT
     webhook_id: gang_light_single_webhook
-  condition: []
-  action:
-  - service: homeassistant.update_entity
-    data: {}
+    trigger: webhook
+    local_only: true
+  conditions: []
+  actions:
+  - data:
+      entity_id:
+      - sensor.dingz_gang_state
+      - light.dingz_gang_light
     target:
       entity_id:
       - sensor.dingz_gang_state
-  - service: homeassistant.update_entity
-    data: {}
-    target:
-      entity_id: light.dingz_gang_light
+    action: homeassistant.update_entity
   - if:
     - condition: state
       entity_id: light.dingz_gang_light
@@ -3276,177 +3394,181 @@
           entity_id: input_number.nummer_status_licht_level
           state: '0.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 1
           target:
             entity_id: light.dingz_gang_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '1.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 40
           target:
             entity_id: light.dingz_gang_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '2.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 60
           target:
             entity_id: light.dingz_gang_light
+          action: light.turn_on
       - conditions:
         - condition: state
           entity_id: input_number.nummer_status_licht_level
           state: '3.0'
         sequence:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 80
           target:
             entity_id: light.dingz_gang_light
+          action: light.turn_on
       default: []
   mode: single
 - id: '1669356647108'
   alias: Dusche Licht LED (Text Status)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_text.text_status_dusche_licht
-    from:
-    - manuell
-    - reset
-    to:
-    - manuell
-    - reset
-  condition: []
-  action:
+    from: manuell
+    to: reset
+    trigger: state
+  - entity_id:
+    - input_text.text_status_dusche_licht
+    from: reset
+    to: manuell
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: state
         entity_id: input_text.text_status_dusche_licht
         state: manuell
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           color_name: red
           brightness_pct: 10
         target:
           entity_id: light.dingz_dusche_led
+        action: light.turn_on
     - conditions:
       - condition: state
         entity_id: input_text.text_status_dusche_licht
         state: reset
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           color_name: green
           brightness_pct: 10
         target:
           entity_id: light.dingz_dusche_led
+        action: light.turn_on
   mode: single
 - id: '1669356870782'
   alias: Bad Licht LED (Text Status)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_text.text_status_bad_licht
-    from:
-    - manuell
-    - reset
-    to:
-    - manuell
-    - reset
-  condition: []
-  action:
+    from: manuell
+    to: reset
+    trigger: state
+  - entity_id:
+    - input_text.text_status_bad_licht
+    from: reset
+    to: manuell
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: state
         entity_id: input_text.text_status_bad_licht
         state: manuell
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           color_name: red
           brightness_pct: 10
         target:
           entity_id: light.dingz_bad_led
+        action: light.turn_on
     - conditions:
       - condition: state
         entity_id: input_text.text_status_bad_licht
         state: reset
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           color_name: green
           brightness_pct: 10
         target:
           entity_id: light.dingz_bad_led
+        action: light.turn_on
   mode: single
 - id: '1670261576094'
   alias: Wohnung Gruppe Cover OPEN or CLOSE (notification)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_boolean.umschalter_cover
-    from:
-    - 'on'
-    - 'off'
-    to:
-    - 'off'
-    - 'on'
+    from: 'on'
+    to: 'off'
     for:
       minutes: 1
-  condition:
+    trigger: state
+  - entity_id:
+    - input_boolean.umschalter_cover
+    from: 'off'
+    to: 'on'
+    for:
+      minutes: 1
+    trigger: state
+  conditions:
   - condition: state
     entity_id: input_boolean.umschalter_cover
     state:
     - 'on'
     - 'off'
-  action:
+  actions:
   - choose:
     - conditions:
       - condition: state
         entity_id: input_boolean.umschalter_cover
         state: 'on'
       sequence:
-      - service: cover.close_cover
-        data: {}
+      - data: {}
         target:
           entity_id: cover.gruppe_markise_wohnen
-      - service: notify.mobile_app_stephs_iphone
-        data:
+        action: cover.close_cover
+      - data:
           message: Wohnung Gruppe Cover Close
         enabled: false
+        action: notify.mobile_app_stephs_iphone
     - conditions:
       - condition: state
         entity_id: input_boolean.umschalter_cover
         state: 'off'
       sequence:
-      - service: cover.open_cover
-        data: {}
+      - data: {}
         target:
           entity_id: cover.gruppe_markise_wohnen
-      - service: notify.mobile_app_stephs_iphone
-        data:
+        action: cover.open_cover
+      - data:
           message: Wohnung Gruppe Cover Open
         enabled: false
+        action: notify.mobile_app_stephs_iphone
   mode: single
 - id: '1670354806823'
   alias: Dusche Licht Simulation (NOT_HOME)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_illumination_dark_low
     from: 'off'
     to: 'on'
@@ -3454,12 +3576,14 @@
       hours: 0
       minutes: 2
       seconds: 0
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: not_home
-  action:
-  - repeat:
+  actions:
+  - alias: Bis 23:00 Uhr, solange not_home
+    repeat:
       while:
       - condition: and
         conditions:
@@ -3487,11 +3611,11 @@
           state: not_home
         alias: Licht an, wenn nicht zu Hause
         then:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 40
           target:
             entity_id: light.dingz_dusche_decke_light
+          action: light.turn_on
       - if:
         - condition: state
           entity_id: group.awesome_people
@@ -3503,24 +3627,26 @@
             minutes: '{{ ''%0.2d''|format(range(3, 10)|random|int) }}'
             seconds: 0
             milliseconds: 0
-      - if:
+      - alias: Licht aus, wenn nicht zu Hause
+        if:
         - condition: state
           entity_id: group.awesome_people
           state: not_home
-        alias: Licht aus, wenn nicht zu Hause
         then:
-        - service: light.turn_off
-          data: {}
+        - data: {}
           target:
             entity_id: light.dingz_dusche_decke_light
-    alias: Bis 23:00 Uhr, solange not_home
+          action: light.turn_off
+  - data: {}
+    target:
+      entity_id: light.dingz_dusche_decke_light
+    action: light.turn_off
   mode: single
 - id: '1670354975352'
   alias: Bad Licht Simulation (NOT_HOME)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - binary_sensor.schwellwertsensor_illumination_dark_low
     from: 'off'
     to: 'on'
@@ -3528,12 +3654,14 @@
       hours: 0
       minutes: 2
       seconds: 0
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: group.awesome_people
     state: not_home
-  action:
-  - repeat:
+  actions:
+  - alias: Bis 23:00 Uhr, solange not_home
+    repeat:
       while:
       - condition: and
         conditions:
@@ -3560,12 +3688,12 @@
           entity_id: group.awesome_people
           state: not_home
         then:
-        - service: light.turn_on
-          data:
+        - data:
             brightness_pct: 80
           target:
             entity_id:
             - light.dingz_bad_decke_wc_light
+          action: light.turn_on
         alias: Licht an, wenn nicht zu Hause
       - if:
         - condition: state
@@ -3578,51 +3706,54 @@
             seconds: 0
             milliseconds: 0
         alias: Random Delay, wenn nicht zu Hause
-      - if:
+      - alias: Licht aus, wenn nicht zu Hause
+        if:
         - condition: state
           entity_id: group.awesome_people
           state: not_home
         then:
-        - service: light.turn_off
-          data: {}
+        - data: {}
           target:
             entity_id:
             - light.dingz_bad_decke_wc_light
-        alias: Licht aus, wenn nicht zu Hause
-    alias: Bis 23:00 Uhr, solange not_home
+          action: light.turn_off
+  - data: {}
+    target:
+      entity_id:
+      - light.dingz_bad_decke_wc_light
+    action: light.turn_off
   mode: single
 - id: '1677307543734'
   alias: Ewl Tarifanpassung Tag-Nacht
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - schedule.ewl_zeitplan_nachttarif
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - if:
     - condition: state
       entity_id: schedule.ewl_zeitplan_nachttarif
       state: 'on'
     then:
-    - service: input_number.set_value
-      data:
+    - data:
         value: '{{ states(''input_number.ewl_wasserstrom_tagestarif'') }}'
       target:
         entity_id: input_number.ewl_wasserstrom_aktueller_tarif
+      action: input_number.set_value
     else:
-    - service: input_number.set_value
-      data:
+    - data:
         value: '{{ states(''input_number.ewl_wasserstrom_nachttarif'') }}'
       target:
         entity_id: input_number.ewl_wasserstrom_aktueller_tarif
+      action: input_number.set_value
   mode: single
 - id: '1684519193372'
   alias: Bad Monitoring Zehnder ComfoAir Lüftung
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.comfoair_error_luftung_filter
     for:
       hours: 1
@@ -3630,209 +3761,215 @@
       seconds: 0
     from: 'False'
     to: 'True'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - sensor.comfoair_error_luftung_kategorie_a
     for:
       hours: 1
       minutes: 0
       seconds: 0
     from: A0
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - sensor.comfoair_error_luftung_kategorie_e
     for:
       hours: 1
       minutes: 0
       seconds: 0
     from: '0'
-  condition: []
-  action:
-  - service: notify.stephan_buhler
-    data:
+    trigger: state
+  conditions: []
+  actions:
+  - data:
       title: Zehnder ComfoAir Störung - bitte kontrollieren
       message: 'Filter : {{ states(''sensor.comfoair_error_luftung_filter'') }} Error
         A: {{ states(''sensor.comfoair_error_luftung_kategorie_a'') }} Error E: {{
         states(''sensor.comfoair_error_luftung_kategorie_e'') }}'
+    action: notify.stephan_buhler
   mode: single
 - id: '1684526040499'
   alias: Küche Umschalter Kochen Strom P0 (Zehnder ComfoAir Lüftung)
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.energy_statistic_qb_phase_w
+  triggers:
+  - entity_id:
+    - sensor.energy_statistic_qb_phase_w
     above: 3600
-  condition: []
-  action:
-  - service: input_boolean.turn_on
-    data: {}
+    trigger: numeric_state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_p0
+    action: input_boolean.turn_on
   - delay:
       hours: 0
       minutes: 20
       seconds: 0
       milliseconds: 0
-  - service: input_boolean.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_p0
+    action: input_boolean.turn_off
   mode: restart
 - id: '1684527783529'
   alias: Küche Umschalter Kochen Strom P1 (Zehnder ComfoAir Lüftung)
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.energy_statistic_qb_phase_w2
+  triggers:
+  - entity_id:
+    - sensor.energy_statistic_qb_phase_w2
     above: 500
-  condition: []
-  action:
-  - service: input_boolean.turn_on
-    data: {}
+    trigger: numeric_state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_p1
+    action: input_boolean.turn_on
   - delay:
       hours: 0
       minutes: 20
       seconds: 0
       milliseconds: 0
-  - service: input_boolean.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_p1
+    action: input_boolean.turn_off
   mode: restart
 - id: '1684527811411'
   alias: Küche Umschalter Kochen Strom P2 (Zehnder ComfoAir Lüftung)
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.energy_statistic_qb_phase_w3
+  triggers:
+  - entity_id:
+    - sensor.energy_statistic_qb_phase_w3
     above: 1800
-  condition: []
-  action:
-  - service: input_boolean.turn_on
-    data: {}
+    trigger: numeric_state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_p2
+    action: input_boolean.turn_on
   - delay:
       hours: 0
       minutes: 20
       seconds: 0
       milliseconds: 0
-  - service: input_boolean.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_p2
+    action: input_boolean.turn_off
   mode: restart
 - id: '1684527837370'
   alias: Küche Umschalter Kochen Strom P3 (Zehnder ComfoAir Lüftung)
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.energy_statistic_qb_phase_w4
+  triggers:
+  - entity_id:
+    - sensor.energy_statistic_qb_phase_w4
     above: 1000
-  condition: []
-  action:
-  - service: input_boolean.turn_on
-    data: {}
+    trigger: numeric_state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_p3
+    action: input_boolean.turn_on
   - delay:
       hours: 0
       minutes: 20
       seconds: 0
       milliseconds: 0
-  - service: input_boolean.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_p3
+    action: input_boolean.turn_off
   mode: restart
 - id: '1684528062858'
   alias: Küche Umschalter Kochen Bewegung (Zehnder ComfoAir Lüftung)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.multisensor_7_kuchenture_motion_detection
+  triggers:
+  - entity_id:
+    - binary_sensor.motion_kuche_motion
     from: 'off'
     to: 'on'
-  condition: []
-  action:
-  - service: input_boolean.turn_on
-    data: {}
+    trigger: state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_bewegung
+    action: input_boolean.turn_on
   - delay:
       hours: 0
       minutes: 20
       seconds: 0
       milliseconds: 0
-  - service: input_boolean.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_bewegung
+    action: input_boolean.turn_off
   mode: restart
 - id: '1684528177388'
   alias: Küche Umschalter Kochen Strom Licht (Zehnder ComfoAir Lüftung)
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.dingz_wohnzimmer_power
+  triggers:
+  - entity_id:
+    - sensor.dingz_wohnzimmer_power
     above: 6
-  - platform: numeric_state
-    entity_id: sensor.dingz_kuche_power
+    trigger: numeric_state
+  - entity_id: sensor.dingz_kuche_power
     above: 6
-  condition: []
-  action:
-  - service: input_boolean.turn_on
-    data: {}
+    trigger: numeric_state
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_licht
+    action: input_boolean.turn_on
   - delay:
       hours: 0
       minutes: 20
       seconds: 0
       milliseconds: 0
-  - service: input_boolean.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_strom_licht
+    action: input_boolean.turn_off
   mode: restart
 - id: '1684528637743'
   alias: Umschalter Küche Kochen (Zehnder ComfoAir Lüftung)
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_boolean.umschalter_kuche_bewegung
     from: 'off'
     to: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_kuche_strom_licht
     from: 'off'
     to: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_kuche_strom_p0
     from: 'off'
     to: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_kuche_strom_p1
     from: 'off'
     to: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_kuche_strom_p2
     from: 'off'
     to: 'on'
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - input_boolean.umschalter_kuche_strom_p3
     from: 'off'
     to: 'on'
-  condition:
+    trigger: state
+  conditions:
   - condition: state
     entity_id: input_boolean.umschalter_kuche_bewegung
     state: 'on'
@@ -3868,65 +4005,66 @@
     - condition: state
       entity_id: input_select.status_luftung
       state: Abwesend
-  action:
-  - service: notify.mobile_app_stephs_iphone
-    data:
+  actions:
+  - data:
       message: Kochen ON ({{ states('input_select.status_luftung') }})
-  - service: input_select.select_option
-    data:
+    action: notify.mobile_app_stephs_iphone
+  - data:
       option: Kochen
     target:
       entity_id: input_select.status_luftung
     alias: Select Status Lüftung Kochen
-  - service: input_boolean.turn_on
-    data: {}
+    action: input_select.select_option
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_kochen
-  - service: rest_command.zehnder_comfoair_high
-    data: {}
+    action: input_boolean.turn_on
+  - data: {}
     alias: Zehnder ComfoAir Lüftung High
+    action: rest_command.zehnder_comfoair_high
   - delay:
       hours: 0
       minutes: 30
       seconds: 0
       milliseconds: 0
-  - service: rest_command.zehnder_comfoair_middle
-    data: {}
+  - data: {}
     alias: Zehnder ComfoAir Lüftung Middle
+    action: rest_command.zehnder_comfoair_middle
   - delay:
       hours: 0
       minutes: 30
       seconds: 0
       milliseconds: 0
-  - service: input_boolean.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: input_boolean.umschalter_kuche_kochen
-  - service: rest_command.zehnder_comfoair_low
-    data: {}
+    action: input_boolean.turn_off
+  - data: {}
     alias: Zehnder ComfoAir Lüftung Low
-  - service: input_select.select_option
-    data:
+    action: rest_command.zehnder_comfoair_low
+  - data:
       option: Normal
     target:
       entity_id: input_select.status_luftung
     alias: Select Status Lüftung Normal
-  - service: notify.mobile_app_stephs_iphone
-    data:
+    action: input_select.select_option
+  - data:
       message: Kochen OFF ({{ states('input_select.status_luftung') }})
+    action: notify.mobile_app_stephs_iphone
   mode: restart
 - id: '1684530513889'
   alias: Wohnen Zehnder ComfoAir Lüftung bei Luftfeuchtigkeit
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
+  triggers:
+  - entity_id:
+    - sensor.homematic_thermostat_bad_feuchtigkeit
     above: 70
-  - platform: numeric_state
-    entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
+    trigger: numeric_state
+  - entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
     above: 70
     enabled: true
-  condition:
+    trigger: numeric_state
+  conditions:
   - condition: or
     conditions:
     - condition: state
@@ -3938,18 +4076,18 @@
     - condition: state
       entity_id: input_select.status_luftung
       state: Feuchtigkeit
-  action:
-  - service: notify.mobile_app_stephs_iphone
-    data:
+  actions:
+  - data:
       message: Feuchtigkeit ON ({{ states('input_select.status_luftung') }})
-  - service: input_select.select_option
-    data:
+    action: notify.mobile_app_stephs_iphone
+  - data:
       option: Feuchtigkeit
     target:
       entity_id: input_select.status_luftung
     alias: Select Status Feuchtigkeit
-  - service: rest_command.zehnder_comfoair_middle
-    data: {}
+    action: input_select.select_option
+  - data: {}
+    action: rest_command.zehnder_comfoair_middle
   - choose:
     - conditions:
       - condition: numeric_state
@@ -3957,9 +4095,9 @@
         above: 70
       sequence:
       - wait_for_trigger:
-        - platform: numeric_state
-          entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
+        - entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
           below: 67
+          trigger: numeric_state
         timeout:
           hours: 1
           minutes: 0
@@ -3971,9 +4109,9 @@
         above: 70
       sequence:
       - wait_for_trigger:
-        - platform: numeric_state
-          entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
+        - entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
           below: 67
+          trigger: numeric_state
         timeout:
           hours: 1
           minutes: 0
@@ -3989,8 +4127,8 @@
         entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
         above: 66
     then:
-    - service: rest_command.zehnder_comfoair_high
-      data: {}
+    - data: {}
+      action: rest_command.zehnder_comfoair_high
   - choose:
     - conditions:
       - condition: numeric_state
@@ -3998,9 +4136,9 @@
         above: 66
       sequence:
       - wait_for_trigger:
-        - platform: numeric_state
-          entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
+        - entity_id: sensor.homematic_thermostat_bad_feuchtigkeit
           below: 66
+          trigger: numeric_state
         timeout:
           hours: 1
           minutes: 0
@@ -4012,9 +4150,9 @@
         above: 66
       sequence:
       - wait_for_trigger:
-        - platform: numeric_state
-          entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
+        - entity_id: sensor.homematic_thermostat_dusche_feuchtigkeit
           below: 66
+          trigger: numeric_state
         timeout:
           hours: 1
           minutes: 0
@@ -4025,28 +4163,27 @@
       entity_id: input_select.status_luftung
       state: Feuchtigkeit
     then:
-    - service: rest_command.zehnder_comfoair_low
-      data: {}
-    - service: input_select.select_option
-      data:
+    - data: {}
+      action: rest_command.zehnder_comfoair_low
+    - data:
         option: Normal
       target:
         entity_id: input_select.status_luftung
       alias: Select Status Normal
-    - service: notify.mobile_app_stephs_iphone
-      data:
+      action: input_select.select_option
+    - data:
         message: Feuchtigkeit OFF ({{ states('input_select.status_luftung') }})
+      action: notify.mobile_app_stephs_iphone
     else:
-    - service: notify.mobile_app_stephs_iphone
-      data:
+    - data:
         message: Feuchtigkeit OFF ({{ states('input_select.status_luftung') }})
+      action: notify.mobile_app_stephs_iphone
   mode: restart
 - id: '1684561061880'
   alias: Wohnen Zehnder ComfoAir Lüftung bei Abwesenheit
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - group.awesome_people
     from: home
     to: not_home
@@ -4054,7 +4191,8 @@
       hours: 0
       minutes: 5
       seconds: 0
-  condition:
+    trigger: state
+  conditions:
   - condition: or
     conditions:
     - condition: state
@@ -4063,33 +4201,32 @@
     - condition: state
       entity_id: input_select.status_luftung
       state: Normal-Kühlen
-  action:
-  - service: notify.mobile_app_stephs_iphone
-    data:
+  actions:
+  - data:
       message: Abwesend ON ({{ states('input_select.status_luftung') }})
+    action: notify.mobile_app_stephs_iphone
   - if:
     - condition: state
       entity_id: input_select.status_luftung
       state: Normal
     then:
-    - service: input_select.select_option
-      data:
+    - data:
         option: Abwesend
       target:
         entity_id: input_select.status_luftung
       alias: Select Status Abwesend
-    - service: rest_command.zehnder_comfoair_away
-      data: {}
+      action: input_select.select_option
+    - data: {}
+      action: rest_command.zehnder_comfoair_away
     else:
-    - service: input_select.select_option
-      data:
+    - data:
         option: Abwesend-Kühlen
       target:
         entity_id: input_select.status_luftung
       alias: Select Status Abwesend-Kühlen
+      action: input_select.select_option
   - wait_for_trigger:
-    - platform: state
-      entity_id:
+    - entity_id:
       - group.awesome_people
       from: not_home
       to: home
@@ -4097,50 +4234,37 @@
         hours: 0
         minutes: 5
         seconds: 0
+      trigger: state
   - if:
     - condition: state
       entity_id: input_select.status_luftung
       state: Abwesend
     then:
-    - service: rest_command.zehnder_comfoair_low
-      data: {}
-    - service: input_select.select_option
-      data:
+    - data: {}
+      action: rest_command.zehnder_comfoair_low
+    - data:
         option: Normal
       target:
         entity_id: input_select.status_luftung
       alias: Select Status Normal
+      action: input_select.select_option
     else:
-    - service: input_select.select_option
-      data:
+    - data:
         option: Normal-Kühlen
       target:
         entity_id: input_select.status_luftung
       alias: Select Status Normal-Kühlen
-  - service: notify.mobile_app_stephs_iphone
-    data:
+      action: input_select.select_option
+  - data:
       message: Abwesend OFF ({{ states('input_select.status_luftung') }})
+    action: notify.mobile_app_stephs_iphone
   mode: restart
-- id: '1685383610003'
-  alias: iOS Action - Power TV
-  description: ''
-  trigger:
-  - event_data:
-      actionID: B1B6ECEF-B46F-4EA7-8E59-6C642EEF9F69
-    event_type: ios.action_fired
-    platform: event
-  condition: []
-  action:
-  - service: switch.toggle
-    data: {}
-    target:
-      entity_id: switch.hifi_center
-  mode: single
 - id: '1686978355361'
   alias: Wohnen Zehnder ComfoAir Lüftung Kühlung bei Zuluft tiefer Abluft
   description: ''
-  trigger:
-  - platform: template
+  triggers:
+  - alias: Temperatur Zuluft ist tiefer als Abluft für 5 Minuten und Abluft höher
+      als Comfort
     value_template: "{{ true if ( ( states('sensor.comfoair_temperatur_luftung_zuluft')|int
       < \n              (states('sensor.comfoair_temperatur_luftung_abluft')|int -
       1) ) \n        and  ( states('sensor.comfoair_temperatur_luftung_abluft')|int
@@ -4150,10 +4274,8 @@
       hours: 0
       minutes: 5
       seconds: 0
-    alias: Temperatur Zuluft ist tiefer als Abluft für 5 Minuten und Abluft höher
-      als Comfort
-  - platform: template
-    value_template: "{{ true if ( ( states('sensor.comfoair_temperatur_luftung_zuluft')|int
+    trigger: template
+  - value_template: "{{ true if ( ( states('sensor.comfoair_temperatur_luftung_zuluft')|int
       >= \n              (states('sensor.comfoair_temperatur_luftung_abluft')|int)
       )\n        and  ( states('sensor.comfoair_temperatur_luftung_abluft')|int >
       \n              (states('sensor.comfoair_temperatur_luftung_comfort')|int) )
@@ -4164,7 +4286,8 @@
       seconds: 0
     alias: Temperatur Zuluft ist höher-gleich als Abluft für 5 Minuten und Abluft
       höher als Comfort
-  condition:
+    trigger: template
+  conditions:
   - condition: or
     conditions:
     - condition: state
@@ -4179,7 +4302,7 @@
     - condition: state
       entity_id: input_select.status_luftung
       state: Abwesend-Kühlen
-  action:
+  actions:
   - if:
     - condition: template
       value_template: "{{ true if ( ( states('sensor.comfoair_temperatur_luftung_zuluft')|int
@@ -4195,32 +4318,32 @@
           entity_id: input_select.status_luftung
           state: Normal
         sequence:
-        - service: input_select.select_option
-          data:
+        - data:
             option: Normal-Kühlen
           target:
             entity_id: input_select.status_luftung
-        - service: rest_command.zehnder_comfoair_middle
-          data: {}
-        - service: notify.mobile_app_stephs_iphone
-          data:
+          action: input_select.select_option
+        - data: {}
+          action: rest_command.zehnder_comfoair_middle
+        - data:
             message: Normal kühlen ON ({{ states('input_select.status_luftung') }})
+          action: notify.mobile_app_stephs_iphone
       - conditions:
         - condition: state
           entity_id: input_select.status_luftung
           state: Abwesend
         sequence:
-        - service: input_select.select_option
-          data:
+        - data:
             option: Abwesend-Kühlen
           target:
             entity_id: input_select.status_luftung
-        - service: rest_command.zehnder_comfoair_middle
-          data: {}
-        - service: notify.mobile_app_stephs_iphone
-          data:
+          action: input_select.select_option
+        - data: {}
+          action: rest_command.zehnder_comfoair_middle
+        - data:
             message: Abwesend kühlen ON ({{ states('input_select.status_luftung')
               }})
+          action: notify.mobile_app_stephs_iphone
     else:
     - choose:
       - conditions:
@@ -4228,52 +4351,53 @@
           entity_id: input_select.status_luftung
           state: Normal-Kühlen
         sequence:
-        - service: input_select.select_option
-          data:
+        - data:
             option: Normal
           target:
             entity_id: input_select.status_luftung
-        - service: rest_command.zehnder_comfoair_low
-          data: {}
-        - service: notify.mobile_app_stephs_iphone
-          data:
+          action: input_select.select_option
+        - data: {}
+          action: rest_command.zehnder_comfoair_low
+        - data:
             message: Normal kühlen OFF ({{ states('input_select.status_luftung') }})
+          action: notify.mobile_app_stephs_iphone
       - conditions:
         - condition: state
           entity_id: input_select.status_luftung
           state: Abwesend-Kühlen
         sequence:
-        - service: input_select.select_option
-          data:
+        - data:
             option: Abwesend
           target:
             entity_id: input_select.status_luftung
-        - service: rest_command.zehnder_comfoair_away
-          data: {}
-        - service: notify.mobile_app_stephs_iphone
-          data:
+          action: input_select.select_option
+        - data: {}
+          action: rest_command.zehnder_comfoair_away
+        - data:
             message: Abwesend kühlen OFF ({{ states('input_select.status_luftung')
               }})
+          action: notify.mobile_app_stephs_iphone
   mode: restart
 - id: '1695718783663'
   alias: Wohnung Kühlen ON-OFF anhand mittlerer Aussentemperatur
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.sql_homematic_outside_24h_average_temperature
+  triggers:
+  - entity_id:
+    - sensor.sql_homematic_outside_24h_average_temperature
     for:
       hours: 12
       minutes: 0
       seconds: 0
     above: 20
-  - platform: numeric_state
-    entity_id: sensor.sql_homematic_outside_24h_average_temperature
+    trigger: numeric_state
+  - entity_id: sensor.sql_homematic_outside_24h_average_temperature
     for:
       hours: 12
       minutes: 0
       seconds: 0
     below: 20
-  condition:
+    trigger: numeric_state
+  conditions:
   - condition: state
     entity_id: climate.thermostat_bad
     state: cool
@@ -4292,14 +4416,13 @@
   - condition: state
     entity_id: climate.thermostat_wohnzimmer
     state: cool
-  action:
+  actions:
   - if:
     - condition: numeric_state
       entity_id: sensor.sql_homematic_outside_24h_average_temperature
       above: 20
     then:
-    - service: climate.set_temperature
-      data:
+    - data:
         temperature: 20
       target:
         entity_id:
@@ -4309,9 +4432,9 @@
         - climate.thermostat_schlafzimmer
         - climate.thermostat_stephan
         - climate.thermostat_wohnzimmer
+      action: climate.set_temperature
     else:
-    - service: climate.set_temperature
-      data:
+    - data:
         temperature: 28
       target:
         entity_id:
@@ -4321,4 +4444,366 @@
         - climate.thermostat_schlafzimmer
         - climate.thermostat_stephan
         - climate.thermostat_wohnzimmer
+      action: climate.set_temperature
+  mode: single
+- id: '1719850220899'
+  alias: Umschalter Kühlen und Entfeuchten (Zehnder ComfoAir Lüftung)
+  description: "Diese Automatisation schaltet die Lüftung auf High, wenn \n* Temperatur
+    Zuluft tiefer ist als Temperatur Abluft\n* Bypass ON (d.h. es ist wärmer als Comfort)\n*
+    Feuchte draussen tiefer als Feuchte drinnen\nIm Else-Fall wird die Lüftung auf
+    Low geschaltet."
+  triggers:
+  - entity_id:
+    - binary_sensor.comfoair_bypass
+    to:
+    - 'off'
+    - 'on'
+    trigger: state
+    from:
+    - 'on'
+    - 'off'
+  - entity_id:
+    - sensor.comfoair_temperatur_luftung_zuluft
+    to:
+    trigger: state
+  - entity_id:
+    - sensor.comfoair_temperatur_luftung_abluft
+    to:
+    trigger: state
+  - entity_id:
+    - sensor.homematic_thermostat_wohnzimmer_feuchtigkeit
+    to:
+    trigger: state
+  conditions:
+  - alias: Check, ob alle verwendeten Attribute gültige Werte ausgeben, sonst macht
+      Steuerung keinen sinn
+    condition: template
+    value_template: "{{ true if\n      (\n            states('sensor.comfoair_temperatur_luftung_zuluft')|is_number\n
+      \       and states('sensor.comfoair_temperatur_luftung_abluft')|is_number\n
+      \       and is_state('binary_sensor.comfoair_bypass', ['on', 'off']) \n        and
+      states('sensor.homematic_wetterstation_absolute_feuchte')|is_number\n        and
+      states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|is_number\n      )\n
+      \  else false\n}}"
+  - condition: numeric_state
+    entity_id: automation.umschalter_kuhlen_und_entfeuchten_zehnder_comfoair_luftung
+    attribute: current
+    below: 1
+    alias: Wenn bereits eine parallele zweite Automation läuft, dann stoppen wir hier
+  actions:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - alias: Temperatur Zuluft <= Temperatur Abluft
+          condition: template
+          value_template: "{{ true if\n     (   \n         states('sensor.comfoair_temperatur_luftung_zuluft')|float
+            \n      <= states('sensor.comfoair_temperatur_luftung_abluft')|float\n
+            \    )\n    else false\n}}"
+        - condition: template
+          value_template: "{{ true if\n     (   \n         is_state('binary_sensor.comfoair_bypass',
+            ['on']) \n     )\n    else false\n}}"
+          alias: Bypass ist eingeschaltet
+        - alias: Absolute Feuchte draussen ist tiefer als Absolute Feuche Wohnzimmer
+          condition: template
+          value_template: "{{ true if\n     (\n         states('sensor.homematic_wetterstation_absolute_feuchte')|float
+            \n      <= states('sensor.homematic_thermostat_wohnzimmer_absolute_feuchte')|float\n
+            \    )  \n    else false\n}}"
+        - alias: Relative Feuchte Wohnzimmer >= 65%
+          condition: template
+          value_template: "{{ true if\n     (\n         states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float
+            \n      > 65\n     )  \n    else false\n}}"
+      sequence:
+      - data: {}
+        action: rest_command.zehnder_comfoair_high
+      - alias: Status Lüftung - Feuchtigkeit
+        metadata: {}
+        data:
+          option: Option1
+        target:
+          entity_id: input_select.status_luftung
+        action: input_select.select_option
+      alias: Teste Bedingungen für Bypass - HIGH
+    - conditions:
+      - condition: and
+        conditions:
+        - alias: Temperatur Zuluft <= Temperatur Abluft
+          condition: template
+          value_template: "{{ true if\n     (   \n         states('sensor.comfoair_temperatur_luftung_zuluft')|float
+            \n      <= states('sensor.comfoair_temperatur_luftung_abluft')|float\n
+            \    )\n    else false\n}}"
+        - condition: template
+          value_template: "{{ true if\n     (   \n         is_state('binary_sensor.comfoair_bypass',
+            ['on']) \n     )\n    else false\n}}"
+          alias: Bypass ist eingeschaltet
+        - alias: Absolute Feuchte draussen ist tiefer als Absolute Feuche Wohnzimmer
+          condition: template
+          value_template: "{{ true if\n     (\n         states('sensor.homematic_wetterstation_absolute_feuchte')|float
+            \n      <= states('sensor.homematic_thermostat_wohnzimmer_absolute_feuchte')|float\n
+            \    )  \n    else false\n}}"
+        - alias: Relative Feuchte Wohnzimmer < 65%
+          condition: template
+          value_template: "{{ true if\n     (\n         states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float
+            \n      <= 65\n     )  \n    else false\n}}"
+      sequence:
+      - data: {}
+        action: rest_command.zehnder_comfoair_middle
+      - alias: Status Lüftung - Normal-Kühlen
+        metadata: {}
+        data:
+          option: Option2
+        target:
+          entity_id: input_select.status_luftung
+        action: input_select.select_option
+      alias: Teste Bedingungen für Bypass - MIDDLE
+    - conditions:
+      - condition: and
+        conditions:
+        - alias: Temperatur Aussenluft <= Temperatur Abluft
+          condition: template
+          value_template: "{{ true if\n     (   \n         states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature')|float
+            \n      <= states('sensor.comfoair_temperatur_luftung_abluft')|float\n
+            \    )\n    else false\n}}"
+        - alias: Temperatur Abluft >= Temperatur Comfort
+          condition: template
+          value_template: "{{ true if\n     (   \n         states('sensor.comfoair_temperatur_luftung_abluft')|float
+            \n      >= states('sensor.comfoair_temperatur_luftung_comfort')|float\n
+            \    )\n    else false\n}}"
+        - alias: Absolute Feuchte draussen ist tiefer als Absolute Feuche Wohnzimmer
+          condition: template
+          value_template: "{{ true if\n     (\n         states('sensor.homematic_wetterstation_absolute_feuchte')|float
+            \n      <= states('sensor.homematic_thermostat_wohnzimmer_absolute_feuchte')|float\n
+            \    )  \n    else false\n}}"
+      sequence:
+      - data: {}
+        action: rest_command.zehnder_comfoair_middle
+      - alias: Status Lüftung - Normal-Kühlen
+        metadata: {}
+        data:
+          option: Option3
+        target:
+          entity_id: input_select.status_luftung
+        action: input_select.select_option
+      alias: Teste Bedingungen ohne Bypass - MIDDLE
+    default:
+    - metadata: {}
+      data: {}
+      action: rest_command.zehnder_comfoair_low
+    - alias: Status Lüftung - Normal
+      metadata: {}
+      data:
+        option: Else
+      target:
+        entity_id: input_select.status_luftung
+      action: input_select.select_option
+  mode: parallel
+  max: 10
+- id: '1731104547206'
+  alias: Sauna Zirkulation einschalten
+  description: ''
+  triggers:
+  - type: power
+    device_id: ab81fa5afa601eb65fa42035508ec5e7
+    entity_id: d2468e943da9d586f27715c5bceda0b6
+    domain: sensor
+    trigger: device
+    above: 15
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  - type: power
+    device_id: 40bf42a3d4e5ab5f37e31b4b6a51bb13
+    entity_id: 79a934504a94434d5425a99db58b3d9e
+    domain: sensor
+    trigger: device
+    above: 15
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  - trigger: time
+    at: '23:00:00'
+  conditions:
+  - condition: device
+    type: is_off
+    device_id: 60956c87a02ec7bf35037a0e19372079
+    entity_id: c5266aad9c576ad14e41d1c36b4dab8d
+    domain: switch
+  - condition: device
+    type: is_off
+    device_id: 54d0c322d8c1bea015c6c22105f4f990
+    entity_id: 12932306751840ef6b13f690a2db4cb4
+    domain: switch
+  actions:
+  - type: turn_on
+    device_id: 60956c87a02ec7bf35037a0e19372079
+    entity_id: c5266aad9c576ad14e41d1c36b4dab8d
+    domain: switch
+  - type: turn_on
+    device_id: 54d0c322d8c1bea015c6c22105f4f990
+    entity_id: 12932306751840ef6b13f690a2db4cb4
+    domain: switch
+  mode: single
+- id: '1731104751319'
+  alias: Sauna Zirkulation ausschalten
+  description: ''
+  triggers:
+  - type: power
+    device_id: ab81fa5afa601eb65fa42035508ec5e7
+    entity_id: d2468e943da9d586f27715c5bceda0b6
+    domain: sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+    below: 15
+  - type: power
+    device_id: 40bf42a3d4e5ab5f37e31b4b6a51bb13
+    entity_id: 79a934504a94434d5425a99db58b3d9e
+    domain: sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+    below: 15
+  - trigger: time
+    at: 06:00:00
+  conditions:
+  - condition: and
+    conditions:
+    - type: is_power
+      condition: device
+      device_id: ab81fa5afa601eb65fa42035508ec5e7
+      entity_id: d2468e943da9d586f27715c5bceda0b6
+      domain: sensor
+      below: 10
+    - type: is_power
+      condition: device
+      device_id: 40bf42a3d4e5ab5f37e31b4b6a51bb13
+      entity_id: 79a934504a94434d5425a99db58b3d9e
+      domain: sensor
+      below: 10
+    - condition: device
+      type: is_on
+      device_id: 60956c87a02ec7bf35037a0e19372079
+      entity_id: c5266aad9c576ad14e41d1c36b4dab8d
+      domain: switch
+    - condition: device
+      type: is_on
+      device_id: 54d0c322d8c1bea015c6c22105f4f990
+      entity_id: 12932306751840ef6b13f690a2db4cb4
+      domain: switch
+    - condition: time
+      before: '23:00:00'
+    - condition: time
+      after: 06:00:00
+  actions:
+  - type: turn_off
+    device_id: 60956c87a02ec7bf35037a0e19372079
+    entity_id: c5266aad9c576ad14e41d1c36b4dab8d
+    domain: switch
+  - type: turn_off
+    device_id: 54d0c322d8c1bea015c6c22105f4f990
+    entity_id: 12932306751840ef6b13f690a2db4cb4
+    domain: switch
+  mode: single
+- id: '1731105152096'
+  alias: Sauna Entfeuchtung ausschalten
+  description: ''
+  triggers:
+  - type: power
+    device_id: 38275881fa06b91167c5e0fe89b85fbe
+    entity_id: b095c847dac6d6147394d45d298c6768
+    domain: sensor
+    trigger: device
+    above: 5000
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: 60956c87a02ec7bf35037a0e19372079
+    entity_id: c5266aad9c576ad14e41d1c36b4dab8d
+    domain: switch
+  - type: turn_off
+    device_id: 54d0c322d8c1bea015c6c22105f4f990
+    entity_id: 12932306751840ef6b13f690a2db4cb4
+    domain: switch
+  - type: turn_off
+    device_id: ab81fa5afa601eb65fa42035508ec5e7
+    entity_id: 8b8c7c2878c52cc91a72d00c794c4943
+    domain: switch
+  - type: turn_off
+    device_id: 40bf42a3d4e5ab5f37e31b4b6a51bb13
+    entity_id: d12b5f3ba439dabf1ca64b5477e8741c
+    domain: switch
+  mode: single
+- id: '1731105233814'
+  alias: Sauna Entfeuchtung einschalten
+  description: ''
+  triggers:
+  - type: power
+    device_id: 38275881fa06b91167c5e0fe89b85fbe
+    entity_id: b095c847dac6d6147394d45d298c6768
+    domain: sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+    below: 1000
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: 60956c87a02ec7bf35037a0e19372079
+    entity_id: c5266aad9c576ad14e41d1c36b4dab8d
+    domain: switch
+  - type: turn_on
+    device_id: 54d0c322d8c1bea015c6c22105f4f990
+    entity_id: 12932306751840ef6b13f690a2db4cb4
+    domain: switch
+  - type: turn_on
+    device_id: ab81fa5afa601eb65fa42035508ec5e7
+    entity_id: 8b8c7c2878c52cc91a72d00c794c4943
+    domain: switch
+  - type: turn_on
+    device_id: 40bf42a3d4e5ab5f37e31b4b6a51bb13
+    entity_id: d12b5f3ba439dabf1ca64b5477e8741c
+    domain: switch
+  mode: single
+- id: '1750492439008'
+  alias: Küche Licht OFF (keine Motion)
+  description: ''
+  triggers:
+  - type: no_motion
+    device_id: 3a03af9e7fecbb801a9ba71847fe23ec
+    entity_id: e3c6bfa7054c3e61050880cf1f22b66b
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  conditions: []
+  actions:
+  - data: {}
+    target:
+      entity_id:
+      - light.gruppe_licht_dingz_kuche
+    action: light.turn_off
+  mode: single
+- id: '1750495511888'
+  alias: System Startup Automation (Install apk)
+  description: ''
+  triggers:
+  - event: start
+    trigger: homeassistant
+  conditions: []
+  actions:
+  - data: {}
+    action: shell_command.setup_apk
   mode: single

@@ -29,6 +29,7 @@ shell_command:
   shutdown_legolas: !secret qnap_legolas_poweroff
   trigger_plexon: !secret ha_zardoz_plexon
   trigger_plexoff: !secret ha_zardoz_plexoff
+  setup_apk: !secret shell_setup_apk
 
 # Logger Config for Log Viewer Add-On
 #logger:
@@ -83,11 +84,11 @@ media_player:
 ##      3: 'Swisscom TV'
 ##      4: 'Epson HDMI'
       5: 'BluOS'
-  - platform: bluesound
-    hosts:
-      - host: !secret ip_nad
-        name: NAD Bluesound
-        port: !secret port_nad
+##  - platform: bluesound
+##    hosts:
+##      - host: !secret ip_nad
+##        name: NAD Bluesound
+##        port: !secret port_nad
 
 # HomeMatic IP CCU3
 #homematic:
@@ -115,43 +116,43 @@ influxdb:
       - climate
       - person
     entity_globs:
-      - sensor.qubino_3_phase_smart_meter_electric_consumption_w*
+      - sensor.qubino_smart_meter_electric_consumption_w*
 
-mqtt:
-  sensor:
-    - name: Shelly Wasserverteiler Devicepower
-      state_topic: "felismqtt/shellyplusht/wasserverteiler/status/devicepower:0"
-      unit_of_measurement: "%"
-      value_template: "{{ value_json.battery.percent }}"
-      device_class: battery
-      unique_id: mqtt_shelly_wasserverteiler_devicepower
-    - name: Shelly Wasserverteiler Feuchtigkeit
-      state_topic: "felismqtt/shellyplusht/wasserverteiler/status/humidity:0"
-      unit_of_measurement: "%"
-      value_template: "{{ value_json.rh }}"
-      device_class: humidity
-      unique_id: mqtt_shelly_wasserverteiler_feuchtigkeit
-    - name: Shelly Wasserverteiler Temperatur
-      state_topic: "felismqtt/shellyplusht/wasserverteiler/status/temperature:0"
-      unit_of_measurement: "°C"
-      value_template: "{{ value_json.tC }}"
-      device_class: temperature
-      unique_id: mqtt_shelly_wasserverteiler_temperatur
-    - name: Shelly Heizverteiler Devicepower
-      state_topic: "felismqtt/shellyplusht/heizverteiler/status/devicepower:0"
-      unit_of_measurement: "%"
-      value_template: "{{ value_json.battery.percent }}"
-      device_class: battery
-      unique_id: mqtt_shelly_heizverteiler_devicepower
-    - name: Shelly Heizverteiler Feuchtigkeit
-      state_topic: "felismqtt/shellyplusht/heizverteiler/status/humidity:0"
-      unit_of_measurement: "%"
-      value_template: "{{ value_json.rh }}"
-      device_class: humidity
-      unique_id: mqtt_shelly_heizverteiler_feuchtigkeit
-    - name: Shelly Heizverteiler Temperatur
-      state_topic: "felismqtt/shellyplusht/heizverteiler/status/temperature:0"
-      unit_of_measurement: "°C"
-      value_template: "{{ value_json.tC }}"
-      device_class: temperature
-      unique_id: mqtt_shelly_heizverteiler_temperatur
+# mqtt:
+#   sensor:
+#     - name: Shelly Wasserverteiler Devicepower
+#       state_topic: "felismqtt/shellyplusht/wasserverteiler/status/devicepower:0"
+#       unit_of_measurement: "%"
+#       value_template: "{{ value_json.battery.percent }}"
+#       device_class: battery
+#       unique_id: mqtt_shelly_wasserverteiler_devicepower
+#     - name: Shelly Wasserverteiler Feuchtigkeit
+#       state_topic: "felismqtt/shellyplusht/wasserverteiler/status/humidity:0"
+#       unit_of_measurement: "%"
+#       value_template: "{{ value_json.rh }}"
+#       device_class: humidity
+#       unique_id: mqtt_shelly_wasserverteiler_feuchtigkeit
+#     - name: Shelly Wasserverteiler Temperatur
+#       state_topic: "felismqtt/shellyplusht/wasserverteiler/status/temperature:0"
+#       unit_of_measurement: "°C"
+#       value_template: "{{ value_json.tC }}"
+#       device_class: temperature
+#       unique_id: mqtt_shelly_wasserverteiler_temperatur
+#     - name: Shelly Heizverteiler Devicepower
+#       state_topic: "felismqtt/shellyplusht/heizverteiler/status/devicepower:0"
+#       unit_of_measurement: "%"
+#       value_template: "{{ value_json.battery.percent }}"
+#       device_class: battery
+#       unique_id: mqtt_shelly_heizverteiler_devicepower
+#     - name: Shelly Heizverteiler Feuchtigkeit
+#       state_topic: "felismqtt/shellyplusht/heizverteiler/status/humidity:0"
+#       unit_of_measurement: "%"
+#       value_template: "{{ value_json.rh }}"
+#       device_class: humidity
+#       unique_id: mqtt_shelly_heizverteiler_feuchtigkeit
+#     - name: Shelly Heizverteiler Temperatur
+#       state_topic: "felismqtt/shellyplusht/heizverteiler/status/temperature:0"
+#       unit_of_measurement: "°C"
+#       value_template: "{{ value_json.tC }}"
+#       device_class: temperature
+#       unique_id: mqtt_shelly_heizverteiler_temperatur

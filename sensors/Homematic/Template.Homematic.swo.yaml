@@ -8,7 +8,7 @@ sensors:
 # Homematic Wetterstation Temperatur
   homematic_wetterstation_actual_temperature:
     friendly_name: "Homematic Wetterstation Temperatur"
-    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature')|is_number -%}
+    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature') != 'unavailable' and states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature') != 'unknown' -%}
   {{ states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature') }}
 {%- else -%}
   {{ states('sensor.homematic_wetterstation_actual_temperature') }}
@@ -22,7 +22,7 @@ sensors:
 # Homematic Wetterstation Luftfeuchtigkeit
   homematic_wetterstation_humidity:
     friendly_name: "Homematic Wetterstation Luftfeuchtigkeit"
-    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_humidity')|is_number -%}
+    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_humidity') != 'unavailable' and states('sensor.hmip_swo_pr_00185d89a9f0bf_humidity') != 'unknown' -%}
   {{ states('sensor.hmip_swo_pr_00185d89a9f0bf_humidity') }}
 {%- else -%}
   {{ states('sensor.homematic_wetterstation_humidity') }}
@@ -36,7 +36,7 @@ sensors:
 # Homematic Wetterstation Helligkeit
   homematic_wetterstation_illumination:
     friendly_name: "Homematic Wetterstation Helligkeit"
-    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_illumination')|is_number -%}
+    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_illumination') != 'unavailable' and states('sensor.hmip_swo_pr_00185d89a9f0bf_illumination') != 'unknown' -%}
   {{ states('sensor.hmip_swo_pr_00185d89a9f0bf_illumination') }}
 {%- else -%}
   {{ states('sensor.homematic_wetterstation_illumination') }}
@@ -50,7 +50,7 @@ sensors:
 # Homematic Wetterstation Windgeschwindigkei
   homematic_wetterstation_wind_speed:
     friendly_name: "Homematic Wetterstation Windgeschwindigkei"
-    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_wind_speed')|is_number -%}
+    value_template: "{% if states('sensor.hmip_swo_pr_00185d89a9f0bf_wind_speed') != 'unavailable' and states('sensor.hmip_swo_pr_00185d89a9f0bf_wind_speed') != 'unknown' -%}
   {{ states('sensor.hmip_swo_pr_00185d89a9f0bf_wind_speed') }}
 {%- else -%}
   {{ states('sensor.homematic_wetterstation_wind_speed') }}

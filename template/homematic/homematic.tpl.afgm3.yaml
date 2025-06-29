@@ -60,17 +60,17 @@
       state: "{{(10**5 * 
                         18.016 / 
                         8314.3 * 
-                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        states('sensor.homematic_thermostat_stephan_feuchtigkeit')|float / 
                         100 * 
                         6.1078 * 
                         10** (
                               (7.5 * 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                states('sensor.homematic_thermostat_stephan_temperatur')|float) / 
                                 (237.3 + 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                states('sensor.homematic_thermostat_stephan_temperatur')|float
                                 )
                               ) / 
-                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              (states('sensor.homematic_thermostat_stephan_temperatur')|float + 
                               273.15
                               ) 
                       )|round(1)}}"
@@ -86,17 +86,17 @@
       state: "{{(10**5 * 
                         18.016 / 
                         8314.3 * 
-                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        states('sensor.homematic_thermostat_pia_feuchtigkeit')|float / 
                         100 * 
                         6.1078 * 
                         10** (
                               (7.5 * 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                states('sensor.homematic_thermostat_pia_temperatur')|float) / 
                                 (237.3 + 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                states('sensor.homematic_thermostat_pia_temperatur')|float
                                 )
                               ) / 
-                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              (states('sensor.homematic_thermostat_pia_temperatur')|float + 
                               273.15
                               ) 
                       )|round(1)}}"
@@ -112,17 +112,17 @@
       state: "{{(10**5 * 
                         18.016 / 
                         8314.3 * 
-                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        states('sensor.homematic_thermostat_bad_feuchtigkeit')|float / 
                         100 * 
                         6.1078 * 
                         10** (
                               (7.5 * 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                states('sensor.homematic_thermostat_bad_temperatur')|float) / 
                                 (237.3 + 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                states('sensor.homematic_thermostat_bad_temperatur')|float
                                 )
                               ) / 
-                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              (states('sensor.homematic_thermostat_bad_temperatur')|float + 
                               273.15
                               ) 
                       )|round(1)}}"
@@ -138,17 +138,17 @@
       state: "{{(10**5 * 
                         18.016 / 
                         8314.3 * 
-                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        states('sensor.homematic_thermostat_schlafzimmer_feuchtigkeit')|float / 
                         100 * 
                         6.1078 * 
                         10** (
                               (7.5 * 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                states('sensor.homematic_thermostat_schlafzimmer_temperatur')|float) / 
                                 (237.3 + 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                states('sensor.homematic_thermostat_schlafzimmer_temperatur')|float
                                 )
                               ) / 
-                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              (states('sensor.homematic_thermostat_schlafzimmer_temperatur')|float + 
                               273.15
                               ) 
                       )|round(1)}}"
@@ -164,17 +164,17 @@
       state: "{{(10**5 * 
                         18.016 / 
                         8314.3 * 
-                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
+                        states('sensor.homematic_thermostat_dusche_feuchtigkeit')|float / 
                         100 * 
                         6.1078 * 
                         10** (
                               (7.5 * 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
+                                states('sensor.homematic_thermostat_dusche_temperatur')|float) / 
                                 (237.3 + 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
+                                states('sensor.homematic_thermostat_dusche_temperatur')|float
                                 )
                               ) / 
-                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
+                              (states('sensor.homematic_thermostat_dusche_temperatur')|float + 
                               273.15
                               ) 
                       )|round(1)}}"

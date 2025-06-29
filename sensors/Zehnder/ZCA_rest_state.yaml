@@ -4,7 +4,7 @@ resource: !secret url_sensor_zehnder_comfoair_state
 # http://ip:1880/state
 name: Zehnder ComfoAir State
 value_template: "OK"
-scan_interval: 30
+scan_interval: 60
 force_update: true
 json_attributes:
   - "getTemperatureStates"

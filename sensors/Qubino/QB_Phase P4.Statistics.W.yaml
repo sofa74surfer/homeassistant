@@ -1,6 +1,7 @@
 platform: statistics
 unique_id: energy_statistic_qb_phase_w4
-entity_id: sensor.qubino_smart_meter_electric_consumption_w_4
+#entity_id: sensor.qubino_smart_meter_electric_consumption_w_4
+entity_id: sensor.shellypro3em63_8c4f00dca454_phase_c_active_power
 name: "Energy Statistic QB Phase w4"
 state_characteristic: average_linear
 sampling_size: 20

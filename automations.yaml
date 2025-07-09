@@ -105,6 +105,14 @@
       minutes: 0
       seconds: 5
     trigger: state
+  - trigger: numeric_state
+    entity_id:
+    - sensor.energy_statistic_qb_phase_w4
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+    above: 800
   conditions:
   - condition: state
     entity_id: group.awesome_people
@@ -115,6 +123,13 @@
   - condition: state
     entity_id: binary_sensor.schwellwertsensor_illumination_dark_low
     state: 'on'
+  - condition: state
+    entity_id: input_boolean.umschalter_motion
+    state: 'on'
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
   actions:
   - target:
       entity_id: scene.hue_wohnzimmer_on_ambient
@@ -1085,6 +1100,10 @@
     - 'on'
     to:
     - 'off'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
     trigger: state
   - entity_id:
     - binary_sensor.schwellwertsensor_watt_hifi

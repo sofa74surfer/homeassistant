@@ -16,14 +16,11 @@ Integrationen
 * Sure Petcare 
 * iRobot 
 * Netatmo
-* Hue 
+* Hue Leuchten und Bewegungsmelder
 * Ubiquity Unifi 
 * Homematic (HACS, RasperryMatic; HW: HMIP-RFUSB-TK/eQ-3)
     * Thermostate
     * Wetterstation
-* Zwave (HW: Aeotec - Z-Wave+ 700 USB Z-Stick 7)
-    * Qubino Electric Smart Meter
-    * Aeotec Multisensor
 * Qnap
 * Notify
 * Wake on Lan
@@ -37,6 +34,7 @@ Eine kleine Auswahl ...
     * Licht automatisch ein und aus
 * Strom
     * Strom sparen bei Abweseneheit oder während Schlafenszeit
+    * Stromlos schalten Verstärker wegen hohem Standby von > 40W
 * Markisen
     * Markisen in der Nacht automatisch runter, wenn wir zu Bett gehen
     * Markisen automatisch hoch, bei zu viel Wind

@@ -1,5 +1,6 @@
 platform: integration
-source: sensor.qubino_smart_meter_electric_consumption_w_2
+#source: sensor.qubino_smart_meter_electric_consumption_w_2
+source: sensor.shellypro3em63_8c4f00dca454_phase_a_active_power
 name: "Energy Consumption QB Phase w2"
 unit_prefix: k
 round: 3

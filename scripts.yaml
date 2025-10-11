@@ -269,6 +269,11 @@ tv_off:
     entity_id: script.tv_off
     attribute: current
     below: 2
+  - alias: Wenn bereits eine parallele zweites Script läuft, dann stoppen wir hier
+    condition: numeric_state
+    entity_id: script.tv_on
+    attribute: current
+    below: 1
   - action: rest_command.sofabaton_tv_off
     data: {}
   - delay:

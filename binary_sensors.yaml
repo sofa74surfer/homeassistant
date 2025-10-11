@@ -29,6 +29,6 @@
                               on
                             {%- endif %}
                           {%- else -%}
-                            {{ states('sensor.comfoair_bypass') }}
+                            {{ states('binary_sensor.comfoair_bypass') }}
                           {%- endif %}"
         unique_id: template.sensor_comfoair_bypass

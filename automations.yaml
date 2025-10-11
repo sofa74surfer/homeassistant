@@ -56,31 +56,6 @@
       action: light.turn_off
     alias: Light Schlafzimmer Off, when Awesome People not_home
   mode: single
-- id: '1605131875883'
-  alias: Schlafzimmer Szene OFF 23:30, random 1-20, not_home
-  description: ''
-  triggers:
-  - at: '23:30:00'
-    trigger: time
-  conditions:
-  - condition: state
-    entity_id: group.awesome_people
-    state: not_home
-  actions:
-  - wait_template: '{{ ''22:''''%0.2d'''':00''|format(range(0, 20)|random|int) }}'
-  - type: turn_off
-    device_id: 0dd0ce477d4f719fd4fc8341b067bc85
-    entity_id: light.schlafzimmer
-    domain: light
-  - type: turn_off
-    device_id: 44c495113e18e26db13a2f4bdc5442a4
-    entity_id: light.schlafzimmer_pia
-    domain: light
-  - type: turn_off
-    device_id: bcf481a9e79122849c323a61b91105d9
-    entity_id: light.schlafzimmer_stephan
-    domain: light
-  mode: single
 - id: '1605216723225'
   alias: Wohnen Ambient Hue Licht ON Cover OPEN - Morgen Home
   description: Schaltet das Licht ein, sobald die Kaffeemaschine läuft oder das Licht
@@ -124,12 +99,13 @@
     entity_id: binary_sensor.schwellwertsensor_illumination_dark_low
     state: 'on'
   - condition: state
-    entity_id: input_boolean.umschalter_motion
+    entity_id: binary_sensor.gruppe_motion_wohnzimmer
     state: 'on'
     for:
       hours: 0
-      minutes: 1
+      minutes: 0
       seconds: 0
+    enabled: true
   actions:
   - target:
       entity_id: scene.hue_wohnzimmer_on_ambient
@@ -154,7 +130,9 @@
       minutes: 2
       seconds: 0
     trigger: state
-  conditions: []
+  conditions:
+  - condition: time
+    before: '12:00:00'
   actions:
   - action: scene.turn_on
     target:
@@ -685,6 +663,8 @@
       minutes: 2
       seconds: 0
     trigger: state
+  - trigger: time_pattern
+    hours: '6'
   conditions: []
   actions:
   - choose:
@@ -818,6 +798,12 @@
     target:
       entity_id: input_text.text_status_bad_licht
     action: input_text.set_value
+  - data:
+      color_name: green
+      brightness_pct: 10
+    target:
+      entity_id: light.dingz_bad_led
+    action: light.turn_on
   mode: single
 - id: '1617084313798'
   alias: Wohnung Kamera ON-OFF (home, not_home, co2, sun, power)
@@ -1601,69 +1587,6 @@
   trace:
     stored_traces: 48
   mode: restart
-- id: '1668031396008'
-  alias: Schlafzimmer Dingz OFF, wenn HUE off
-  description: ''
-  triggers:
-  - type: turned_off
-    device_id: 0dd0ce477d4f719fd4fc8341b067bc85
-    entity_id: light.schlafzimmer
-    domain: light
-    for:
-      hours: 0
-      minutes: 5
-      seconds: 0
-    trigger: device
-  - type: turned_off
-    device_id: 44c495113e18e26db13a2f4bdc5442a4
-    entity_id: light.schlafzimmer_pia
-    domain: light
-    for:
-      hours: 0
-      minutes: 5
-      seconds: 0
-    trigger: device
-  - type: turned_off
-    device_id: bcf481a9e79122849c323a61b91105d9
-    entity_id: light.schlafzimmer_stephan
-    domain: light
-    for:
-      hours: 0
-      minutes: 5
-      seconds: 0
-    trigger: device
-  conditions:
-  - condition: and
-    conditions:
-    - condition: device
-      type: is_off
-      device_id: 0dd0ce477d4f719fd4fc8341b067bc85
-      entity_id: light.schlafzimmer
-      domain: light
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 0
-    - condition: device
-      type: is_off
-      device_id: 44c495113e18e26db13a2f4bdc5442a4
-      entity_id: light.schlafzimmer_pia
-      domain: light
-      for:
-        hours: 0
-        minutes: 0
-        seconds: 0
-    - condition: device
-      type: is_off
-      device_id: bcf481a9e79122849c323a61b91105d9
-      entity_id: light.schlafzimmer_stephan
-      domain: light
-  actions:
-  - data: {}
-    target:
-      entity_id: light.dingz_schlafzimmer_boden_light
-    action: light.turn_off
-  mode: single
 - id: '1668093310881'
   alias: Umschalter MSL - Set ON or OFF
   description: ''
@@ -1943,6 +1866,7 @@
       entity_id:
       - switch.unifi_dream_machine_udm_p6_outdoor_poe
     action: switch.turn_off
+    enabled: false
   - data: {}
     target:
       entity_id:
@@ -2537,7 +2461,9 @@
       minutes: 2
       seconds: 0
     trigger: state
-  conditions: []
+  conditions:
+  - condition: time
+    before: '12:00:00'
   actions:
   - data: {}
     target:
@@ -2709,12 +2635,24 @@
       target:
         entity_id: input_text.text_status_bad_licht
       action: input_text.set_value
+    - data:
+        color_name: red
+        brightness_pct: 10
+      target:
+        entity_id: light.dingz_bad_led
+      action: light.turn_on
     else:
     - data:
         value: reset
       target:
         entity_id: input_text.text_status_bad_licht
       action: input_text.set_value
+    - data:
+        color_name: green
+        brightness_pct: 10
+      target:
+        entity_id: light.dingz_bad_led
+      action: light.turn_on
   mode: restart
 - id: '1669012738190'
   alias: Wohnen Umschalter Status Licht Illumination Markise LED
@@ -4643,16 +4581,18 @@
   - trigger: time
     at: '23:00:00'
   conditions:
-  - condition: device
-    type: is_off
-    device_id: 60956c87a02ec7bf35037a0e19372079
-    entity_id: c5266aad9c576ad14e41d1c36b4dab8d
-    domain: switch
-  - condition: device
-    type: is_off
-    device_id: 54d0c322d8c1bea015c6c22105f4f990
-    entity_id: 12932306751840ef6b13f690a2db4cb4
-    domain: switch
+  - condition: or
+    conditions:
+    - condition: device
+      type: is_off
+      device_id: 60956c87a02ec7bf35037a0e19372079
+      entity_id: c5266aad9c576ad14e41d1c36b4dab8d
+      domain: switch
+    - condition: device
+      type: is_off
+      device_id: 54d0c322d8c1bea015c6c22105f4f990
+      entity_id: 12932306751840ef6b13f690a2db4cb4
+      domain: switch
   actions:
   - type: turn_on
     device_id: 60956c87a02ec7bf35037a0e19372079
@@ -4704,16 +4644,18 @@
       entity_id: 79a934504a94434d5425a99db58b3d9e
       domain: sensor
       below: 10
-    - condition: device
-      type: is_on
-      device_id: 60956c87a02ec7bf35037a0e19372079
-      entity_id: c5266aad9c576ad14e41d1c36b4dab8d
-      domain: switch
-    - condition: device
-      type: is_on
-      device_id: 54d0c322d8c1bea015c6c22105f4f990
-      entity_id: 12932306751840ef6b13f690a2db4cb4
-      domain: switch
+    - condition: or
+      conditions:
+      - condition: device
+        type: is_on
+        device_id: 60956c87a02ec7bf35037a0e19372079
+        entity_id: c5266aad9c576ad14e41d1c36b4dab8d
+        domain: switch
+      - condition: device
+        type: is_on
+        device_id: 54d0c322d8c1bea015c6c22105f4f990
+        entity_id: 12932306751840ef6b13f690a2db4cb4
+        domain: switch
     - condition: time
       before: '23:00:00'
     - condition: time

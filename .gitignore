@@ -20,3 +20,4 @@ homematicip_local/
 history.txt
 test*
 switches/state
+.ha_run.lock

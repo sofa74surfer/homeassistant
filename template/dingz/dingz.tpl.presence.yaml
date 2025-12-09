@@ -1,0 +1,12 @@
+- binary_sensor:
+    # Dingz Bad Presence
+    - name: "Dingz Bad Presence"
+      state: "{{ states.sensor.dingz_bad_state.attributes['sensors']['pirs'][1]['motion'] }}"
+      device_class: motion
+      unique_id: dingz_bad_state_person_present
+
+    # Dingz Dusche Presence
+    - name: "Dingz Dusche Presence"
+      state: "{{ states.sensor.dingz_dusche_state.attributes['sensors']['pirs'][1]['motion'] }}"
+      device_class: motion
+      unique_id: dingz_dusche_state_person_present

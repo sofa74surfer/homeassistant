@@ -1,0 +1,28 @@
+- sensor:
+    - name: "ComfoAir Rotation Zuluft"
+      state: >
+        {% set zehnder_state = state_attr('sensor.zehnder_comfoair_state', 'getFanState') %}
+        {% if states('sensor.zehnder_comfoair_state') == 'OK'
+              and zehnder_state
+              and 'rotationsSupply' in zehnder_state
+              and 'value' in zehnder_state['rotationsSupply'] -%}
+          {{ zehnder_state['rotationsSupply']['value'] }}
+        {%- else -%}
+          {{ states('sensor.comfoair_rotation_zuluft') }}
+        {%- endif %}
+      unit_of_measurement: "rpm"
+      unique_id: template.sensor_comfoair_rotation_zuluft
+
+    - name: "ComfoAir Rotation Abluft"
+      state: >
+        {% set zehnder_state = state_attr('sensor.zehnder_comfoair_state', 'getFanState') %}
+        {% if states('sensor.zehnder_comfoair_state') == 'OK'
+              and zehnder_state
+              and 'rotationsOutgoing' in zehnder_state
+              and 'value' in zehnder_state['rotationsOutgoing'] -%}
+          {{ zehnder_state['rotationsOutgoing']['value'] }}
+        {%- else -%}
+          {{ states('sensor.comfoair_rotation_abluft') }}
+        {%- endif %}
+      unit_of_measurement: "rpm"
+      unique_id: template.sensor_comfoair_rotation_abluft

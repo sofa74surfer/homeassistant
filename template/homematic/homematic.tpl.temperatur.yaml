@@ -1,0 +1,72 @@
+- sensor:
+    # Homematic Thermostat Wohnzimmer Temperatur
+    - name: "Homematic Thermostat Wohnzimmer Temperatur"
+      state: >
+        {% if states('climate.thermostat_wohnzimmer') != 'unavailable' and states('climate.thermostat_wohnzimmer') != 'unknown' -%}
+          {{ state_attr('climate.thermostat_wohnzimmer', 'current_temperature') }}
+        {%- else -%}
+          {{ states('sensor.homematic_thermostat_wohnzimmer_temperatur') }}
+        {%- endif %}
+      device_class: temperature
+      unit_of_measurement: "°C"
+      unique_id: template.sensor_homematic_thermostat_wohnzimmer_temperatur
+
+    # Homematic Thermostat Stephan Temperatur
+    - name: "Homematic Thermostat Stephan Temperatur"
+      state: >
+        {% if states('climate.thermostat_stephan') != 'unavailable' and states('climate.thermostat_stephan') != 'unknown' -%}
+          {{ state_attr('climate.thermostat_stephan', 'current_temperature') }}
+        {%- else -%}
+          {{ states('sensor.homematic_thermostat_stephan_temperatur') }}
+        {%- endif %}
+      device_class: temperature
+      unit_of_measurement: "°C"
+      unique_id: template.sensor_homematic_thermostat_stephan_temperatur
+
+    # Homematic Thermostat Pia Temperatur
+    - name: "Homematic Thermostat Pia Temperatur"
+      state: >
+        {% if states('climate.thermostat_pia') != 'unavailable' and states('climate.thermostat_pia') != 'unknown' -%}
+          {{ state_attr('climate.thermostat_pia', 'current_temperature') }}
+        {%- else -%}
+          {{ states('sensor.homematic_thermostat_pia_temperatur') }}
+        {%- endif %}
+      device_class: temperature
+      unit_of_measurement: "°C"
+      unique_id: template.sensor_homematic_thermostat_pia_temperatur
+
+    # Homematic Thermostat Bad Temperatur
+    - name: "Homematic Thermostat Bad Temperatur"
+      state: >
+        {% if states('climate.thermostat_bad') != 'unavailable' and states('climate.thermostat_bad') != 'unknown' -%}
+          {{ state_attr('climate.thermostat_bad', 'current_temperature') }}
+        {%- else -%}
+          {{ states('sensor.homematic_thermostat_bad_temperatur') }}
+        {%- endif %}
+      device_class: temperature
+      unit_of_measurement: "°C"
+      unique_id: template.sensor_homematic_thermostat_bad_temperatur
+
+    # Homematic Thermostat Schlafzimmer Temperatur
+    - name: "Homematic Thermostat Schlafzimmer Temperatur"
+      state: >
+        {% if states('climate.thermostat_schlafzimmer') != 'unavailable' and states('climate.thermostat_schlafzimmer') != 'unknown' -%}
+          {{ state_attr('climate.thermostat_schlafzimmer', 'current_temperature') }}
+        {%- else -%}
+          {{ states('sensor.homematic_thermostat_schlafzimmer_temperatur') }}
+        {%- endif %}
+      device_class: temperature
+      unit_of_measurement: "°C"
+      unique_id: template.sensor_homematic_thermostat_schlafzimmer_temperatur
+
+    # Homematic Thermostat Dusche Temperatur
+    - name: "Homematic Thermostat Dusche Temperatur"
+      state: >
+        {% if states('climate.thermostat_dusche') != 'unavailable' and states('climate.thermostat_dusche') != 'unknown' -%}
+          {{ state_attr('climate.thermostat_dusche', 'current_temperature') }}
+        {%- else -%}
+          {{ states('sensor.homematic_thermostat_dusche_temperatur') }}
+        {%- endif %}
+      device_class: temperature
+      unit_of_measurement: "°C"
+      unique_id: template.sensor_homematic_thermostat_dusche_temperatur

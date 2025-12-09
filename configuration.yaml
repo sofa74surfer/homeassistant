@@ -43,9 +43,11 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-binary_sensor: !include binary_sensors.yaml
-light: !include lights.yaml
-cover: !include covers.yaml
+#binary_sensor: !include binary_sensors.yaml
+#light: !include lights.yaml
+#light: !include_dir_merge_list light/
+#cover: !include covers.yaml
+#cover: !include_dir_merge_list cover/
 command_line: !include command_line.yaml
 sql: !include sql.yaml
 
@@ -61,13 +63,6 @@ sensor: !include_dir_list sensors/
 switch: !include_dir_list switches/
 rest_command: !include_dir_merge_named rest_commands/
 template: !include_dir_merge_list template/
-
-#remote:
-#  - platform: harmony
-#    name: Harmony Hub
-#    host: !secret ip_harmony
-#    activity: Film wiedergeben
-#    delay_secs: 0.6
 
 media_player:
   - platform: nad
@@ -90,69 +85,3 @@ media_player:
 ##        name: NAD Bluesound
 ##        port: !secret port_nad
 
-# HomeMatic IP CCU3
-#homematic:
-#  interfaces:
-#    ip:
-#      host: !secret ip_homematic
-#      port: !secret port_homematic
-#      resolvenames: "json"
-#      username: "Admin"
-#      password: !secret homematic_ccu_login
-#      ssl: true
-#      verify_ssl: false
-
-influxdb:
-  host: !secret host_influxdb
-  port: 8086
-  database: !secret db_influxdb
-  username: !secret user_influxdb
-  password: !secret pw_influxdb
-  max_retries: 3
-  default_measurement: state
-  include: 
-    domains:
-      - switch
-      - climate
-      - person
-    entity_globs:
-      - sensor.qubino_smart_meter_electric_consumption_w*
-
-# mqtt:
-#   sensor:
-#     - name: Shelly Wasserverteiler Devicepower
-#       state_topic: "felismqtt/shellyplusht/wasserverteiler/status/devicepower:0"
-#       unit_of_measurement: "%"
-#       value_template: "{{ value_json.battery.percent }}"
-#       device_class: battery
-#       unique_id: mqtt_shelly_wasserverteiler_devicepower
-#     - name: Shelly Wasserverteiler Feuchtigkeit
-#       state_topic: "felismqtt/shellyplusht/wasserverteiler/status/humidity:0"
-#       unit_of_measurement: "%"
-#       value_template: "{{ value_json.rh }}"
-#       device_class: humidity
-#       unique_id: mqtt_shelly_wasserverteiler_feuchtigkeit
-#     - name: Shelly Wasserverteiler Temperatur
-#       state_topic: "felismqtt/shellyplusht/wasserverteiler/status/temperature:0"
-#       unit_of_measurement: "°C"
-#       value_template: "{{ value_json.tC }}"
-#       device_class: temperature
-#       unique_id: mqtt_shelly_wasserverteiler_temperatur
-#     - name: Shelly Heizverteiler Devicepower
-#       state_topic: "felismqtt/shellyplusht/heizverteiler/status/devicepower:0"
-#       unit_of_measurement: "%"
-#       value_template: "{{ value_json.battery.percent }}"
-#       device_class: battery
-#       unique_id: mqtt_shelly_heizverteiler_devicepower
-#     - name: Shelly Heizverteiler Feuchtigkeit
-#       state_topic: "felismqtt/shellyplusht/heizverteiler/status/humidity:0"
-#       unit_of_measurement: "%"
-#       value_template: "{{ value_json.rh }}"
-#       device_class: humidity
-#       unique_id: mqtt_shelly_heizverteiler_feuchtigkeit
-#     - name: Shelly Heizverteiler Temperatur
-#       state_topic: "felismqtt/shellyplusht/heizverteiler/status/temperature:0"
-#       unit_of_measurement: "°C"
-#       value_template: "{{ value_json.tC }}"
-#       device_class: temperature
-#       unique_id: mqtt_shelly_heizverteiler_temperatur

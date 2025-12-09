@@ -1,0 +1,10 @@
+- binary_sensor:
+  # ComfoAir Bypass
+    - name: "ComfoAir Bypass"
+      state: >
+        {% if states('sensor.zehnder_comfoair_state') == 'OK' %}
+          {{ (state_attr('sensor.zehnder_comfoair_state', 'getFlapState')['bypass']['value'] | float) != 0 }}
+        {% else %}
+          {{ states('binary_sensor.comfoair_bypass') == 'on' }}
+        {% endif %}
+      unique_id: template.sensor_comfoair_bypass

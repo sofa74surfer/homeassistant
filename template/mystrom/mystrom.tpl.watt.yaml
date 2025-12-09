@@ -1,0 +1,170 @@
+- sensor:
+    # Hifi Center
+    - name: "MyStrom Hifi Center Power"
+      state: >
+        {{ state_attr('sensor.mystrom_hifi_center_report', 'power') | float | round(1) }}
+      device_class: power
+      #state_class: measurement
+      unit_of_measurement: "W"
+      attributes:
+        last_updated: "{{ now() }}"
+      unique_id: template.sensor_mystrom_power_hifi_center
+
+    # Entfeuchter
+    - name: "MyStrom Entfeuchter Power"
+      state: >
+        {{ state_attr('sensor.mystrom_entfeuchter_report', 'power') | float | round(1) }}
+      device_class: power
+      #state_class: measurement
+      unit_of_measurement: "W"
+      attributes:
+        last_updated: "{{ now() }}"
+      unique_id: template.sensor_mystrom_power_entfeuchter
+    
+    # NAS & Switch
+    - name: "MyStrom NAS Switch Power"
+      state: >
+        {{ state_attr('sensor.mystrom_nas_switch_report', 'power') | float | round(1) }}
+      device_class: power
+      #state_class: measurement
+      unit_of_measurement: "W"
+      attributes:
+        last_updated: "{{ now() }}"
+      unique_id: template.sensor_mystrom_power_nas_switch
+
+    # Schrank Lüfter
+    - name: "MyStrom Schrank Lüfter Power"
+      state: >
+        {{ state_attr('sensor.mystrom_schrank_lufter_report', 'power') | float | round(1) }}
+      device_class: power
+      #state_class: measurement
+      unit_of_measurement: "W"
+      attributes:
+        last_updated: "{{ now() }}"
+      unique_id: template.sensor_power_mystrom_schrank_lufter
+
+    # Beamer No kWh
+    # - name: "Beamer MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_beamer_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_beamer
+
+    # Büro Stephan
+    # - name: "Büro Stephan MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_buro_stephan_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_buro_stephan
+
+    # Geschirrspüler
+    # - name: "Geschirrspüler MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_geschirrspuler_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_geschirrspuler
+
+    # Kaffeemaschine
+    # - name: "Kaffeemaschine MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_kaffeemaschine_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_kaffeemaschine
+
+    # Keller
+    # - name: "Keller MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_keller_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_keller
+
+    # Kühlschrank
+    # - name: "Kühlschrank MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_kuhlschrank_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_kuhlschrank
+
+    # Lüftung
+    # - name: "Lüftung MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_luftung_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_luftung
+
+    # Presence
+    # - name: "Presence MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_presence_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_presence
+    
+    # Beamer
+    # - name: "Beamer MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_beamer_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_beamer
+
+    # Sideboard
+    # - name: "Sideboard MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_sideboard_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_sideboard
+
+    # Terrasse
+    # - name: "Terrasse MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_terrasse_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_terrasse
+
+    # Tumbler
+    # - name: "Tumbler MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_tumbler_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_tumbler
+
+    # Waschmaschine
+    # - name: "Waschmaschine MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_waschmaschine_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_waschmaschine
+
+    # Büro Pia
+    # - name: "Büro Pia MyStrom W"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_buro_pia_report', 'power') | float | round(1) }}
+    #   device_class: power
+    #   #state_class: measurement
+    #   unit_of_measurement: "W"
+    #   unique_id: template.sensor_mystrom_power_buro_pia

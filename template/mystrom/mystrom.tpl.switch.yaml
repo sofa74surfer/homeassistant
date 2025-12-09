@@ -1,0 +1,14 @@
+- switch:
+    # HiFi Center Rest
+    - name: "HiFi Center Rest"
+      state: "{{ state_attr('sensor.mystrom_hifi_center_report', 'relay') }}"
+      turn_on:
+        - service: rest_command.ecs_generic_relay
+          data:
+            ip: !secret ip_mystrom_hifi_center
+            state: '1'
+      turn_off:
+        - service: rest_command.ecs_generic_relay
+          data:
+            ip: !secret ip_mystrom_hifi_center
+            state: '0'

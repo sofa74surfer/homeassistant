@@ -1,0 +1,39 @@
+- sensor:
+    - name: "ComfoAir Error Lüftung Kategorie A"
+      state: >
+        {% set zehnder_info = state_attr('sensor.zehnder_comfoair_info', 'getFaults') %}
+        {% if states('sensor.zehnder_comfoair_info') == 'OK'
+              and zehnder_info
+              and 'currentErrorA' in zehnder_info
+              and 'value' in zehnder_info['currentErrorA'] -%}
+          {{ zehnder_info['currentErrorA']['value'] }}
+        {%- else -%}
+          {{ states('sensor.comfoair_error_luftung_kategorie_a') }}
+        {%- endif %}
+      unique_id: template.sensor_comfoair_error_luftung_kategorie_a
+
+    - name: "ComfoAir Error Lüftung Kategorie E"
+      state: >
+        {% set zehnder_info = state_attr('sensor.zehnder_comfoair_info', 'getFaults') %}
+        {% if states('sensor.zehnder_comfoair_info') == 'OK'
+              and zehnder_info
+              and 'currentErrorE' in zehnder_info
+              and 'value' in zehnder_info['currentErrorE'] -%}
+          {{ zehnder_info['currentErrorE']['value'] }}
+        {%- else -%}
+          {{ states('sensor.comfoair_error_luftung_kategorie_e') }}
+        {%- endif %}
+      unique_id: template.sensor_comfoair_error_luftung_kategorie_e
+
+    - name: "ComfoAir Error Lüftung Filter"
+      state: >
+        {% set zehnder_info = state_attr('sensor.zehnder_comfoair_info', 'getFaults') %}
+        {% if states('sensor.zehnder_comfoair_info') == 'OK'
+              and zehnder_info
+              and 'replaceFilter' in zehnder_info
+              and 'value' in zehnder_info['replaceFilter'] -%}
+          {{ zehnder_info['replaceFilter']['value'] }}
+        {%- else -%}
+          {{ states('sensor.comfoair_error_luftung_filter') }}
+        {%- endif %}
+      unique_id: template.sensor_comfoair_error_luftung_filter

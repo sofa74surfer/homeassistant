@@ -1,0 +1,68 @@
+- sensor:
+    # Schrank Lüfter
+    - name: "MyStrom Schrank Lüfter Temperature"
+      state: >
+        {{ state_attr('sensor.mystrom_schrank_lufter_report', 'temperature') | float | round(1) }}
+      device_class: temperature
+      unit_of_measurement: "°C"
+      attributes:
+        last_updated: "{{ now() }}"
+      unique_id: template.sensor_mystrom_temperature_schrank_lufter
+
+    # Entfeuchter
+    # - name: "Entfeuchter MyStrom °C"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_entfeuchter_report', 'temperature') | float | round(1) }}
+    #   device_class: temperature
+    #   unit_of_measurement: "°C"
+    #   attributes:
+    #     last_updated: "{{ now() }}"
+    #   unique_id: template.sensor_mystrom_temperature_entfeuchter
+
+    # Beamer No kWh
+    # - name: "Beamer MyStrom °C"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_beamer_report', 'temperature') | float | round(1) }}
+    #   device_class: temperature
+    #   unit_of_measurement: "°C"
+    #   unique_id: template.sensor_mystrom_temperature_beamer
+
+    # Büro Stephan
+    # - name: "Büro Stephan MyStrom °C"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_buro_stephan_report', 'temperature') | float | round(1) }}
+    #   device_class: temperature
+    #   unit_of_measurement: "°C"
+    #   unique_id: template.sensor_mystrom_temperature_buro_stephan
+
+    # Presence
+    # - name: "Presence MyStrom °C"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_presence_report', 'temperature') | float | round(1) }}
+    #   device_class: temperature
+    #   unit_of_measurement: "°C"
+    #   unique_id: template.sensor_mystrom_temperature_presence
+
+    # Beamer
+    # - name: "Beamer MyStrom °C"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_beamer_report', 'temperature') | float | round(1) }}
+    #   device_class: temperature
+    #   unit_of_measurement: "°C"
+    #   unique_id: template.sensor_mystrom_temperature_beamer
+
+    # Terrasse
+    # - name: "Terrasse MyStrom °C"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_terrasse_report', 'temperature') | float | round(1) }}
+    #   device_class: temperature
+    #   unit_of_measurement: "°C"
+    #   unique_id: template.sensor_mystrom_temperature_terrasse
+
+    # Büro Pia
+    # - name: "Büro Pia MyStrom °C"
+    #   state: >
+    #     {{ state_attr('sensor.mystrom_buro_pia_report', 'temperature') | float | round(1) }}
+    #   device_class: temperature
+    #   unit_of_measurement: "°C"
+    #   unique_id: template.sensor_mystrom_temperature_buro_pia

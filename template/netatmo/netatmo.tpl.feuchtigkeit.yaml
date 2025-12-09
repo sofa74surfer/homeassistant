@@ -1,0 +1,14 @@
+- sensor:
+    # Netatmo Keller Feuchtigkeit
+    - name: "Netatmo Keller Feuchtigkeit"
+      state: >
+        {% if states('sensor.keller_luftfeuchtigkeit') != 'unavailable' and states('sensor.keller_luftfeuchtigkeit') != 'unknown' -%}
+          {{ states('sensor.keller_luftfeuchtigkeit') }}
+        {%- else -%}
+          {{ states('sensor.netatmo_keller_feuchtigkeit') }}
+        {%- endif %}
+      device_class: humidity
+      unit_of_measurement: "%"
+      attributes:
+        last_updated: "{{ now() }}"
+      unique_id: template.sensor_netatmo_keller_feuchtigkeit

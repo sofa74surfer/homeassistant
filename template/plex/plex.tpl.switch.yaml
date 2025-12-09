@@ -1,0 +1,8 @@
+- switch:
+    # Plex State
+    - name: "Plex State"
+      state: "{{ is_state('sensor.plex_state', 'plexon') }}"
+      turn_on:
+        - service: shell_command.trigger_plexon
+      turn_off:
+        - service: shell_command.trigger_plexoff

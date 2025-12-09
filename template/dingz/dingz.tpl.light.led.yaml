@@ -1,0 +1,406 @@
+- light:
+    - unique_id: dingz_markise1_led
+      name: "Dingz Markise1 LED"
+      level: "{{ ((state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_markise1_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_markise1
+            force_entity: sensor.dingz_markise1_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_markise1
+            force_entity: sensor.dingz_markise1_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_markise1
+            force_entity: sensor.dingz_markise1_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_markise1_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_markise1
+            force_entity: sensor.dingz_markise1_state
+
+  # ####### Dingz Markise23 LED
+    - unique_id: dingz_markise23_led
+      name: "Dingz Markise23 LED"
+      level: "{{ ((state_attr('sensor.dingz_markise23_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_markise23_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_markise23_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_markise23_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_markise23
+            force_entity: sensor.dingz_markise23_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_markise23
+            force_entity: sensor.dingz_markise23_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_markise23_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_markise23_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_markise23
+            force_entity: sensor.dingz_markise23_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_markise23_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_markise23
+            force_entity: sensor.dingz_markise23_state
+
+  # ####### Dingz Markise45 LED
+    - unique_id: dingz_markise45_led
+      name: "Dingz Markise45 LED"
+      level: "{{ ((state_attr('sensor.dingz_markise45_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_markise45_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_markise45_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_markise45_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_markise45
+            force_entity: sensor.dingz_markise45_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_markise45
+            force_entity: sensor.dingz_markise45_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_markise45_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_markise45_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_markise45
+            force_entity: sensor.dingz_markise45_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_markise45_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_markise45
+            force_entity: sensor.dingz_markise45_state
+
+  # ####### Dingz Bad LED
+    - unique_id: dingz_bad_led
+      name: "Dingz Bad LED"
+      level: "{{ ((state_attr('sensor.dingz_bad_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_bad_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_bad_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_bad_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_bad_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_bad_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_bad_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_bad
+            force_entity: sensor.dingz_bad_state
+
+  # ####### Dingz Dusche LED
+    - unique_id: dingz_dusche_led
+      name: "Dingz Dusche LED"
+      level: "{{ ((state_attr('sensor.dingz_dusche_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_dusche_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_dusche_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_dusche_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_dusche_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_dusche_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_dusche_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_dusche
+            force_entity: sensor.dingz_dusche_state
+
+  # ####### Dingz Kuche LED
+    - unique_id: dingz_kuche_led
+      name: "Dingz Kuche LED"
+      level: "{{ ((state_attr('sensor.dingz_kuche_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_kuche_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_kuche_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_kuche_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_kuche_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_kuche_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_kuche_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_kuche
+            force_entity: sensor.dingz_kuche_state
+
+  # ####### Dingz Schlafzimmer LED
+    - unique_id: dingz_schlafzimmer_led
+      name: "Dingz Schlafzimmer LED"
+      level: "{{ ((state_attr('sensor.dingz_schlafzimmer_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_schlafzimmer_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_schlafzimmer_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_schlafzimmer_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_schlafzimmer
+            force_entity: sensor.dingz_schlafzimmer_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_schlafzimmer
+            force_entity: sensor.dingz_schlafzimmer_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_schlafzimmer_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_schlafzimmer_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_schlafzimmer
+            force_entity: sensor.dingz_schlafzimmer_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_schlafzimmer_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_schlafzimmer
+            force_entity: sensor.dingz_schlafzimmer_state
+
+  # ####### Dingz Wohnzimmer LED
+    - unique_id: dingz_wohnzimmer_led
+      name: "Dingz Wohnzimmer LED"
+      level: "{{ ((state_attr('sensor.dingz_wohnzimmer_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_wohnzimmer_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_wohnzimmer_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_wohnzimmer_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_wohnzimmer_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_wohnzimmer_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_wohnzimmer_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_wohnzimmer
+            force_entity: sensor.dingz_wohnzimmer_state
+
+  # ####### Dingz Büro Stephan LED
+    - unique_id: dingz_buro_stephan_led
+      name: "Dingz Büro Stephan LED"
+      level: "{{ ((state_attr('sensor.dingz_buro_stephan_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_buro_stephan_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_buro_stephan_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_buro_stephan_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_buro_stephan
+            force_entity: sensor.dingz_buro_stephan_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_buro_stephan
+            force_entity: sensor.dingz_buro_stephan_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_buro_stephan_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_buro_stephan_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_buro_stephan
+            force_entity: sensor.dingz_buro_stephan_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_buro_stephan_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_buro_stephan
+            force_entity: sensor.dingz_buro_stephan_state
+
+  # ####### Dingz Büro Pia LED
+    - unique_id: dingz_buro_pia_led
+      name: "Dingz Büro Pia LED"
+      level: "{{ ((state_attr('sensor.dingz_buro_pia_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_buro_pia_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_buro_pia_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_buro_pia_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_buro_pia
+            force_entity: sensor.dingz_buro_pia_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_buro_pia
+            force_entity: sensor.dingz_buro_pia_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_buro_pia_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_buro_pia_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_buro_pia
+            force_entity: sensor.dingz_buro_pia_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_buro_pia_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_buro_pia
+            force_entity: sensor.dingz_buro_pia_state
+
+  # ####### Dingz Gang LED
+    - unique_id: dingz_gang_led
+      name: "Dingz Gang LED"
+      level: "{{ ((state_attr('sensor.dingz_gang_state', 'led')['hsv'].split(';')[2]|int) * 255 / 100) | int }}"
+      state: "{{ state_attr('sensor.dingz_gang_state', 'led')['on'] }}"
+      hs: "({{ ((state_attr('sensor.dingz_gang_state', 'led')['hsv'].split(';')[0] | int) * 360 / 359) | int }}, {{ state_attr('sensor.dingz_gang_state', 'led')['hsv'].split(';')[1] | int }})"
+      turn_on:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "on"
+            ip: !secret ip_dingz_gang
+            force_entity: sensor.dingz_gang_state
+      turn_off:
+        - action: script.dingz_led_level_generic_onoff
+          data:
+            action: "off"
+            ip: !secret ip_dingz_gang
+            force_entity: sensor.dingz_gang_state
+      set_level:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ state_attr('sensor.dingz_gang_state', 'led')['hsv'].split(';')[0] | int }}"
+            cols: "{{ state_attr('sensor.dingz_gang_state', 'led')['hsv'].split(';')[1] | int }}"
+            colv: "{{ (brightness * 100 / 255) | int }}"
+            ip: !secret ip_dingz_gang
+            force_entity: sensor.dingz_gang_state
+      set_hs:
+        - action: script.dingz_led_level_generic
+          data:
+            action: "on"
+            colh: "{{ (h * 359 / 360) | int }}"
+            cols: "{{ s }}"
+            colv: "{{ state_attr('sensor.dingz_gang_state', 'led')['hsv'].split(';')[2] }}"
+            ip: !secret ip_dingz_gang
+            force_entity: sensor.dingz_gang_state

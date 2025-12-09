@@ -1,0 +1,70 @@
+- sensor:
+    - name: "ComfoAir Power Stufe"
+      state: >
+        {% set zehnder_state = state_attr('sensor.zehnder_comfoair_state', 'getFanState') %}
+        {% set zehnder_info = state_attr('sensor.zehnder_comfoair_info', 'getVentilationLevel') %}
+        {% if states('sensor.zehnder_comfoair_state') == 'OK'
+              and zehnder_state
+              and 'outgoingAir' in zehnder_state
+              and 'value' in zehnder_state['outgoingAir']
+              and states('sensor.zehnder_comfoair_info') == 'OK'
+              and zehnder_info
+              and 'exhaustAway' in zehnder_info
+              and 'value' in zehnder_info['exhaustAway']
+              and 'exhaustLow' in zehnder_info
+              and 'value' in zehnder_info['exhaustLow']
+              and 'exhaustMiddle' in zehnder_info
+              and 'value' in zehnder_info['exhaustMiddle']
+              and 'exhaustHigh' in zehnder_info
+              and 'value' in zehnder_info['exhaustHigh'] -%}
+          {% if zehnder_state['outgoingAir']['value'] <= zehnder_info['exhaustAway']['value'] -%}
+            away
+          {%- else -%}
+            {% if zehnder_state['outgoingAir']['value'] <= zehnder_info['exhaustLow']['value'] -%}
+              low
+            {%- else -%}
+              {% if zehnder_state['outgoingAir']['value'] <= zehnder_info['exhaustMiddle']['value'] -%}
+                mid
+              {%- else -%}
+                {% if zehnder_state['outgoingAir']['value'] <= zehnder_info['exhaustHigh']['value'] -%}
+                  high
+                {%- else -%}
+                  NA
+                {%- endif %}
+              {%- endif %}
+            {%- endif %}
+          {%- endif %}
+        {%- else -%}
+          {{ states('sensor.comfoair_power_stufe') }}
+        {%- endif %}
+      unique_id: template.sensor_comfoair_power_stufe
+
+    - name: "ComfoAir Power Zuluft"
+      state: >
+        {% set zehnder_state = state_attr('sensor.zehnder_comfoair_state', 'getFanState') %}
+        {% if states('sensor.zehnder_comfoair_state') == 'OK'
+              and zehnder_state
+              and 'supplyAir' in zehnder_state
+              and 'value' in zehnder_state['supplyAir'] -%}
+          {{ zehnder_state['supplyAir']['value'] }}
+        {%- else -%}
+          {{ states('sensor.comfoair_power_zuluft') }}
+        {%- endif %}
+      device_class: power_factor
+      unit_of_measurement: "%"
+      unique_id: template.sensor_comfoair_power_zuluft
+
+    - name: "ComfoAir Power Abluft"
+      state: >
+        {% set zehnder_state = state_attr('sensor.zehnder_comfoair_state', 'getFanState') %}
+        {% if states('sensor.zehnder_comfoair_state') == 'OK'
+              and zehnder_state
+              and 'outgoingAir' in zehnder_state
+              and 'value' in zehnder_state['outgoingAir'] -%}
+          {{ zehnder_state['outgoingAir']['value'] }}
+        {%- else -%}
+          {{ states('sensor.comfoair_power_abluft') }}
+        {%- endif %}
+      device_class: power_factor
+      unit_of_measurement: "%"
+      unique_id: template.sensor_comfoair_power_abluft

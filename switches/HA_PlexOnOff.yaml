@@ -1,8 +1,0 @@
-platform: template
-switches:
-  plex_state:
-    value_template: "{{ is_state('sensor.plex_state', 'plexon') }}"
-    turn_on:
-      service: shell_command.trigger_plexon
-    turn_off:
-      service: shell_command.trigger_plexoff

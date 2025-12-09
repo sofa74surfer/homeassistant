@@ -1,187 +1,120 @@
-# ####### ########################### #######
-# ####### Absolute Feuchte Homematic  #######
-# ####### ########################### #######
-
-# Wetterstation
 - sensor:
+
+    # Wetterstation
     - name: "Homematic Wetterstation Absolute Feuchte"
-      state: "{{(10**5 * 
-                        18.016 / 
-                        8314.3 * 
-                        states('sensor.hmip_swo_pr_00185d89a9f0bf_humidity')|float / 
-                        100 * 
-                        6.1078 * 
-                        10** (
-                              (7.5 * 
-                                states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature')|float) / 
-                                (237.3 + 
-                                states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature')|float
-                                )
-                              ) / 
-                              (states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature')|float + 
-                              273.15
-                              ) 
-                      )|round(1)}}"
-#      attributes:
-#        last_updated:  "{{ now() }}"
+      state: >
+        {% set humidity = states('sensor.hmip_swo_pr_00185d89a9f0bf_humidity') | float(none) %}
+        {% set temperature = states('sensor.hmip_swo_pr_00185d89a9f0bf_actual_temperature') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.homematic_wetterstation_absolute_feuchte') }}
+        {% endif %}
       device_class: weight
       state_class: measurement
       unit_of_measurement: "g"
       unique_id: template.homematic_wetterstation_absolute_feuchte
 
-# Wohnzimmer
+    # Wohnzimmer
     - name: "Homematic Thermostat Wohnzimmer Absolute Feuchte"
-      state: "{{(10**5 * 
-                        18.016 / 
-                        8314.3 * 
-                        states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit')|float / 
-                        100 * 
-                        6.1078 * 
-                        10** (
-                              (7.5 * 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float) / 
-                                (237.3 + 
-                                states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float
-                                )
-                              ) / 
-                              (states('sensor.homematic_thermostat_wohnzimmer_temperatur')|float + 
-                              273.15
-                              ) 
-                      )|round(1)}}"
-#      attributes:
-#        last_updated:  "{{ now() }}"
+      state: >
+        {% set humidity = states('sensor.homematic_thermostat_wohnzimmer_feuchtigkeit') | float(none) %}
+        {% set temperature = states('sensor.homematic_thermostat_wohnzimmer_temperatur') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.homematic_thermostat_wohnzimmer_absolute_feuchte') }}
+        {% endif %}
       device_class: weight
       state_class: measurement
       unit_of_measurement: "g"
       unique_id: template.homematic_thermostat_wohnzimmer_absolute_feuchte
 
-# Büro Stephan
+    # Büro Stephan
     - name: "Homematic Thermostat Stephan Absolute Feuchte"
-      state: "{{(10**5 * 
-                        18.016 / 
-                        8314.3 * 
-                        states('sensor.homematic_thermostat_stephan_feuchtigkeit')|float / 
-                        100 * 
-                        6.1078 * 
-                        10** (
-                              (7.5 * 
-                                states('sensor.homematic_thermostat_stephan_temperatur')|float) / 
-                                (237.3 + 
-                                states('sensor.homematic_thermostat_stephan_temperatur')|float
-                                )
-                              ) / 
-                              (states('sensor.homematic_thermostat_stephan_temperatur')|float + 
-                              273.15
-                              ) 
-                      )|round(1)}}"
-#      attributes:
-#        last_updated:  "{{ now() }}"
+      state: >
+        {% set humidity = states('sensor.homematic_thermostat_stephan_feuchtigkeit') | float(none) %}
+        {% set temperature = states('sensor.homematic_thermostat_stephan_temperatur') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.homematic_thermostat_stephan_absolute_feuchte') }}
+        {% endif %}
       device_class: weight
       state_class: measurement
       unit_of_measurement: "g"
       unique_id: template.homematic_thermostat_stephan_absolute_feuchte
 
-# Büro Pia
+    # Büro Pia
     - name: "Homematic Thermostat Pia Absolute Feuchte"
-      state: "{{(10**5 * 
-                        18.016 / 
-                        8314.3 * 
-                        states('sensor.homematic_thermostat_pia_feuchtigkeit')|float / 
-                        100 * 
-                        6.1078 * 
-                        10** (
-                              (7.5 * 
-                                states('sensor.homematic_thermostat_pia_temperatur')|float) / 
-                                (237.3 + 
-                                states('sensor.homematic_thermostat_pia_temperatur')|float
-                                )
-                              ) / 
-                              (states('sensor.homematic_thermostat_pia_temperatur')|float + 
-                              273.15
-                              ) 
-                      )|round(1)}}"
-#      attributes:
-#        last_updated:  "{{ now() }}"
+      state: >
+        {% set humidity = states('sensor.homematic_thermostat_pia_feuchtigkeit') | float(none) %}
+        {% set temperature = states('sensor.homematic_thermostat_pia_temperatur') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.homematic_thermostat_pia_absolute_feuchte') }}
+        {% endif %}
       device_class: weight
       state_class: measurement
       unit_of_measurement: "g"
       unique_id: template.homematic_thermostat_pia_absolute_feuchte
 
-# Bad
+    # Bad
     - name: "Homematic Thermostat Bad Absolute Feuchte"
-      state: "{{(10**5 * 
-                        18.016 / 
-                        8314.3 * 
-                        states('sensor.homematic_thermostat_bad_feuchtigkeit')|float / 
-                        100 * 
-                        6.1078 * 
-                        10** (
-                              (7.5 * 
-                                states('sensor.homematic_thermostat_bad_temperatur')|float) / 
-                                (237.3 + 
-                                states('sensor.homematic_thermostat_bad_temperatur')|float
-                                )
-                              ) / 
-                              (states('sensor.homematic_thermostat_bad_temperatur')|float + 
-                              273.15
-                              ) 
-                      )|round(1)}}"
-#      attributes:
-#        last_updated:  "{{ now() }}"
+      state: >
+        {% set humidity = states('sensor.homematic_thermostat_bad_feuchtigkeit') | float(none) %}
+        {% set temperature = states('sensor.homematic_thermostat_bad_temperatur') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.homematic_thermostat_bad_absolute_feuchte') }}
+        {% endif %}
       device_class: weight
       state_class: measurement
       unit_of_measurement: "g"
       unique_id: template.homematic_thermostat_bad_absolute_feuchte
 
-# Schlafzimmer
+    # Schlafzimmer
     - name: "Homematic Thermostat Schlafzimmer Absolute Feuchte"
-      state: "{{(10**5 * 
-                        18.016 / 
-                        8314.3 * 
-                        states('sensor.homematic_thermostat_schlafzimmer_feuchtigkeit')|float / 
-                        100 * 
-                        6.1078 * 
-                        10** (
-                              (7.5 * 
-                                states('sensor.homematic_thermostat_schlafzimmer_temperatur')|float) / 
-                                (237.3 + 
-                                states('sensor.homematic_thermostat_schlafzimmer_temperatur')|float
-                                )
-                              ) / 
-                              (states('sensor.homematic_thermostat_schlafzimmer_temperatur')|float + 
-                              273.15
-                              ) 
-                      )|round(1)}}"
-#      attributes:
-#        last_updated:  "{{ now() }}"
+      state: >
+        {% set humidity = states('sensor.homematic_thermostat_schlafzimmer_feuchtigkeit') | float(none) %}
+        {% set temperature = states('sensor.homematic_thermostat_schlafzimmer_temperatur') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.homematic_thermostat_schlafzimmer_absolute_feuchte') }}
+        {% endif %}
       device_class: weight
       state_class: measurement
       unit_of_measurement: "g"
       unique_id: template.homematic_thermostat_schlafzimmer_absolute_feuchte
 
-# Dusche
+    # Dusche
     - name: "Homematic Thermostat Dusche Absolute Feuchte"
-      state: "{{(10**5 * 
-                        18.016 / 
-                        8314.3 * 
-                        states('sensor.homematic_thermostat_dusche_feuchtigkeit')|float / 
-                        100 * 
-                        6.1078 * 
-                        10** (
-                              (7.5 * 
-                                states('sensor.homematic_thermostat_dusche_temperatur')|float) / 
-                                (237.3 + 
-                                states('sensor.homematic_thermostat_dusche_temperatur')|float
-                                )
-                              ) / 
-                              (states('sensor.homematic_thermostat_dusche_temperatur')|float + 
-                              273.15
-                              ) 
-                      )|round(1)}}"
-#      attributes:
-#        last_updated:  "{{ now() }}"
+      state: >
+        {% set humidity = states('sensor.homematic_thermostat_dusche_feuchtigkeit') | float(none) %}
+        {% set temperature = states('sensor.homematic_thermostat_dusche_temperatur') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.homematic_thermostat_dusche_absolute_feuchte') }}
+        {% endif %}
       device_class: weight
       state_class: measurement
       unit_of_measurement: "g"
       unique_id: template.homematic_thermostat_dusche_absolute_feuchte
-

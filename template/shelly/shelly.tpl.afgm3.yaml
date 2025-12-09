@@ -1,0 +1,54 @@
+- sensor:
+    # Shelly Keller
+    - name: "Shelly Keller Absolute Feuchte"
+      state: >
+        {% set humidity = states('sensor.shelly_ht_keller_humidity') | float(none) %}
+        {% set temperature = states('sensor.shelly_ht_keller_temperature') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.shelly_keller_absolute_feuchte') }}
+        {% endif %}
+      device_class: weight
+      unit_of_measurement: "g"
+      unique_id: template.shelly_keller_absolute_feuchte
+      attributes:
+        last_updated: "{{ now() }}"
+
+    # Shelly Wasserverteiler
+    - name: "Shelly Wasserverteiler Absolute Feuchte"
+      state: >
+        {% set humidity = states('sensor.shelly_ht_wasserverteiler_humidity') | float(none) %}
+        {% set temperature = states('sensor.shelly_ht_wasserverteiler_temperature') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.shelly_wasserverteiler_absolute_feuchte') }}
+        {% endif %}
+      device_class: weight
+      unit_of_measurement: "g"
+      unique_id: template.shelly_wasserverteiler_absolute_feuchte
+      attributes:
+        last_updated: "{{ now() }}"
+
+    # Shelly Heizverteiler
+    - name: "Shelly Heizverteiler Absolute Feuchte"
+      state: >
+        {% set humidity = states('sensor.shelly_ht_heizverteiler_humidity') | float(none) %}
+        {% set temperature = states('sensor.shelly_ht_heizverteiler_temperature') | float(none) %}
+        {% if humidity is not none and temperature is not none %}
+          {{ (10**5 * 18.016 / 8314.3 * humidity / 100 * 6.1078 *
+              10**((7.5 * temperature) / (237.3 + temperature)) /
+              (temperature + 273.15)) | round(1) }}
+        {% else %}
+          {{ states('sensor.shelly_heizverteiler_absolute_feuchte') }}
+        {% endif %}
+      device_class: weight
+      unit_of_measurement: "g"
+      unique_id: template.shelly_heizverteiler_absolute_feuchte
+      attributes:
+        last_updated: "{{ now() }}"

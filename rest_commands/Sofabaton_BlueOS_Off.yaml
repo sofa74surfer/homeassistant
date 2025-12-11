@@ -1,2 +1,2 @@
   sofabaton_blueos_off:
-    url: https://app1.sofabaton.com/app/keypress?node_id=AoDveH28wFXKXXXWBXrVFe&id=AoDveH2101&type=0
+    url: !secret url_sofabaton_blueos_off
